@@ -42,3 +42,5 @@ yarn-error.log*
 
 # WebStorm
 .idea/**/*
+
+/Google_Speech_to_Text_cred.json
