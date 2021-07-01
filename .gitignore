@@ -44,3 +44,5 @@ yarn-error.log*
 .idea/**/*
 
 /Google_Speech_to_Text_cred.json
+
+/uploadedaudiofile

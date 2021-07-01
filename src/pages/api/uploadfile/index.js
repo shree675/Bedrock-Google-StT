@@ -1,15 +1,14 @@
 const fs = require("fs");
 const speech = require("@google-cloud/speech");
-import Formidable from "formidable";
+import formidable from "formidable";
 
 const client = new speech.SpeechClient();
-var file = "";
 
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 export default async (req, res) => {
   // const form = new Formidable.IncomingForm({
@@ -68,50 +67,99 @@ export default async (req, res) => {
   console.log(__dirname);
   console.log(__filename);
 
-  // console.log(req.body);
+  var ufile = "";
 
-  // var i;
-  // for (i = 0; i < req.body.bb.length; i++) {
-  //   if (req.body.bb[i] === ",") {
-  //     break;
-  //   }
-  // }
+  const form = new formidable.IncomingForm();
+  form.uploadDir = "./";
+  form.keepExtensions = true;
 
-  // var x = req.body.bb.slice(i + 1, req.body.bb.length);
-  // console.log(x);
+  form.on("fileBegin", function (name, file) {
+    //rename the incoming file to the file's name
+    // fs.rename(file.path, form.uploadDir + "uploadedaudiofile");
+    file.path = form.uploadDir + "uploadedaudiofile";
+  });
 
-  main();
+  form.parse(req, async (err, fields, files) => {
+    // console.log(files.file);
+    ufile = files.file;
 
-  async function main() {
+    const audio = {
+      content: fs
+        .readFileSync(form.uploadDir + "uploadedaudiofile")
+        .toString("base64"),
+    };
+
+    console.log(audio.content.slice(0, 200));
+
     const config = {
-      encoding: "LINEAR16",
+      encoding: "FLAC",
       languageCode: "en-US",
       sampleRateHertz: 16000,
+      enableWordTimeOffsets: true,
     };
-    //     enableWordTimeOffsets: true,
 
-    // content: fs.readFileSync(__dirname + "audiofile.flac").toString("base64"),
-    // content: fs
-    //   .readFileSync(
-    //     "D:\\Enshrine Global Systems\\bedrock-1.2.0\\src\\pages\\api\\uploadfile\\audiofile.flac"
-    //   )
-    //   .toString("base64"),
-    const audio = {
-      content: req.body.data,
-    };
-    // console.log(audio.content);
     const request = {
       config: config,
       audio: audio,
     };
-    // console.log(request);
-    const [response] = await client.recognize(request);
-    console.log(response);
-    const transcription = response.results
-      .map((result) => result.alternatives[0].transcript)
-      .join("\n");
-    console.log("Transcription: ", transcription);
-  }
 
-  res.send(req.body);
+    res.send("Hello");
+
+    // const [response] = await client.recognize(request);
+
+    // console.log(response);
+
+    // const transcription = response.results
+    //   .map((result) => result.alternatives[0].transcript)
+    //   .join("\n");
+    // console.log("Transcription: ", transcription);
+  });
+
+  // const config = {
+  //   encoding: "FLAC",
+  //   languageCode: "en-US",
+  //   sampleRateHertz: 16000,
+  //   enableWordTimeOffsets: true,
+  // };
+
+  // const audio = {
+  //   content: fs
+  //     .readFileSync(
+  //       "D:\\Enshrine Global Systems\\bedrock-1.2.0\\src\\pages\\api\\uploadfile\\audiofile.flac"
+  //     )
+  //     .toString("base64"),
+  // };
+
+  // // const audio = {
+  // //   uri: "gs://cloud-samples-tests/speech/brooklyn.flac",
+  // // };
+
+  // // content: fs.readFileSync(__dirname + "audiofile.flac").toString("base64"),
+
+  // // content: fs.readFileSync(__dirname + "audiofile.flac").toString("base64"),
+  // // content: fs
+  // //   .readFileSync(
+  // //     "D:\\Enshrine Global Systems\\bedrock-1.2.0\\src\\pages\\api\\uploadfile\\audiofile.flac"
+  // //   )
+  // //   .toString("base64"),
+
+  // const audio = {
+  //   content: fs.readFileSync(ufile.path).toString("base64"),
+  // };
+
+  // console.log(audio.content);
+
+  // const request = {
+  //   config: config,
+  //   audio: audio,
+  // };
+  // const [response] = await client.recognize(request);
+  // console.log(response);
+  // const transcription = response.results
+  //   .map((result) => result.alternatives[0].transcript)
+  //   .join("\n");
+  // console.log("Transcription: ", transcription);
+
+  // res.send(req.body.headers);
+  // res.send(req.body);
 };

@@ -45,17 +45,18 @@ export default function Dashboard() {
     var formData = new FormData();
     console.log(uploadedFile);
 
-    getBase64(uploadedFile);
+    // getBase64(uploadedFile);
 
     // formData.append("file", bb);
     formData.append("file", uploadedFile);
 
-    // fetch("/api/uploadfile", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
+    fetch("/api/uploadfile", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.text())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
 
     // fetch("/api/uploadfile", {
     //   method: "POST",
@@ -68,9 +69,25 @@ export default function Dashboard() {
     //   console.log(res);
     // });
 
-    axios.post("/api/uploadfile", formData).then((res) => {
-      console.log(res);
-    });
+    // // works::::
+    // axios.post("/api/uploadfile", formData).then((res) => {
+    //   console.log(res);
+    // });
+
+    // only the below works (latest):
+    // ----------------------------------------------------------------
+    // fetch("http://localhost:5000/upload", {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((res) => {
+    //     // console.log(res);
+    //     return res.text();
+    //   })
+    //   .then((data) => {
+    //     console.log(data);
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   const hasDropped = (files, event) => {
