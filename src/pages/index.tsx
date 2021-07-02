@@ -50,16 +50,20 @@ function Homepage() {
     // formData.append("file", bb);
     formData.append("file", uploadedFile);
 
-    fetch("/api/uploadfile", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.text())
-      .then((data) => {
-        setTranscription(data);
-        console.log(data);
-      })
-      .catch((err) => console.log(err));
+    // --------------------------------------------
+
+    // fetch("/api/uploadfile", {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((res) => res.text())
+    //   .then((data) => {
+    //     setTranscription(data);
+    //     console.log(data);
+    //   })
+    //   .catch((err) => console.log(err));
+
+    // --------------------------------------------
 
     // fetch("/api/uploadfile", {
     //   method: "POST",
@@ -79,18 +83,18 @@ function Homepage() {
 
     // only the below works (latest):
     // ----------------------------------------------------------------
-    // fetch("http://localhost:5000/upload", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((res) => {
-    //     // console.log(res);
-    //     return res.text();
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((err) => console.log(err));
+    fetch("http://localhost:5000/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => {
+        // console.log(res);
+        return res.text();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
   };
 
   const hasDropped = (files, event) => {

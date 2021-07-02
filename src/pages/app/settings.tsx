@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/Image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useUpdateUserMutation } from "../../client/graphql/updateUser.generated";
@@ -99,11 +100,13 @@ export default function Dashboard() {
           <button
             disabled={!name}
             onClick={() => {
+              console.log(profilepic);
               toast.promise(
                 updateUser({
                   name: name,
                   email: email,
                   userId: currentUser.id,
+                  profilepic: profilepic,
                 }),
                 {
                   loading: `Updating settings...`,

@@ -1,8 +1,19 @@
-mutation UpdateUser($name: String, $email: String!, $userId: String!) {
-  updateUser(name: $name, email: $email, userId: $userId) {
+mutation UpdateUser(
+  $name: String
+  $profilepic: String
+  $email: String!
+  $userId: String!
+) {
+  updateUser(
+    name: $name
+    profilepic: $profilepic
+    email: $email
+    userId: $userId
+  ) {
     id
     name
     email
+    profilepic
     projects {
       id
       name

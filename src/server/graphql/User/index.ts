@@ -8,6 +8,7 @@ const User = objectType({
     t.model.name();
     t.model.projects();
     t.model.email();
+    t.model.profilepic();
   },
 });
 
@@ -38,13 +39,14 @@ const mutations = extendType({
         userId: nonNull(stringArg()),
         email: nonNull(stringArg()),
         name: stringArg(),
+        profilepic: stringArg(),
       },
-      resolve: async (_, { userId, email, name }, ctx) => {
+      resolve: async (_, { userId, email, name, profilepic }, ctx) => {
         if (!ctx.user?.id || userId !== ctx.user.id) return null;
 
         return await prisma.user.update({
           where: { id: userId },
-          data: { name, email },
+          data: { name, email, profilepic },
         });
       },
     });

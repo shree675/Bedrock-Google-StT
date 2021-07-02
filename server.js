@@ -23,40 +23,35 @@ app.use(cors());
 app.post("/upload", fileUpload(), async function (req, res) {
   console.log(req.files.file);
 
-  const config = {
-    encoding: "7BIT",
-    languageCode: "en-US",
-    sampleRateHertz: 16000,
-    enableWordTimeOffsets: true,
-  };
+  // const audio = {
+  //   content: req.files.file.data.toString("base64"),
+  // };
 
   const audio = {
-    content: req.files.file.data.toString("base64"),
+    content: fs.readFileSync("./audiofile.flac").toString("base64"),
   };
 
   // console.log(audio.content);
+  async function test() {
+    const config = {
+      encoding: "FLAC",
+      languageCode: "en-US",
+      enableWordTimeOffsets: true,
+    };
 
-  const request = {
-    config: config,
-    audio: audio,
-  };
+    const request = {
+      config: config,
+      audio: audio,
+    };
 
-  const mes = {
-    response: "hello",
-  };
-  res.statusText = "hello";
-  res.send("hello");
-
-  // const [response] = await client.recognize(request);
-  // console.log(response);
-
-  // const transcription = response.results
-  //   .map((result) => result.alternatives[0].transcript)
-  //   .join("\n");
-
-  // console.log("Transcription: ", transcription);
-
-  // res.send("uploaded");
+    // Detects speech in the audio file
+    const [response] = await client.recognize(request);
+    const transcription = response.results
+      .map((result) => result.alternatives[0].transcript)
+      .join("\n");
+    console.log(`Transcription: ${transcription}`);
+  }
+  test();
 });
 
 app.listen(5000, () => {
