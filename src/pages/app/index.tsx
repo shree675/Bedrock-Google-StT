@@ -11,11 +11,9 @@ import { event } from "next/dist/build/output/log";
 export default function Dashboard() {
   const router = useRouter();
   const [{ data, fetching, error }] = useGetCurrentUserQuery();
-  const [, createProject] = useMutation(CreateProjectDocument);
-  const [name, setName] = useState("");
   const [uploadedFile, setUploadedFile] = useState("");
-  const [bb, setbb] = useState("");
   const [filename, setFileName] = useState("");
+  const [transcription, setTranscription] = useState("");
 
   const styles = {
     border: "1px solid black",
@@ -25,21 +23,6 @@ export default function Dashboard() {
   };
 
   useEffect(() => {}, [filename]);
-
-  function getBase64(file) {
-    if (!file) {
-      setbb("");
-      return;
-    }
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      setbb(reader.result);
-    };
-    reader.onerror = function (error) {
-      console.log("Error: ", error);
-    };
-  }
 
   const upload = async () => {
     var formData = new FormData();
@@ -55,7 +38,10 @@ export default function Dashboard() {
       body: formData,
     })
       .then((res) => res.text())
-      .then((data) => console.log(data))
+      .then((data) => {
+        setTranscription(data);
+        console.log(data);
+      })
       .catch((err) => console.log(err));
 
     // fetch("/api/uploadfile", {
@@ -92,14 +78,16 @@ export default function Dashboard() {
 
   const hasDropped = (files, event) => {
     setUploadedFile(files[0]);
-    getBase64(files[0]);
+    // getBase64(files[0]);
     console.log(files[0]);
     setFileName(files[0].name);
+    setTranscription("");
   };
 
   const hasUploaded = (event) => {
     setUploadedFile(event.target.files[0]);
-    getBase64(event.target.files[0]);
+    setTranscription("");
+    // getBase64(event.target.files[0]);
   };
 
   if (fetching) return <p>Loading...</p>;
@@ -118,60 +106,59 @@ export default function Dashboard() {
 
   return (
     <>
-      <h1>Hello {data.currentUser.name}!</h1>
-      <h3>Upload Files for Transcription</h3>
-      <br></br>
-      <input type="file" onChange={hasUploaded}></input>
-      <button onClick={upload}>Upload</button>
+      {!data?.currentUser ? (
+        <>
+          <h3>Sign up to our account and get started</h3>
+          <Link href="/get-started">Get started</Link>
+          <Link href="/login">Login</Link>
+        </>
+      ) : (
+        <>
+          <h1>Hello, {data.currentUser.name}</h1>
+          <div>Welcome to xyz</div>
+          <br></br>
+          <div>Upload from computer</div>
 
-      <div>Or</div>
-      <div styles={styles}>
-        <FileDrop
-          onFrameDragEnter={(event) => {}}
-          onFrameDragLeave={(event) => {}}
-          onFrameDrop={(event) => {}}
-          onDragOver={(event) => {}}
-          onDragLeave={(event) => {}}
-          onDrop={(files, event) => {
-            hasDropped(files, event);
-          }}
-        >
-          {filename === ""
-            ? "Drop some files here!"
-            : `${filename} (or) Drop a different file`}
-        </FileDrop>
-      </div>
-      <br></br>
-      <h3>Create Projects</h3>
-      <ul>
-        {data.currentUser.projects.map((project) => (
-          <li key={project.slug}>
-            <Link href={`/app/${project.slug}`}>{project.name}</Link>
-          </li>
-        ))}
-      </ul>
-      <input
-        placeholder="Hooli Inc."
-        value={name}
-        onChange={(evt) => setName(evt.target.value)}
-      />
-      <button
-        disabled={!name}
-        onClick={() => {
-          createProject({
-            name,
-          }).then((result) => {
-            const slug = result.data?.createProject?.slug;
-            if (slug) router.push(`/app/${slug}`);
-          });
-        }}
-      >
-        Create project
-      </button>
-      <br></br>
-      <Link href="/app/settings">Settings</Link>
-      <br></br>
-      <Link href="/api/auth/logout">Logout</Link>
+          <input type="file" onChange={hasUploaded}></input>
+          <div>Or</div>
+          <div styles={styles}>
+            <FileDrop
+              onFrameDragEnter={(event) => {}}
+              onFrameDragLeave={(event) => {}}
+              onFrameDrop={(event) => {}}
+              onDragOver={(event) => {}}
+              onDragLeave={(event) => {}}
+              onDrop={(files, event) => {
+                hasDropped(files, event);
+              }}
+            >
+              {filename === ""
+                ? "Drag and drop an audio file"
+                : `${filename} (or) Drop a different file`}
+            </FileDrop>
+          </div>
+          <br></br>
+          <button onClick={upload}>Upload</button>
+          <div>We currently support only 60 seconds</div>
+          <div>
+            {transcription === "" ? (
+              <>
+                <h4>Transcription:</h4>
+                <div>(Please upload a file)</div>
+              </>
+            ) : (
+              <>
+                <h4>Transcription:</h4>
+                <div>{transcription}</div>
+              </>
+            )}
+          </div>
+          <br></br>
+          <Link href="/app/template">
+            <button>Proceed</button>
+          </Link>
+        </>
+      )}
     </>
   );
 }

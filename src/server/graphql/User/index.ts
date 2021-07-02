@@ -36,14 +36,15 @@ const mutations = extendType({
       type: "User",
       args: {
         userId: nonNull(stringArg()),
+        email: nonNull(stringArg()),
         name: stringArg(),
       },
-      resolve: async (_, { userId, name }, ctx) => {
+      resolve: async (_, { userId, email, name }, ctx) => {
         if (!ctx.user?.id || userId !== ctx.user.id) return null;
 
         return await prisma.user.update({
           where: { id: userId },
-          data: { name },
+          data: { name, email },
         });
       },
     });
