@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 import { useUpdateUserMutation } from "../../client/graphql/updateUser.generated";
 import toast from "react-hot-toast";
 import { useGetCurrentUserQuery } from "../../client/graphql/getCurrentUser.generated";
+import { useDeleteUserMutation } from "../../client/graphql/deleteUser.generated";
 
 export default function Dashboard() {
   const [{ data, fetching, error }] = useGetCurrentUserQuery();
   const router = useRouter();
   const [, updateUser] = useUpdateUserMutation();
+  const [, deleteUser] = useDeleteUserMutation();
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [profilepic, setProfilepic] = useState("");
@@ -98,9 +100,8 @@ export default function Dashboard() {
           </div>
           <br></br>
           <button
-            disabled={!name}
             onClick={() => {
-              console.log(profilepic);
+              // console.log(profilepic);
               toast.promise(
                 updateUser({
                   name: name,
@@ -152,7 +153,24 @@ export default function Dashboard() {
             permanently deleted. Before deleting your account, please download
             any data or information that you wish to retain.
           </div>
-          <button>DELETE ACCOUNT</button>
+          <button
+            onClick={async () => {
+              await toast.promise(
+                deleteUser({
+                  userId: currentUser.id,
+                }),
+                {
+                  loading: `Deleting account...`,
+                  success: `Account deleted! Refresh the browser to apply changes`,
+                  error: (err) => {
+                    return err;
+                  },
+                }
+              );
+            }}
+          >
+            DELETE ACCOUNT
+          </button>
           <br></br>
         </div>
       </div>

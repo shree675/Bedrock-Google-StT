@@ -10,6 +10,7 @@ import { event } from "next/dist/build/output/log";
 
 function Homepage() {
   const [{ data, fetching, error }] = useGetCurrentUserQuery();
+  const router = useRouter();
   const [, createProject] = useMutation(CreateProjectDocument);
   const [name, setName] = useState("");
   const [uploadedFile, setUploadedFile] = useState("");
@@ -52,16 +53,16 @@ function Homepage() {
 
     // --------------------------------------------
 
-    // fetch("/api/uploadfile", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((res) => res.text())
-    //   .then((data) => {
-    //     setTranscription(data);
-    //     console.log(data);
-    //   })
-    //   .catch((err) => console.log(err));
+    fetch("/api/uploadfile", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.text())
+      .then((data) => {
+        setTranscription(data);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
 
     // --------------------------------------------
 
@@ -83,18 +84,18 @@ function Homepage() {
 
     // only the below works (latest):
     // ----------------------------------------------------------------
-    fetch("http://localhost:5000/upload", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => {
-        // console.log(res);
-        return res.text();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => console.log(err));
+    // fetch("http://localhost:5000/upload", {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((res) => {
+    //     // console.log(res);
+    //     return res.text();
+    //   })
+    //   .then((data) => {
+    //     console.log(data);
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   const hasDropped = (files, event) => {
@@ -114,6 +115,16 @@ function Homepage() {
   if (fetching) return <p>Loading...</p>;
 
   if (error) return <p>{error.message}</p>;
+
+  if (!data?.currentUser) {
+    if (process.browser) router.push("/login");
+    return (
+      <p>
+        Redirecting to <Link href="/login">/login</Link>
+        ...
+      </p>
+    );
+  }
 
   return (
     <>

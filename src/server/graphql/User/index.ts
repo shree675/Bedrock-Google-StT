@@ -50,6 +50,31 @@ const mutations = extendType({
         });
       },
     });
+
+    t.nullable.field("deleteUser", {
+      type: "User",
+      args: {
+        userId: nonNull(stringArg()),
+      },
+      resolve: async (_, { userId }, ctx) => {
+        if (!ctx.user?.id) return null;
+
+        const hasAccess = await prisma.user.findFirst({
+          where: { id: userId },
+        });
+
+        if (!hasAccess) return null;
+
+        const user = await prisma.user.delete({
+          where: {
+            id: userId,
+          },
+          // data: {disconnect: {id: userId}}
+        });
+
+        return null;
+      },
+    });
   },
 });
 

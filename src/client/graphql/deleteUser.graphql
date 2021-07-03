@@ -1,0 +1,14 @@
+mutation DeleteUser($userId: String!) {
+  deleteUser(userId: $userId) {
+    id
+    name
+    email
+    profilepic
+    projects {
+      id
+      name
+      slug
+      paidPlan
+    }
+  }
+}
