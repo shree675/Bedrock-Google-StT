@@ -1,0 +1,12 @@
+query transcript {
+  transcript {
+    id
+    title
+    filetype
+    expirationdate
+    renderdate
+    status
+    transcript
+    userid
+  }
+}

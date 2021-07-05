@@ -1,0 +1,28 @@
+mutation CreateTranscript(
+  $title: String!
+  $transcript: String!
+  $userid: String!
+  $filetype: String!
+  $expirationdate: String!
+  $renderdate: String!
+  $status: String!
+) {
+  createTranscript(
+    title: $title
+    transcript: $transcript
+    userid: $userid
+    status: $status
+    renderdate: $renderdate
+    expirationdate: $expirationdate
+    filetype: $filetype
+  ) {
+    id
+    title
+    filetype
+    expirationdate
+    renderdate
+    status
+    transcript
+    userid
+  }
+}

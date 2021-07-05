@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id         String    @id @default(cuid())
-  createdAt  DateTime  @default(now())
-  modifiedAt DateTime  @default(now())
-  email      String    @unique
-  projects   Project[]
-  name       String?
-  profilepic String?
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  modifiedAt  DateTime  @default(now())
+  email       String    @unique
+  projects    Project[]
+  name        String?
+  profilepic  String?
 }
 
 model Project {
@@ -29,4 +29,17 @@ model Project {
   stripeSubscriptionId   String?   @unique
   stripePriceId          String?
   stripeCurrentPeriodEnd DateTime?
+}
+
+model Transcript {
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  modifiedAt      DateTime @default(now())
+  title           String
+  filetype        String
+  expirationdate  String
+  renderdate      String
+  status          String
+  transcript      String
+  userid          String
 }

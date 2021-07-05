@@ -3,6 +3,7 @@ import { makeSchema } from "nexus";
 import path from "path";
 import User from "./User";
 import Project, { PaidPlan } from "./Project";
+import Transcript from "./Transcript";
 
 // Only generate in development or when the yarn run generate:nexus command is run
 // This fixes deployment on Netlify, otherwise you'll run into an EROFS error during building
@@ -10,7 +11,7 @@ const shouldGenerateArtifacts =
   process.env.NODE_ENV === "development" || !!process.env.GENERATE;
 
 export const schema = makeSchema({
-  types: [User, Project, PaidPlan],
+  types: [User, Project, PaidPlan, Transcript],
   plugins: [
     nexusPrisma({
       shouldGenerateArtifacts,

@@ -7,13 +7,21 @@ import { useGetCurrentUserQuery } from "../../client/graphql/getCurrentUser.gene
 import axios from "axios";
 import { FileDrop } from "react-file-drop";
 import { event } from "next/dist/build/output/log";
+import { use } from "passport";
+import { useGetTranscriptsQuery } from "../../client/graphql/getTranscripts.generated";
+import { GetStaticProps } from "next";
 
 export default function Dashboard() {
   const router = useRouter();
   const [{ data, fetching, error }] = useGetCurrentUserQuery();
+  const currentUser = data?.currentUser;
+  const [data1] = useGetTranscriptsQuery();
   const [uploadedFile, setUploadedFile] = useState("");
   const [filename, setFileName] = useState("");
   const [transcription, setTranscription] = useState("");
+  const [results, setResults] = useState([]);
+  const [title, setTitle] = useState("");
+  const [transcript, setTranscript] = useState("");
 
   const styles = {
     border: "1px solid black",
@@ -22,15 +30,15 @@ export default function Dashboard() {
     padding: 20,
   };
 
-  useEffect(() => {}, [filename]);
+  useEffect(() => {
+    const transcripts = data1?.data?.transcript;
+    setResults(transcripts);
+  }, [filename, data1?.data?.transcript]);
 
   const upload = async () => {
     var formData = new FormData();
     console.log(uploadedFile);
 
-    // getBase64(uploadedFile);
-
-    // formData.append("file", bb);
     formData.append("file", uploadedFile);
 
     fetch("/api/uploadfile", {
@@ -104,6 +112,12 @@ export default function Dashboard() {
     );
   }
 
+  const newTo = {
+    pathname: "/app/details",
+    title: title,
+    transcript: transcript,
+  };
+
   return (
     <>
       {!data?.currentUser ? (
@@ -154,9 +168,51 @@ export default function Dashboard() {
             )}
           </div>
           <br></br>
-          <Link href="/app/template">
+          <Link href="/app/details">
             <button>Proceed</button>
           </Link>
+          <h3>Previous Transcriptions</h3>
+          <table>
+            <tr>
+              <td>TITLE</td>
+              <td>FILETYPE</td>
+              <td>EXPIRATION DATE</td>
+              <td>STATUS</td>
+            </tr>
+            {results
+              ? results.map((row) => (
+                  <>
+                    <button
+                      onClick={() => {
+                        setTitle(row["title"]);
+                        setTranscript(row["transcript"]);
+                      }}
+                    >
+                      <Link
+                        href={{
+                          pathname: "/app/details",
+                          query: {
+                            title: row["title"],
+                            transcript: row["transcript"],
+                            renderdate: row["renderdate"],
+                          },
+                        }}
+                      >
+                        <tr>
+                          <td>{row["title"]}</td>
+                          <td>{row["filetype"]}</td>
+                          <td>{row["expirationdate"]}</td>
+                          <td>
+                            <div>{row["status"]}</div>
+                            <div>Render Date: {row["renderdate"]}</div>
+                          </td>
+                        </tr>
+                      </Link>
+                    </button>
+                  </>
+                ))
+              : null}
+          </table>
         </>
       )}
     </>

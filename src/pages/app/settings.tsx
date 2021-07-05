@@ -29,7 +29,7 @@ export default function Dashboard() {
       let reader = new FileReader();
       reader.onload = function (ev) {
         setProfilepic(ev.target.result);
-        console.log(ev.target.result);
+        // console.log(ev.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
     }

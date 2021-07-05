@@ -6,6 +6,7 @@ type Mutation {
   createProject(name: String!, slug: String): Project
   createStripeCheckoutBillingPortalUrl(projectId: String!): String
   createStripeCheckoutSession(plan: PaidPlan!, projectId: String!): String
+  createTranscript(expirationdate: String!, filetype: String!, renderdate: String!, status: String!, title: String!, transcript: String!, userid: String!): Transcript
   deleteUser(userId: String!): User
   inviteToProject(email: String!, projectId: String!): Boolean
   removeUserFromProject(projectId: String!, userId: String!): Project
@@ -34,6 +35,18 @@ input ProjectWhereUniqueInput {
 type Query {
   currentUser: User
   project(id: String, slug: String): Project
+  transcript: [Transcript]
+}
+
+type Transcript {
+  expirationdate: String!
+  filetype: String!
+  id: String!
+  renderdate: String!
+  status: String!
+  title: String!
+  transcript: String!
+  userid: String!
 }
 
 type User {

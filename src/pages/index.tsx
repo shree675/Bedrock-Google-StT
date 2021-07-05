@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { useGetCurrentUserQuery } from "../client/graphql/getCurrentUser.generated";
+import { useGetTranscriptsQuery } from "../client/graphql/getTranscripts.generated";
+// import { useCreateTranscriptsQuery } from "../client/graphql/getTranscripts.generated";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useMutation } from "urql";
@@ -8,16 +10,22 @@ import axios from "axios";
 import { FileDrop } from "react-file-drop";
 import { event } from "next/dist/build/output/log";
 import Navbar from "../client/components/Navbar";
+import { useCreateTranscriptMutation } from "../client/graphql/createTranscript.generated";
+import toast from "react-hot-toast";
 
 function Homepage() {
   const [{ data, fetching, error }] = useGetCurrentUserQuery();
+  const [, createTranscript] = useCreateTranscriptMutation();
+  const currentUser = data?.currentUser;
+
+  const [data1] = useGetTranscriptsQuery();
+
   const router = useRouter();
   const [, createProject] = useMutation(CreateProjectDocument);
   const [name, setName] = useState("");
   const [uploadedFile, setUploadedFile] = useState("");
-  // const [bb, setbb] = useState("");
   const [filename, setFileName] = useState("");
-  const [transcription, setTranscription] = useState("");
+  const [transcription, setTranscription] = useState("(empty)");
 
   const styles = {
     border: "1px solid black",
@@ -28,28 +36,9 @@ function Homepage() {
 
   useEffect(() => {}, [filename]);
 
-  // function getBase64(file) {
-  //   if (!file) {
-  //     setbb("");
-  //     return;
-  //   }
-  //   var reader = new FileReader();
-  //   reader.readAsDataURL(file);
-  //   reader.onload = function () {
-  //     setbb(reader.result);
-  //   };
-  //   reader.onerror = function (error) {
-  //     console.log("Error: ", error);
-  //   };
-  // }
-
   const upload = async () => {
     var formData = new FormData();
     console.log(uploadedFile);
-
-    // getBase64(uploadedFile);
-
-    // formData.append("file", bb);
     formData.append("file", uploadedFile);
 
     // --------------------------------------------
@@ -61,7 +50,7 @@ function Homepage() {
       .then((res) => res.text())
       .then((data) => {
         setTranscription(data);
-        console.log(data);
+        // console.log(data);
       })
       .catch((err) => console.log(err));
 
@@ -101,7 +90,6 @@ function Homepage() {
 
   const hasDropped = (files, event) => {
     setUploadedFile(files[0]);
-    // getBase64(files[0]);
     console.log(files[0]);
     setFileName(files[0].name);
     setTranscription("");
@@ -110,7 +98,6 @@ function Homepage() {
   const hasUploaded = (event) => {
     setUploadedFile(event.target.files[0]);
     setTranscription("");
-    // getBase64(event.target.files[0]);
   };
 
   if (fetching) return <p>Loading...</p>;
@@ -183,35 +170,41 @@ function Homepage() {
         )}
       </div>
       <br></br>
-      <Link href="/app/template">
-        <button>Proceed</button>
+      {/* <Link href="/proceed">
+        <button
+          onClick={async () => {
+            toast.promise(
+              createTranscript({
+                title: "title_abc",
+                transcript: transcription,
+                filetype: "audio file",
+                expirationdate: new Date().toDateString(),
+                renderdate: new Date().toDateString(),
+                status: "OK",
+                userid: currentUser ? currentUser.id : "",
+              }),
+              {
+                loading: `Updating settings...`,
+                success: `Settings updated!`,
+                error: (err) => err,
+              }
+            );
+          }}
+        >
+          Save
+        </button>
       </Link>
-      {/* <h3>Create Projects</h3>
-      <ul>
-        {data.currentUser.projects.map((project) => (
-          <li key={project.slug}>
-            <Link href={`/app/${project.slug}`}>{project.name}</Link>
-          </li>
-        ))}
-      </ul>
-      <input
-        placeholder="Hooli Inc."
-        value={name}
-        onChange={(evt) => setName(evt.target.value)}
-      />
-      <button
-        disabled={!name}
-        onClick={() => {
-          createProject({
-            name,
-          }).then((result) => {
-            const slug = result.data?.createProject?.slug;
-            if (slug) router.push(`/app/${slug}`);
-          });
+      <br></br> */}
+      <Link
+        href={{
+          pathname: "/app/choosetemplate",
+          query: {
+            transcript: transcription, ////////////////////////////////// also pass timestamps
+          },
         }}
       >
-        Create project
-      </button> */}
+        <button>Proceed</button>
+      </Link>
       <br></br>
     </>
   );
