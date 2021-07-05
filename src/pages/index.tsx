@@ -7,6 +7,7 @@ import { CreateProjectDocument } from "../client/graphql/createProject.generated
 import axios from "axios";
 import { FileDrop } from "react-file-drop";
 import { event } from "next/dist/build/output/log";
+import Navbar from "../client/components/Navbar";
 
 function Homepage() {
   const [{ data, fetching, error }] = useGetCurrentUserQuery();
@@ -128,6 +129,7 @@ function Homepage() {
 
   return (
     <>
+      {/* <Navbar /> */}
       <h1>Getting Started</h1>
       <h2>
         👋Welcome {data.currentUser.name}! This is your onboading page to play

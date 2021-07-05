@@ -207,7 +207,6 @@ export default async function test(req, res) {
     console.log();
 
     const config = {
-      encoding: "7BIT",
       languageCode: "en-US",
       enableWordTimeOffsets: true,
     };
