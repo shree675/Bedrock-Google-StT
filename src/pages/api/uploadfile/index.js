@@ -194,7 +194,7 @@ export default async function test(req, res) {
   });
 
   form.parse(req, async (err, fields, files) => {
-    console.log(files.file);
+    // console.log(files.file);
     ufile = files.file;
 
     const audio = {
@@ -203,10 +203,11 @@ export default async function test(req, res) {
         .toString("base64"),
     };
 
-    // console.log(audio.content.slice(0, 200));
+    console.log(audio.content.slice(0, 200));
+    console.log();
 
     const config = {
-      encoding: "FLAC",
+      encoding: "7BIT",
       languageCode: "en-US",
       enableWordTimeOffsets: true,
     };
@@ -216,24 +217,20 @@ export default async function test(req, res) {
       audio: audio,
     };
 
-    // const audio = {
-    //   content: fs
-    //     .readFileSync("./output.flac")
-    //     .toString("base64"),
-    // };
-    // const config = {
-    //   encoding: "FLAC",
-    //   languageCode: "en-US",
-    //   enableWordTimeOffsets: true,
-    // };
+    return new Promise(async (resolve, reject) => {
+      const [response] = await client.recognize(request);
+      const transcription = response.results
+        .map((result) => result.alternatives[0].transcript)
+        .join("\n");
+      console.log(`Transcription: ${transcription}`);
+      resolve(transcription);
+    });
 
-    // Detects speech in the audio file
-    const [response] = await client.recognize(request);
-    const transcription = response.results
-      .map((result) => result.alternatives[0].transcript)
-      .join("\n");
-    console.log(`Transcription: ${transcription}`);
-    res.send(transcription);
+    // const [response] = await client.recognize(request);
+    // const transcription = response.results
+    //   .map((result) => result.alternatives[0].transcript)
+    //   .join("\n");
+    // console.log(`Transcription: ${transcription}`);
+    // res.send(transcription);
   });
 }
-// test();
