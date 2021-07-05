@@ -12,6 +12,11 @@ const Transcript = objectType({
     t.model.renderdate();
     t.model.status();
     t.model.userid();
+    t.model.subtitle();
+    t.model.textcolor();
+    t.model.audiourl();
+    t.model.imageurl();
+    t.model.backgroundcolor();
   },
 });
 
@@ -54,6 +59,11 @@ const mutations = extendType({
         filetype: nonNull(stringArg()),
         status: nonNull(stringArg()),
         userid: nonNull(stringArg()),
+        subtitle: nonNull(stringArg()),
+        textcolor: nonNull(stringArg()),
+        audiourl: nonNull(stringArg()),
+        imageurl: nonNull(stringArg()),
+        backgroundcolor: nonNull(stringArg()),
       },
       resolve: async (_, args, ctx) => {
         if (!ctx.user?.id) return null;
@@ -67,6 +77,11 @@ const mutations = extendType({
             filetype: args.filetype,
             status: args.status,
             userid: args.userid,
+            subtitle: args.subtitle,
+            textcolor: args.textcolor,
+            audiourl: args.audiourl,
+            imageurl: args.imageurl,
+            backgroundcolor: args.backgroundcolor,
           },
         });
       },
