@@ -9,7 +9,6 @@ import { CreateProjectDocument } from "../client/graphql/createProject.generated
 import axios from "axios";
 import { FileDrop } from "react-file-drop";
 import { event } from "next/dist/build/output/log";
-import Navbar from "../client/components/Navbar";
 import { useCreateTranscriptMutation } from "../client/graphql/createTranscript.generated";
 import toast from "react-hot-toast";
 
@@ -18,15 +17,13 @@ function Homepage() {
   const [, createTranscript] = useCreateTranscriptMutation();
   const currentUser = data?.currentUser;
 
-  // const [data1] = useGetTranscriptsQuery();
-
   const router = useRouter();
   const [, createProject] = useMutation(CreateProjectDocument);
   const [name, setName] = useState("");
   const [uploadedFile, setUploadedFile] = useState("");
   const [filename, setFileName] = useState("");
   const [transcription, setTranscription] = useState("(empty)");
-  const [apiData, setApiData]=useState({});
+  // const [audiourl, setAudiourl] = useState("");
 
   const styles = {
     border: "1px solid black",
@@ -37,12 +34,14 @@ function Homepage() {
 
   useEffect(() => {}, [filename]);
 
-  
+  // const convertToURL = () => {};
 
   const upload = async () => {
     var formData = new FormData();
     console.log(uploadedFile);
     formData.append("file", uploadedFile);
+
+    // convertToURL(uploadedFile);
 
     // --------------------------------------------
 
@@ -206,6 +205,7 @@ function Homepage() {
           pathname: "/app/choosetemplate",
           query: {
             transcript: transcription, ////////////////////////////////// also pass timestamps
+            audiofile: uploadedFile,
           },
         }}
       >

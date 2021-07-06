@@ -42,9 +42,9 @@ model Transcript {
   status          String
   transcript      String
   userid          String
-  subtitle        String   @default("")
-  textcolor       String   @default("")
-  audiourl        String   @default("")
-  imageurl        String   @default("")
-  backgroundcolor String   @default("")
+  subtitle        String   @default("empty")
+  textcolor       String   @default("empty")
+  audiourl        String   @default("empty")
+  imageurl        String   @default("empty")
+  backgroundcolor String   @default("empty")
 }
