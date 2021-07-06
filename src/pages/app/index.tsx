@@ -8,14 +8,14 @@ import axios from "axios";
 import { FileDrop } from "react-file-drop";
 import { event } from "next/dist/build/output/log";
 import { use } from "passport";
-import { useGetTranscriptsQuery } from "../../client/graphql/getTranscripts.generated";
+// import { useGetTranscriptsQuery } from "../../client/graphql/getTranscripts.generated";
 import { GetStaticProps } from "next";
 
 export default function Dashboard() {
   const router = useRouter();
   const [{ data, fetching, error }] = useGetCurrentUserQuery();
   const currentUser = data?.currentUser;
-  const [data1] = useGetTranscriptsQuery();
+  // const [data1] = useGetTranscriptsQuery();
   const [uploadedFile, setUploadedFile] = useState("");
   const [filename, setFileName] = useState("");
   const [transcription, setTranscription] = useState("");
@@ -30,10 +30,10 @@ export default function Dashboard() {
     padding: 20,
   };
 
-  useEffect(() => {
-    const transcripts = data1?.data?.transcript;
-    setResults(transcripts);
-  }, [filename, data1?.data?.transcript]);
+  // useEffect(() => {
+  //   const transcripts = data1?.data?.transcript;
+  //   setResults(transcripts);
+  // }, [filename, data1?.data?.transcript]);
 
   const upload = async () => {
     var formData = new FormData();

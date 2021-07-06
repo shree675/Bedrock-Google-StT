@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useGetCurrentUserQuery } from "../client/graphql/getCurrentUser.generated";
-import { useGetTranscriptsQuery } from "../client/graphql/getTranscripts.generated";
+// import { useGetTranscriptsQuery } from "../client/graphql/getTranscripts.generated";
 // import { useCreateTranscriptsQuery } from "../client/graphql/getTranscripts.generated";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
@@ -18,7 +18,7 @@ function Homepage() {
   const [, createTranscript] = useCreateTranscriptMutation();
   const currentUser = data?.currentUser;
 
-  const [data1] = useGetTranscriptsQuery();
+  // const [data1] = useGetTranscriptsQuery();
 
   const router = useRouter();
   const [, createProject] = useMutation(CreateProjectDocument);
