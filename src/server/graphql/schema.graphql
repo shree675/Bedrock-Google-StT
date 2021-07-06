@@ -6,7 +6,7 @@ type Mutation {
   createProject(name: String!, slug: String): Project
   createStripeCheckoutBillingPortalUrl(projectId: String!): String
   createStripeCheckoutSession(plan: PaidPlan!, projectId: String!): String
-  createTranscript(expirationdate: String!, filetype: String!, renderdate: String!, status: String!, title: String!, transcript: String!, userid: String!): Transcript
+  createTranscript(audiourl: String!, backgroundcolor: String!, expirationdate: String!, filetype: String!, imageurl: String!, renderdate: String!, status: String!, subtitle: String!, textcolor: String!, title: String!, transcript: String!, userid: String!): Transcript
   deleteUser(userId: String!): User
   inviteToProject(email: String!, projectId: String!): Boolean
   removeUserFromProject(projectId: String!, userId: String!): Project
@@ -39,11 +39,16 @@ type Query {
 }
 
 type Transcript {
+  audiourl: String!
+  backgroundcolor: String!
   expirationdate: String!
   filetype: String!
   id: String!
+  imageurl: String!
   renderdate: String!
   status: String!
+  subtitle: String!
+  textcolor: String!
   title: String!
   transcript: String!
   userid: String!

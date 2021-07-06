@@ -19,7 +19,7 @@ const TemplatePage = () => {
       <Link
         href={{
           pathname: "/app/edittemplate",
-          query: { transcript }, ////////////////////////////////// pass timestamps as well
+          query: { transcript }, ////////////////////////////////// pass timestamps here as well
         }}
       >
         <button>Next {"<-"} this is a button</button>

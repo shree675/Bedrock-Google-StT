@@ -8,5 +8,10 @@ query transcript {
     status
     transcript
     userid
+    subtitle
+    textcolor
+    audiourl
+    imageurl
+    backgroundcolor
   }
 }
