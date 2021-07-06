@@ -23,6 +23,7 @@ function Homepage() {
   const [uploadedFile, setUploadedFile] = useState("");
   const [filename, setFileName] = useState("");
   const [transcription, setTranscription] = useState("(empty)");
+  const [apiData,setApiData]=useState({});
   // const [audiourl, setAudiourl] = useState("");
 
   const styles = {
@@ -170,7 +171,7 @@ function Homepage() {
         ) : (
           <>
             <h4>Transcription:</h4>
-            <div>{transcription}</div>
+            <div>{apiData.transcription}</div>
           </>
         )}
       </div>
