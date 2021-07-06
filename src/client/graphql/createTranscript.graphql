@@ -11,6 +11,7 @@ mutation CreateTranscript(
   $audiourl: String!
   $imageurl: String!
   $backgroundcolor: String!
+  $timestamps: String!
 ) {
   createTranscript(
     title: $title
@@ -25,6 +26,7 @@ mutation CreateTranscript(
     audiourl: $audiourl
     imageurl: $imageurl
     backgroundcolor: $backgroundcolor
+    timestamps: $timestamps
   ) {
     id
     title
@@ -39,5 +41,6 @@ mutation CreateTranscript(
     audiourl
     imageurl
     backgroundcolor
+    timestamps
   }
 }

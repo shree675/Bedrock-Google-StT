@@ -47,4 +47,5 @@ model Transcript {
   audiourl        String   @default("empty")
   imageurl        String   @default("empty")
   backgroundcolor String   @default("empty")
+  timestamps      String   @default("{}")
 }

@@ -24,9 +24,12 @@ const EditTemplate = () => {
   const currentUser = data?.currentUser;
   const [, createTranscript] = useCreateTranscriptMutation();
   var renderdate = new Date().toDateString();
+  var timestampstring = [];
 
   useEffect(() => {
-    console.log(audiofile);
+    // console.log(audiofile);
+    timestampstring = JSON.parse(timestamps);
+    console.log(timestampstring);
   }, []);
 
   // var wavesurfer = WaveSurfer.create({
@@ -67,7 +70,7 @@ const EditTemplate = () => {
 
   const router = useRouter();
   const {
-    query: { transcript, audiofile },
+    query: { transcript, timestamps },
   } = router;
   return (
     <div>
@@ -118,6 +121,24 @@ const EditTemplate = () => {
       <h4>Transcript:</h4>
       {transcript}
       <br></br>
+      <h4>Timestamps:</h4>
+      <div>
+        {JSON.parse(timestamps).map((e) => (
+          <>
+            <div>Word: {e.word}</div>
+            <div>
+              Start time: {e.startTime.seconds} seconds + {e.startTime.nanos}{" "}
+              nanoseconds
+            </div>
+            <div>
+              End time: {e.endTime.seconds} seconds + {e.endTime.nanos}{" "}
+              nanoseconds
+            </div>
+            <div>SpeakerTag: {e.speakerTag}</div>
+            <hr></hr>
+          </>
+        ))}
+      </div>
       <button
         onClick={async () => {
           toast.promise(
@@ -132,8 +153,9 @@ const EditTemplate = () => {
               subtitle: subtitle,
               textcolor: textcolor,
               audiourl: "(empty)",
-              imageurl: imageurl,
+              imageurl: "imageurl",
               backgroundcolor: backgroundcolor,
+              timestamps: timestamps,
             }),
             {
               loading: `Saving transcript...`,

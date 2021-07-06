@@ -23,7 +23,8 @@ function Homepage() {
   const [uploadedFile, setUploadedFile] = useState("");
   const [filename, setFileName] = useState("");
   const [transcription, setTranscription] = useState("(empty)");
-  const [apiData,setApiData]=useState({});
+  const [apiData, setApiData] = useState({});
+  const [timestamps, setTimestamps] = useState("");
   // const [audiourl, setAudiourl] = useState("");
 
   const styles = {
@@ -53,9 +54,11 @@ function Homepage() {
       .then((res) => res.json())
       .then((data) => {
         setApiData(data);
-        setTranscription(apiData.transcription)
-        console.log("apiData: ",apiData);
-        console.log("data : ",data.words);
+        setTranscription(data.transcription);
+        console.log("transcript: ", data.transcription);
+        console.log("data : ", data.words);
+        setTimestamps(JSON.stringify(data.words));
+        console.log(JSON.stringify(data.words));
       })
       .catch((err) => console.log(err));
 
@@ -93,7 +96,6 @@ function Homepage() {
     //   .catch((err) => console.log(err));
   };
 
-  
   const hasDropped = (files, event) => {
     setUploadedFile(files[0]);
     console.log(files[0]);
@@ -171,7 +173,7 @@ function Homepage() {
         ) : (
           <>
             <h4>Transcription:</h4>
-            <div>{apiData.transcription}</div>
+            <div>{transcription}</div>
           </>
         )}
       </div>
@@ -205,8 +207,8 @@ function Homepage() {
         href={{
           pathname: "/app/choosetemplate",
           query: {
-            transcript: transcription, ////////////////////////////////// also pass timestamps
-            audiofile: uploadedFile,
+            transcript: transcription,
+            timestamps: timestamps,
           },
         }}
       >

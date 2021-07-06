@@ -17,6 +17,7 @@ const Transcript = objectType({
     t.model.audiourl();
     t.model.imageurl();
     t.model.backgroundcolor();
+    t.model.timestamps();
   },
 });
 
@@ -64,6 +65,7 @@ const mutations = extendType({
         audiourl: nonNull(stringArg()),
         imageurl: nonNull(stringArg()),
         backgroundcolor: nonNull(stringArg()),
+        timestamps: nonNull(stringArg()),
       },
       resolve: async (_, args, ctx) => {
         if (!ctx.user?.id) return null;
@@ -82,6 +84,7 @@ const mutations = extendType({
             audiourl: args.audiourl,
             imageurl: args.imageurl,
             backgroundcolor: args.backgroundcolor,
+            timestamps: args.timestamps,
           },
         });
       },

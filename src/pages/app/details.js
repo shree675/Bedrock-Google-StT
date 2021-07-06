@@ -8,11 +8,11 @@ const Details = () => {
   return (
     <div>
       <h1>Details</h1>
-      <div>Title</div>
+      <h3>Title</h3>
       <div>{title}</div>
-      <div>Date</div>
+      <h4>Date</h4>
       <div>{renderdate}</div>
-      <div>Transcript:</div>
+      <h3>Transcript:</h3>
       <div>{transcript}</div>
     </div>
   );
