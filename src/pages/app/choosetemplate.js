@@ -4,8 +4,9 @@ import Link from "next/link";
 const TemplatePage = () => {
   const router = useRouter();
   const {
-    query: { transcript },
+    query: { transcript, audiofile },
   } = router;
+  console.log(audiofile);
   return (
     <div>
       <h1>
@@ -19,10 +20,10 @@ const TemplatePage = () => {
       <Link
         href={{
           pathname: "/app/edittemplate",
-          query: { transcript }, ////////////////////////////////// pass timestamps here as well
+          query: { transcript, audiofile }, ////////////////////////////////// pass timestamps here as well
         }}
       >
-        <button>Next {"<-"} this is a button</button>
+        <button>Proceed</button>
       </Link>
     </div>
   );
