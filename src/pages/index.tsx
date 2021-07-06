@@ -26,6 +26,7 @@ function Homepage() {
   const [uploadedFile, setUploadedFile] = useState("");
   const [filename, setFileName] = useState("");
   const [transcription, setTranscription] = useState("(empty)");
+  const [apiData, setApiData]=useState({});
 
   const styles = {
     border: "1px solid black",
@@ -35,6 +36,8 @@ function Homepage() {
   };
 
   useEffect(() => {}, [filename]);
+
+  
 
   const upload = async () => {
     var formData = new FormData();
@@ -47,10 +50,12 @@ function Homepage() {
       method: "POST",
       body: formData,
     })
-      .then((res) => res.text())
+      .then((res) => res.json())
       .then((data) => {
-        setTranscription(data);
-        // console.log(data);
+        setApiData(data);
+        setTranscription(apiData.transcription)
+        console.log("apiData: ",apiData);
+        console.log("data : ",data.words);
       })
       .catch((err) => console.log(err));
 
@@ -88,6 +93,7 @@ function Homepage() {
     //   .catch((err) => console.log(err));
   };
 
+  
   const hasDropped = (files, event) => {
     setUploadedFile(files[0]);
     console.log(files[0]);

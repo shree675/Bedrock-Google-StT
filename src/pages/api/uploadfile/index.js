@@ -1,6 +1,6 @@
 const fs = require("fs");
-// const speech = require("@google-cloud/speech");
-// const client = new speech.SpeechClient();
+const speech = require("@google-cloud/speech");
+const client = new speech.SpeechClient();
 import formidable from "formidable";
 
 export const config = {
@@ -45,15 +45,22 @@ export default async function test(req, res) {
     };
 
     // Detects speech in the audio file
-    // const [response] = await client.recognize(request);
-    // const transcription = response.results
-    //   .map((result) => result.alternatives[0].transcript)
-    //   .join("\n");
-    // console.log(`Transcription: ${transcription}`);
-    // res.send(transcription);
-    res.send(
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-    );
+    const [response] = await client.recognize(request);
+    // console.log("response : ",response.results.alternatives.words[0][2]);
+    const [words] = response.results.map((result) => result.alternatives[0].words)
+    console.log('words:', words[0].word)
+    const transcription = response.results
+      .map((result) => result.alternatives[0].transcript)
+      .join("\n");
+    console.log(`Transcription: ${transcription}`);
+    const apiData ={
+      words:words,
+      transcription:transcription,
+    }
+    res.send(apiData);
+    // res.send(
+    //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+    // );
   });
 }
 // test();
