@@ -7,6 +7,7 @@ import { useMutation } from "urql";
 import { useCreateTranscriptMutation } from "../../client/graphql/createTranscript.generated";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
+import Wavesurfer from 'react-wavesurfer.js';
 
 const WaveSurfer = dynamic(() => import("wavesurfer.js"), {
   ssr: false,
@@ -25,6 +26,7 @@ const EditTemplate = () => {
   const [, createTranscript] = useCreateTranscriptMutation();
   var renderdate = new Date().toDateString();
   var timestampstring = [];
+
 
   useEffect(() => {
     // console.log(audiofile);
@@ -70,7 +72,7 @@ const EditTemplate = () => {
 
   const router = useRouter();
   const {
-    query: { transcript, timestamps },
+    query: { transcript, timestamps},
   } = router;
   return (
     <div>
@@ -118,6 +120,7 @@ const EditTemplate = () => {
       />
       <br />
       <div id="wave"></div>
+
       <h4>Transcript:</h4>
       {transcript}
       <br></br>

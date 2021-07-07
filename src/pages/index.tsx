@@ -25,7 +25,7 @@ function Homepage() {
   const [transcription, setTranscription] = useState("(empty)");
   const [apiData, setApiData] = useState({});
   const [timestamps, setTimestamps] = useState("");
-  // const [audiourl, setAudiourl] = useState("");
+  const [audiourl, setAudiourl] = useState("");
 
   const styles = {
     border: "1px solid black",
@@ -105,6 +105,13 @@ function Homepage() {
 
   const hasUploaded = (event) => {
     setUploadedFile(event.target.files[0]);
+      if (event.target.files && event.target.files[0]) {
+      let reader = new FileReader();
+      reader.onload = function (ev) {
+        setAudiourl(ev.target.result);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
     setTranscription("");
   };
 
