@@ -3,7 +3,8 @@ import type { AppProps } from "next/app";
 import { Provider } from "urql";
 import { client } from "../client/graphql/client";
 import Layout from "../client/components/Layout";
-import '../styles/styles.css'
+import "../styles/styles.css";
+import "./index.css";
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (

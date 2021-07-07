@@ -1,34 +1,39 @@
 import Link from "next/link";
 import { useGetCurrentUserQuery } from "../../graphql/getCurrentUser.generated";
-import React from 'react'
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import React, { useEffect, useState } from "react";
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 
 const navigation = [
-  { name: 'Home', href: '/', current: true },
-  { name: 'Dashboard', href: '/app', current: false },
-  { name: 'Profile', href: '/app/settings', current: false },
-  { name: 'Upgrade', href: '/app/[slug]', current: false },
-  { name: 'Feedback', href: '/app/feedback', current: false },
-  { name: 'Logout', href: '/api/auth/logout', current: false },
-]
+  { name: "Home", href: "/", current: true },
+  { name: "Dashboard", href: "/app", current: false },
+  { name: "Profile", href: "/app/settings", current: false },
+  { name: "Upgrade", href: "/app/[slug]", current: false },
+  { name: "Feedback", href: "/app/feedback", current: false },
+  { name: "Logout", href: "/api/auth/logout", current: false },
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 function Navbar() {
   const [{ data }] = useGetCurrentUserQuery();
-  // console.log(data);
+  // console.log(data?.currentUser?.profilepic);
   const isAuthenticated = !!data?.currentUser;
+  const [profilepic, setProfilepic] = useState("");
   // console.log(data?.currentUser);
 
-  return (
+  useEffect(() => {
+    // console.log(data?.currentUser?.profilepic);
+    // setProfilepic(data?.currentUser?.profilepic);
+  }, []);
 
+  return (
     <>
-    {!isAuthenticated ? null : (
-    <Disclosure as="nav" className="bg-gray-800">
+      {!isAuthenticated ? null : (
+        <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
             <>
               <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -40,7 +45,10 @@ function Navbar() {
                       {open ? (
                         <XIcon className="block h-6 w-6" aria-hidden="true" />
                       ) : (
-                        <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                        <MenuIcon
+                          className="block h-6 w-6"
+                          aria-hidden="true"
+                        />
                       )}
                     </Disclosure.Button>
                   </div>
@@ -64,38 +72,50 @@ function Navbar() {
                             key={item.name}
                             href={item.href}
                             className={classNames(
-                              item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                              'px-3 py-2 rounded-md text-sm font-medium'
+                              item.current
+                                ? "bg-gray-900 text-white"
+                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                              "px-3 py-2 rounded-md text-sm font-medium"
                             )}
-                            aria-current={item.current ? 'page' : undefined}
+                            aria-current={item.current ? "page" : undefined}
                           >
-                            <span className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>{item.name}</span>
+                            <span className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                              {item.name}
+                            </span>
                           </Link>
                         ))}
                       </div>
                     </div>
                   </div>
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                    {/* <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                       <span className="sr-only">View notifications</span>
                       <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-    
+                    </button> */}
+
                     {/* Profile dropdown */}
                     <Menu as="div" className="ml-3 relative">
-                      {({ open }) => (
-                        <>
-                          <div>
-                            <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                              <span className="sr-only">Open user menu</span>
-                              <img
-                                className="h-8 w-8 rounded-full"
-                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt=""
-                              />
-                            </Menu.Button>
-                          </div>
-                          <Transition
+                      {/* {({ open }) => ( */}
+                      <>
+                        <div>
+                          <Link href="/app/settings">
+                            <button>
+                              <div className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                <span className="sr-only">Open user menu</span>
+                                <img
+                                  className="h-8 w-8 rounded-full"
+                                  src={
+                                    data?.currentUser?.profilepic
+                                      ? data?.currentUser?.profilepic
+                                      : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                  }
+                                  alt="Your profile picture"
+                                />
+                              </div>
+                            </button>
+                          </Link>
+                        </div>
+                        {/* <Transition
                             show={open}
                             as={Fragment}
                             enter="transition ease-out duration-100"
@@ -149,14 +169,14 @@ function Navbar() {
                                 )}
                               </Menu.Item>
                             </Menu.Items>
-                          </Transition>
-                        </>
-                      )}
+                          </Transition> */}
+                      </>
+                      {/* )} */}
                     </Menu>
                   </div>
                 </div>
               </div>
-    
+
               <Disclosure.Panel className="sm:hidden">
                 <div className="px-2 pt-2 pb-3 space-y-1">
                   {navigation.map((item) => (
@@ -164,12 +184,16 @@ function Navbar() {
                       key={item.name}
                       href={item.href}
                       className={classNames(
-                        item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                        'block px-3 py-2 rounded-md text-base font-medium'
+                        item.current
+                          ? "bg-gray-900 text-white"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                        "block px-3 py-2 rounded-md text-base font-medium"
                       )}
-                      aria-current={item.current ? 'page' : undefined}
+                      aria-current={item.current ? "page" : undefined}
                     >
-                      <span className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>{item.name}</span>
+                      <span className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        {item.name}
+                      </span>
                     </Link>
                   ))}
                 </div>
@@ -177,8 +201,7 @@ function Navbar() {
             </>
           )}
         </Disclosure>
-        )}
-  
+      )}
     </>
   );
 }

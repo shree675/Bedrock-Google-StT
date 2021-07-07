@@ -6,14 +6,17 @@ const Details = () => {
     query: { title, transcript, renderdate },
   } = router;
   return (
-    <div>
-      <h1>Details</h1>
-      <h3>Title</h3>
+    <div className="ml-40 mt-8">
+      <h1 className="text-4xl font-bold mb-4">Details</h1>
+      <h3 className="text-lg font-bold text-gray-500 mb-1">Title</h3>
       <div>{title}</div>
-      <h4>Date</h4>
+      <br></br>
+      <h4 className="text-lg font-bold text-gray-500 mb-1">Date</h4>
       <div>{renderdate}</div>
-      <h3>Transcript:</h3>
-      <div>{transcript}</div>
+      <br></br>
+      <h3 className="text-lg font-bold text-gray-500 mb-1">Transcript:</h3>
+      <div style={{ paddingRight: "10%" }}>{transcript}</div>
+      <br></br>
     </div>
   );
 };

@@ -28,17 +28,12 @@ function Homepage() {
   const [name, setName] = useState("");
   const [uploadedFile, setUploadedFile] = useState("");
   const [filename, setFileName] = useState("");
-  const [transcription, setTranscription] = useState("(empty)");
+  const [transcription, setTranscription] = useState(
+    "(Please upload an audio file)"
+  );
   const [apiData, setApiData] = useState({});
   const [timestamps, setTimestamps] = useState("");
   const [audiourl, setAudiourl] = useState("");
-
-  const styles = {
-    border: "1px solid black",
-    width: 600,
-    color: "black",
-    padding: 20,
-  };
 
   useEffect(() => {}, [filename]);
 
@@ -47,13 +42,15 @@ function Homepage() {
     console.log(uploadedFile);
     formData.append("file", uploadedFile);
 
-    var reader = new FileReader();
-    reader.onload = function (event) {
-      var res = event.target.result;
-      // console.log(res);
-      setAudiourl(res);
-    };
-    reader.readAsDataURL(uploadedFile);
+    // var reader = new FileReader();
+    // reader.onload = function (event) {
+    //   // var res = event.target.result;
+    //   // console.log(res);
+    //   // setAudiourl(res);
+    //   // var blob = new window.Blob([new Uint8Array(event.target.result)]);
+    //   // console.log(blob);
+    // };
+    // reader.readAsDataURL(uploadedFile);
 
     fetch("/api/uploadfile", {
       method: "POST",
@@ -63,10 +60,10 @@ function Homepage() {
       .then((data) => {
         setApiData(data);
         setTranscription(data.transcription);
-        console.log("transcript: ", data.transcription);
-        console.log("data : ", data.words);
+        // console.log("transcript: ", data.transcription);
+        // console.log("data : ", data.words);
         setTimestamps(JSON.stringify(data.words));
-        console.log(JSON.stringify(data.words));
+        // console.log(JSON.stringify(data.words));
       })
       .catch((err) => console.log(err));
   };
@@ -80,7 +77,7 @@ function Homepage() {
 
   const hasUploaded = (event) => {
     setUploadedFile(event.target.files[0]);
-      if (event.target.files && event.target.files[0]) {
+    if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
       reader.onload = function (ev) {
         setAudiourl(ev.target.result);
@@ -113,38 +110,81 @@ function Homepage() {
       </h2>
 
       <br></br>
-      <h3 className="text-lg font-bold text-gray-500 mb-4" >Lets start by uploading an audio file</h3>
+      <h3 className="text-lg font-bold text-gray-500 mb-4">
+        Lets start by uploading an audio file
+      </h3>
       <ul>
-        <li className="flex"><svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-</svg>
+        <li className="flex">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clipRule="evenodd"
+            />
+          </svg>
           Upload audio file, max of 60 seconds in length (.wav, .mp3, .flac,
           etc.)
         </li>
-        <li className="flex"><svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-</svg>Select template from our awesome collection</li>
-        <li className="flex"><svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-</svg>Render the video with transcript in 3 clicks</li>
+        <li className="flex">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clipRule="evenodd"
+            />
+          </svg>
+          Select template from our awesome collection
+        </li>
+        <li className="flex">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clipRule="evenodd"
+            />
+          </svg>
+          Render the video with transcript in 3 clicks
+        </li>
       </ul>
 
       <br></br>
 
-      <div>Upload from computer</div>
+      <div className="mb-4 font-bold">Upload from computer</div>
 
       <br></br>
       <div class="flex items-center justify-center bg-grey-lighter">
-      <label class="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
-      <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <label class="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+          <svg
+            class="w-8 h-8"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+          >
             <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-        </svg>
-      <span class="mt-2 text-base leading-normal">Select a file</span>
-      <input className="hidden" type="file" onChange={hasUploaded}></input>
-      </label>
+          </svg>
+          <span class="mt-2 text-base leading-normal">Select a file</span>
+          <input className="hidden" type="file" onChange={hasUploaded}></input>
+        </label>
       </div>
-      <div>Or</div>
-      <div styles={styles}>
+      <br></br>
+      <div style={{ textAlign: "center" }}>OR</div>
+      <br></br>
+      <div class="flex items-center justify-center bg-grey-lighter">
         <FileDrop
           onFrameDragEnter={(event) => {}}
           onFrameDragLeave={(event) => {}}
@@ -155,14 +195,21 @@ function Homepage() {
             hasDropped(files, event);
           }}
         >
-          {filename === ""
-            ? "Drag and drop an audio file"
-            : `${filename} (or) Drop a different file`}
+          <div>
+            {filename === ""
+              ? "Drag and drop an audio file"
+              : `${filename} (or) Drop a different file`}
+          </div>
         </FileDrop>
       </div>
 
       <br></br>
-      <button onClick={upload} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Upload</button>
+      <button
+        onClick={upload}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+      >
+        Upload
+      </button>
       <div>We currently support only 60 seconds</div>
       <div className="mt-8">
         {transcription === "" ? (
@@ -189,10 +236,12 @@ function Homepage() {
           },
         }}
       >
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Proceed</button>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Proceed
+        </button>
       </Link>
 
-      <br></br>
+      <div style={{ height: "50px" }}></div>
     </div>
   );
 }

@@ -3,7 +3,9 @@
   position: relative;
   height: 100px;
   width: 50%;
-  border: 1px solid black;
+  border: 2px solid turquoise;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .file-drop > .file-drop-target {
@@ -47,7 +49,7 @@
 .file-drop > .file-drop-target.file-drop-dragging-over-frame {
   /* overlay a black mask when dragging over the frame */
   border: none;
-  background-color: rgba(0, 0, 0, 0.65);
+  background-color: rgba(64, 224, 208, 0.349);
   box-shadow: none;
   z-index: 50;
   opacity: 1;
