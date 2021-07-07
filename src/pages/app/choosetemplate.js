@@ -6,7 +6,7 @@ const TemplatePage = () => {
   const {
     query: { transcript, timestamps },
   } = router;
-  // console.log(audiofile);
+  // console.log(audiourl);
   return (
     <div>
       <h1>
@@ -20,7 +20,7 @@ const TemplatePage = () => {
       <Link
         href={{
           pathname: "/app/edittemplate",
-          query: { transcript, timestamps }, ////////////////////////////////// pass timestamps here as well
+          query: { transcript, timestamps },
         }}
       >
         <button>Proceed</button>

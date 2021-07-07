@@ -3,7 +3,7 @@ import { useGetCurrentUserQuery } from "../client/graphql/getCurrentUser.generat
 // import { useGetTranscriptsQuery } from "../client/graphql/getTranscripts.generated";
 // import { useCreateTranscriptsQuery } from "../client/graphql/getTranscripts.generated";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useMutation } from "urql";
 import { CreateProjectDocument } from "../client/graphql/createProject.generated";
 import axios from "axios";
@@ -11,12 +11,18 @@ import { FileDrop } from "react-file-drop";
 import { event } from "next/dist/build/output/log";
 import { useCreateTranscriptMutation } from "../client/graphql/createTranscript.generated";
 import toast from "react-hot-toast";
+// import Wavesurfer from "react-wavesurfer";
+// import WaveSurfer from "wavesurfer";
+// import dynamic from "next/dynamic";
+
+// const WaveSurfer = dynamic(() => import("wavesurfer.js"), {
+//   ssr: false,
+// });
 
 function Homepage() {
   const [{ data, fetching, error }] = useGetCurrentUserQuery();
   const [, createTranscript] = useCreateTranscriptMutation();
   const currentUser = data?.currentUser;
-
   const router = useRouter();
   const [, createProject] = useMutation(CreateProjectDocument);
   const [name, setName] = useState("");
@@ -25,7 +31,10 @@ function Homepage() {
   const [transcription, setTranscription] = useState("(empty)");
   const [apiData, setApiData] = useState({});
   const [timestamps, setTimestamps] = useState("");
-  // const [audiourl, setAudiourl] = useState("");
+  const [audiourl, setAudiourl] = useState("");
+  const [position, setPosition] = useState(0);
+  const [muted, setMuted] = useState(false);
+  const [playing, setPlaying] = useState(true);
 
   const styles = {
     border: "1px solid black",
@@ -36,16 +45,18 @@ function Homepage() {
 
   useEffect(() => {}, [filename]);
 
-  // const convertToURL = () => {};
-
   const upload = async () => {
     var formData = new FormData();
     console.log(uploadedFile);
     formData.append("file", uploadedFile);
 
-    // convertToURL(uploadedFile);
-
-    // --------------------------------------------
+    var reader = new FileReader();
+    reader.onload = function (event) {
+      var res = event.target.result;
+      // console.log(res);
+      setAudiourl(res);
+    };
+    reader.readAsDataURL(uploadedFile);
 
     fetch("/api/uploadfile", {
       method: "POST",
@@ -61,39 +72,6 @@ function Homepage() {
         console.log(JSON.stringify(data.words));
       })
       .catch((err) => console.log(err));
-
-    // --------------------------------------------
-
-    // fetch("/api/uploadfile", {
-    //   method: "POST",
-    //   body: { formData },
-    // })
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
-
-    // axios.post("/api/uploadfile", { formData }).then((res) => {
-    //   console.log(res);
-    // });
-
-    // // works::::
-    // axios.post("/api/uploadfile", formData).then((res) => {
-    //   console.log(res);
-    // });
-
-    // only the below works (latest):
-    // ----------------------------------------------------------------
-    // fetch("http://localhost:5000/upload", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((res) => {
-    //     // console.log(res);
-    //     return res.text();
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((err) => console.log(err));
   };
 
   const hasDropped = (files, event) => {
@@ -124,14 +102,16 @@ function Homepage() {
 
   return (
     <>
-      {/* <Navbar /> */}
       <h1>Getting Started</h1>
       <h2>
         👋Welcome {data.currentUser.name}! This is your onboading page to play
         around with.
       </h2>
+
       <br></br>
+
       <h3>Lets start by uploading an audio file</h3>
+
       <ul>
         <li>
           Upload audio file, max of 60 seconds in length (.wav, .mp3, .flac,
@@ -140,9 +120,13 @@ function Homepage() {
         <li>Select template from our awesome collection</li>
         <li>Render the video with transcript in 3 clicks</li>
       </ul>
+
       <br></br>
+
       <div>Upload from computer</div>
+
       <br></br>
+
       <input type="file" onChange={hasUploaded}></input>
       <div>Or</div>
       <div styles={styles}>
@@ -161,7 +145,9 @@ function Homepage() {
             : `${filename} (or) Drop a different file`}
         </FileDrop>
       </div>
+
       <br></br>
+
       <button onClick={upload}>Upload</button>
       <div>We currently support only 60 seconds</div>
       <div>
@@ -177,32 +163,9 @@ function Homepage() {
           </>
         )}
       </div>
+
       <br></br>
-      {/* <Link href="/proceed">
-        <button
-          onClick={async () => {
-            toast.promise(
-              createTranscript({
-                title: "title_abc",
-                transcript: transcription,
-                filetype: "audio file",
-                expirationdate: new Date().toDateString(),
-                renderdate: new Date().toDateString(),
-                status: "OK",
-                userid: currentUser ? currentUser.id : "",
-              }),
-              {
-                loading: `Updating settings...`,
-                success: `Settings updated!`,
-                error: (err) => err,
-              }
-            );
-          }}
-        >
-          Save
-        </button>
-      </Link>
-      <br></br> */}
+
       <Link
         href={{
           pathname: "/app/choosetemplate",
@@ -214,6 +177,7 @@ function Homepage() {
       >
         <button>Proceed</button>
       </Link>
+
       <br></br>
     </>
   );
