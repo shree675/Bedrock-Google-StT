@@ -40,7 +40,13 @@ export default function AuthenticationForm() {
         value={email}
         onChange={(evt) => setEmail(evt.target.value)}
       />
-      <button type="submit">Let's go!</button>
+      &emsp;
+      <button
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+      >
+        Let's go!
+      </button>
     </form>
   );
 }

@@ -9,7 +9,7 @@ const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Dashboard", href: "/app", current: false },
   { name: "Profile", href: "/app/settings", current: false },
-  { name: "Upgrade", href: "/app/[slug]", current: false },
+  { name: "Upgrade", href: "/", current: false },
   { name: "Feedback", href: "/app/feedback", current: false },
   { name: "Logout", href: "/api/auth/logout", current: false },
 ];
