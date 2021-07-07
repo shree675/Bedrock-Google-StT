@@ -55,7 +55,7 @@ const EditTemplate = () => {
     // console.log(modurl);
     import("wavesurfer.js")
       .then((x) => x.default)
-      .then((WaveSurfer) => {
+      .then((WaveSurfer) => { 
         console.log(document.querySelector("#wave"));
         const waveSurfer = WaveSurfer.create({
           container: document.querySelector("#wave"),
