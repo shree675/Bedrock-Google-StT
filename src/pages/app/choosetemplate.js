@@ -8,13 +8,10 @@ const TemplatePage = () => {
   } = router;
   // console.log(audiourl);
   return (
-    <div>
-      <h1>
-        This is a mock page for choosing templates (we need not implement it
-        now)
-      </h1>
-      <div>Choose your template</div>
-      <div>
+    <div className="ml-40 mt-8">
+     
+      <div className="text-2xl font-bold mb-4">Choose your template</div>
+      <div className="mb-4">
         Select the layout you like the most. You could customize it later
       </div>
       <Link
@@ -23,7 +20,31 @@ const TemplatePage = () => {
           query: { transcript, timestamps },
         }}
       >
-        <button>Proceed</button>
+        <button className="bg-gray-500 hover:bg-blue-700 text-white text-2xl font-bold py-16 px-16 rounded">C1</button>
+      </Link>
+      <Link
+        href={{
+          pathname: "/app/edittemplate",
+          query: { transcript, timestamps }, ////////////////////////////////// pass timestamps here as well
+        }}
+      >
+        <button className="bg-blue-500 hover:bg-blue-700 text-white text-2xl font-bold py-16 px-16 rounded ml-16">C2</button>
+      </Link>
+      <Link
+        href={{
+          pathname: "/app/edittemplate",
+          query: { transcript, timestamps }, ////////////////////////////////// pass timestamps here as well
+        }}
+      >
+        <button className="bg-green-500 hover:bg-blue-700 text-white text-2xl font-bold py-16 px-16 rounded ml-16">C3</button>
+      </Link>
+      <Link
+        href={{
+          pathname: "/app/edittemplate",
+          query: { transcript, timestamps }, ////////////////////////////////// pass timestamps here as well
+        }}
+      >
+        <button className="bg-yellow-500 hover:bg-blue-700 text-white text-2xl font-bold py-16 px-16 rounded ml-16">C4</button>
       </Link>
     </div>
   );
