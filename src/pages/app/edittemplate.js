@@ -5,6 +5,14 @@ import { useGetCurrentUserQuery } from "../../client/graphql/getCurrentUser.gene
 import { useMutation } from "urql";
 import { useCreateTranscriptMutation } from "../../client/graphql/createTranscript.generated";
 import toast from "react-hot-toast";
+import { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/solid'
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
+
 // import dynamic from "next/dynamic";
 
 // const WaveSurfer = dynamic(() => import("wavesurfer.js"), {
@@ -109,11 +117,174 @@ const EditTemplate = () => {
     setTextcolor(e.target.value);
   };
 
-  const onChangeBackgroundColor = (e) => {
-    setBackgroundcolor(e.target.value);
-  };
+  // const onChangeBackgroundColor = (e) => {
+  //   setBackgroundcolor(e.target.value);
+  // };
+
+  const onClickBackgroundColor =(color) => {
+    setBackgroundcolor(color)
+  }
 
   return (
+    <div className="ml-32 flex">
+    <Menu as="div" className="relative inline-block text-left mt-64">
+      {({ open }) => (
+        <>
+          <div>
+            <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+              Background Color
+              <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+            </Menu.Button>
+          </div>
+
+          <Transition
+            show={open}
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items
+              static
+              className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+            >
+              <div className="py-1">
+                <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => onClickBackgroundColor("black")}
+                        type="submit"
+                        className={classNames(
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                          'block w-full text-left px-4 py-2 text-sm'
+                        )}
+                      >
+                        <span className="border text-black mr-4">A</span>Default
+                      </button>
+                    )}
+                  </Menu.Item>
+               <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => onClickBackgroundColor("gray")}
+                        type="submit"
+                        className={classNames(
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                          'block w-full text-left px-4 py-2 text-sm'
+                        )}
+                      >
+                        <span className="border text-gray-500 mr-4">A</span>Gray
+                      </button>
+                    )}
+                  </Menu.Item>
+                <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => onClickBackgroundColor("brown")}
+                        type="submit"
+                        className={classNames(
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                          'block w-full text-left px-4 py-2 text-sm'
+                        )}
+                      >
+                        <span className="border text-yellow-800 mr-4">A</span>Brown
+                      </button>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => onClickBackgroundColor("red")}
+                        type="submit"
+                        className={classNames(
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                          'block w-full text-left px-4 py-2 text-sm'
+                        )}
+                      >
+                        <span className="border text-red-500 mr-4">A</span>Red
+                      </button>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => onClickBackgroundColor("yellow")}
+                        type="submit"
+                        className={classNames(
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                          'block w-full text-left px-4 py-2 text-sm'
+                        )}
+                      >
+                        <span className="border text-yellow-500 mr-4">A</span>Yellow
+                      </button>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => onClickBackgroundColor("green")}
+                        type="submit"
+                        className={classNames(
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                          'block w-full text-left px-4 py-2 text-sm'
+                        )}
+                      >
+                        <span className="border text-green-500 mr-4">A</span>Green
+                      </button>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => onClickBackgroundColor("blue")}
+                        type="submit"
+                        className={classNames(
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                          'block w-full text-left px-4 py-2 text-sm'
+                        )}
+                      >
+                        <span className="border text-blue-500 mr-4">A</span>Blue
+                      </button>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => onClickBackgroundColor("pink")}
+                        type="submit"
+                        className={classNames(
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                          'block w-full text-left px-4 py-2 text-sm'
+                        )}
+                      >
+                        <span className="border text-pink-500 mr-4">A</span> Pink
+                      </button>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => onClickBackgroundColor("purple")}
+                        type="submit"
+                        className={classNames(
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                          'block w-full text-left px-4 py-2 text-sm'
+                        )}
+                      >
+                       <span className="border text-purple-500 mr-4">A</span> Purple
+                      </button>
+                    )}
+                  </Menu.Item>
+              </div>
+            </Menu.Items>
+          </Transition>
+        </>
+      )}
+    </Menu>
+
     <div className="ml-40">
       <br></br>
       <div class="block text-gray-700 text-sm font-bold mb-2 mt-4">
@@ -193,24 +364,6 @@ const EditTemplate = () => {
         onChange={onChangeTextColor}
         value={textcolor}
       />
-      <br />
-
-      <label
-        class="block text-gray-700 text-sm font-bold mb-2 mt-4"
-        for="background color"
-      >
-        Background color
-      </label>
-      <input
-        class="shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-8"
-        id="background color"
-        type="text"
-        placeholder="background color"
-        name="backgroundcolor"
-        onChange={onChangeBackgroundColor}
-        value={backgroundcolor}
-      />
-      <br />
 
       <div id="wave"></div>
 
@@ -293,6 +446,7 @@ const EditTemplate = () => {
           Download
         </button>
       </Link>
+    </div>
     </div>
   );
 };
