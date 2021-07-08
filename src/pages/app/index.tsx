@@ -10,7 +10,6 @@ import { event } from "next/dist/build/output/log";
 import { use } from "passport";
 import { useTranscriptQuery } from "../../client/graphql/getTranscripts.generated";
 import { GetStaticProps } from "next";
-import index from "../index.tsx";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -33,7 +32,8 @@ export default function Dashboard() {
 
   const upload = async () => {
     var formData = new FormData();
-    console.log(uploadedFile);
+    // console.log(uploadedFile);
+    window.File = uploadedFile;
 
     formData.append("file", uploadedFile);
 

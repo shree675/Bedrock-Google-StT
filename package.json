@@ -50,6 +50,7 @@
     "nexus-plugin-prisma": "~0.33.0",
     "passport": "^0.4.1",
     "passport-magic-login": "1.0.7",
+    "passport-twitter": "^1.0.4",
     "path": "^0.12.7",
     "postmark": "^2.7.3",
     "raw-body": "^2.4.1",

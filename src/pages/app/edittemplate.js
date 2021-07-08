@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 // });
 
 const EditTemplate = () => {
+  // try {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [textcolor, setTextcolor] = useState("");
@@ -26,8 +27,7 @@ const EditTemplate = () => {
   var renderdate = new Date().toDateString();
   var timestampstring = [];
   const [wavesurfer, setWS] = useState(null);
-
-  const [f, setf] = useState("");
+  const [file, setFile] = useState("");
 
   const router = useRouter();
   const {
@@ -46,39 +46,45 @@ const EditTemplate = () => {
   }, []);
 
   useEffect(() => {
-    // var modurl = "";
-    // var i = 0;
-    // for (i = 0; i < audiourl.length; i++) {
-    //   if (audiourl[i] === ",") break;
-    // }
-    // modurl = audiourl.slice(i + 1, 100000);
-    // console.log(modurl);
+    setFile(window.File);
+
     import("wavesurfer.js")
       .then((x) => x.default)
       .then((WaveSurfer) => {
-        console.log(document.querySelector("#wave"));
-        const waveSurfer = WaveSurfer.create({
-          container: document.querySelector("#wave"),
-          responsive: true,
-          barWidth: 2,
-          barHeight: 10,
-          cursorWidth: 5,
-          backend: "MediaElement",
-          waveColor: "turquoise",
-          progressColor: "blue",
-        });
-        setWS(waveSurfer);
-        // console.log(f);
-        // waveSurfer.load("/app/sample1.mp3");
-        waveSurfer.load("/app/uploadedaudiofile");
+        try {
+          console.log(document.querySelector("#wave"));
+          const waveSurfer = WaveSurfer.create({
+            container: document.querySelector("#wave"),
+            responsive: true,
+            barWidth: 2,
+            barHeight: 10,
+            cursorWidth: 5,
+            backend: "MediaElement",
+            waveColor: "darkseagreen",
+            progressColor: "cadetblue",
+          });
+          setWS(waveSurfer);
 
-        // waveSurfer.load(
-        // "http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3"
-        // );
-        waveSurfer.on("ready", () => {
-          if (play) waveSurfer.play();
-          else waveSurfer.pause();
-        });
+          // console.log(file);
+          // console.log(window.File);
+
+          let audio = new Audio();
+          audio.src = URL.createObjectURL(window.File);
+          waveSurfer.load(audio);
+
+          // waveSurfer.load(
+          //   "http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3"
+          // );
+          waveSurfer.on("ready", () => {
+            if (play) waveSurfer.play();
+            else waveSurfer.pause();
+          });
+        } catch (err) {
+          alert(
+            "Contents are lost because of refreshing. Page will redirect to the home page."
+          );
+          router.push("/");
+        }
       });
   }, []);
 
@@ -212,7 +218,7 @@ const EditTemplate = () => {
       />
       <br />
 
-      <div id="wave"></div>
+      <div id="wave" style={{ marginRight: `3%` }}></div>
 
       <button
         className="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
@@ -295,6 +301,14 @@ const EditTemplate = () => {
       </Link>
     </div>
   );
+  // }
+  // catch (err) {
+  //   console.log(err);
+  //   // if (!window.File) {
+  //   alert("redirect");
+  //   // }
+  //   return <div></div>;
+  // }
 };
 
 export default EditTemplate;

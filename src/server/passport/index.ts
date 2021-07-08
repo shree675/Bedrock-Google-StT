@@ -1,8 +1,10 @@
 import passport from "passport";
 import magicLink from "./magicLink";
+// import twitterLink from "./twitter";
 import prisma from "../db/prisma";
 
 passport.use(magicLink);
+// passport.use(twitterLink);
 
 // This types passport.(de)serializeUser!
 declare global {

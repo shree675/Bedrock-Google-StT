@@ -39,7 +39,8 @@ function Homepage() {
 
   const upload = async () => {
     var formData = new FormData();
-    console.log(uploadedFile);
+    // console.log(uploadedFile);
+    window.File = uploadedFile;
     formData.append("file", uploadedFile);
 
     // var reader = new FileReader();
@@ -171,7 +172,7 @@ function Homepage() {
         <label class="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
           <svg
             class="w-8 h-8"
-            fill="currentColor"
+            fill="blue"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >

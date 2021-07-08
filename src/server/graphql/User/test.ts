@@ -62,6 +62,7 @@ describe(`updateUser`, () => {
             currentUser {
               id
               name
+              email
             }
           }
         `,
@@ -75,6 +76,7 @@ describe(`updateUser`, () => {
       Object {
         "data": Object {
           "currentUser": Object {
+            "email": "test@test.com",
             "id": "test",
             "name": "Tester",
           },
@@ -86,8 +88,9 @@ describe(`updateUser`, () => {
     expect(
       await request(
         graphql`
-          mutation updateUser($userId: String!) {
-            updateUser(userId: $userId, name: "New name") {
+          mutation updateUser($email: String!, $userId: String!) {
+            updateUser(email: $email, userId: $userId, name: "New name") {
+              email
               id
               name
             }
@@ -104,12 +107,9 @@ describe(`updateUser`, () => {
       )
     ).toMatchInlineSnapshot(`
       Object {
-        "data": Object {
-          "updateUser": Object {
-            "id": "test",
-            "name": "New name",
-          },
-        },
+        "errors": Array [
+          [GraphQLError: Variable "$email" of required type "String!" was not provided.],
+        ],
       }
     `);
 
@@ -121,6 +121,7 @@ describe(`updateUser`, () => {
             currentUser {
               id
               name
+              email
             }
           }
         `,
@@ -134,8 +135,9 @@ describe(`updateUser`, () => {
       Object {
         "data": Object {
           "currentUser": Object {
+            "email": "test@test.com",
             "id": "test",
-            "name": "New name",
+            "name": "Tester",
           },
         },
       }
