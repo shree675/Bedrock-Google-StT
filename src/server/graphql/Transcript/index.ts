@@ -13,10 +13,10 @@ const Transcript = objectType({
     t.model.status();
     t.model.userid();
     t.model.subtitle();
-    t.model.textcolor();
+    t.model.titlecolor();
     t.model.audiourl();
     t.model.imageurl();
-    t.model.backgroundcolor();
+    t.model.subtitlecolor();
     t.model.timestamps();
   },
 });
@@ -61,10 +61,10 @@ const mutations = extendType({
         status: nonNull(stringArg()),
         userid: nonNull(stringArg()),
         subtitle: nonNull(stringArg()),
-        textcolor: nonNull(stringArg()),
+        titlecolor: nonNull(stringArg()),
         audiourl: nonNull(stringArg()),
         imageurl: nonNull(stringArg()),
-        backgroundcolor: nonNull(stringArg()),
+        subtitlecolor: nonNull(stringArg()),
         timestamps: nonNull(stringArg()),
       },
       resolve: async (_, args, ctx) => {
@@ -80,10 +80,10 @@ const mutations = extendType({
             status: args.status,
             userid: args.userid,
             subtitle: args.subtitle,
-            textcolor: args.textcolor,
+            titlecolor: args.titlecolor,
             audiourl: args.audiourl,
             imageurl: args.imageurl,
-            backgroundcolor: args.backgroundcolor,
+            subtitlecolor: args.subtitlecolor,
             timestamps: args.timestamps,
           },
         });

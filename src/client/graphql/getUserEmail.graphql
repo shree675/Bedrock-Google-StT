@@ -1,0 +1,14 @@
+mutation GetUserEmail($email: String!) {
+  getUserEmail(email: $email) {
+    id
+    name
+    email
+    profilepic
+    projects {
+      id
+      name
+      slug
+      paidPlan
+    }
+  }
+}

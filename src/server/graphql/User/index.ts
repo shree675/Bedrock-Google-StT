@@ -75,6 +75,20 @@ const mutations = extendType({
         return null;
       },
     });
+
+    t.nullable.field("getUserEmail", {
+      type: "User",
+      args: {
+        email: nonNull(stringArg()),
+      },
+      resolve: async (_, { email }, ctx) => {
+        // if (!ctx.user?.id) return null;
+
+        return await prisma.user.findFirst({
+          where: { email: email },
+        });
+      },
+    });
   },
 });
 

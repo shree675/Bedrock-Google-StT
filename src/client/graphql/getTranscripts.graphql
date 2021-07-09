@@ -9,9 +9,9 @@ query transcript {
     transcript
     userid
     subtitle
-    textcolor
+    titlecolor
     audiourl
     imageurl
-    backgroundcolor
+    subtitlecolor
   }
 }

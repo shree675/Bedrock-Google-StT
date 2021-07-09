@@ -23,8 +23,8 @@ const EditTemplate = () => {
   // try {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
-  const [textcolor, setTextcolor] = useState("");
-  const [backgroundcolor, setBackgroundcolor] = useState("");
+  const [titlecolor, setTitlecolor] = useState("");
+  const [subtitlecolor, setSubtitlecolor] = useState("");
   const [image, setImage] = useState("");
   const [imageurl, setImageURL] = useState("");
   const [play, setPlay] = useState(false);
@@ -119,16 +119,16 @@ const EditTemplate = () => {
     setSubtitle(e.target.value);
   };
 
-  const onChangeTextColor = (e) => {
-    setTextcolor(e.target.value);
+  const onChangeTitleColor = (e) => {
+    setTitlecolor(e.target.value);
   };
 
   // const onChangeBackgroundColor = (e) => {
   //   setBackgroundcolor(e.target.value);
   // };
 
-  const onClickBackgroundColor = (color) => {
-    setBackgroundcolor(color);
+  const onClickSubtitleColor = (color) => {
+    setSubtitlecolor(color);
   };
 
   return (
@@ -164,7 +164,7 @@ const EditTemplate = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => onClickBackgroundColor("black")}
+                        onClick={() => onClickSubtitleColor("black")}
                         type="submit"
                         className={classNames(
                           active
@@ -180,7 +180,7 @@ const EditTemplate = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => onClickBackgroundColor("gray")}
+                        onClick={() => onClickSubtitleColor("gray")}
                         type="submit"
                         className={classNames(
                           active
@@ -196,7 +196,7 @@ const EditTemplate = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => onClickBackgroundColor("brown")}
+                        onClick={() => onClickSubtitleColor("brown")}
                         type="submit"
                         className={classNames(
                           active
@@ -213,7 +213,7 @@ const EditTemplate = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => onClickBackgroundColor("red")}
+                        onClick={() => onClickSubtitleColor("red")}
                         type="submit"
                         className={classNames(
                           active
@@ -229,7 +229,7 @@ const EditTemplate = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => onClickBackgroundColor("yellow")}
+                        onClick={() => onClickSubtitleColor("yellow")}
                         type="submit"
                         className={classNames(
                           active
@@ -246,7 +246,7 @@ const EditTemplate = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => onClickBackgroundColor("green")}
+                        onClick={() => onClickSubtitleColor("green")}
                         type="submit"
                         className={classNames(
                           active
@@ -263,7 +263,7 @@ const EditTemplate = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => onClickBackgroundColor("blue")}
+                        onClick={() => onClickSubtitleColor("blue")}
                         type="submit"
                         className={classNames(
                           active
@@ -279,7 +279,7 @@ const EditTemplate = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => onClickBackgroundColor("pink")}
+                        onClick={() => onClickSubtitleColor("pink")}
                         type="submit"
                         className={classNames(
                           active
@@ -296,7 +296,7 @@ const EditTemplate = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => onClickBackgroundColor("purple")}
+                        onClick={() => onClickSubtitleColor("purple")}
                         type="submit"
                         className={classNames(
                           active
@@ -391,10 +391,10 @@ const EditTemplate = () => {
           class="shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="text color"
           type="text"
-          placeholder="text color"
-          name="textcolor"
-          onChange={onChangeTextColor}
-          value={textcolor}
+          placeholder="title color"
+          name="titlecolor"
+          onChange={onChangeTitleColor}
+          value={titlecolor}
         />
 
         <div id="wave" style={{ marginRight: `3%` }}></div>
@@ -418,7 +418,7 @@ const EditTemplate = () => {
         <h4 class="font-bold text-lg mb-4 ">Transcript:</h4>
         <div className="mr-64">{transcript}</div>
         <br></br>
-        <h4 class="font-bold text-lg mb-4 mt-8">Timestamps:</h4>
+        {/* <h4 class="font-bold text-lg mb-4 mt-8">Timestamps:</h4>
         <div>
           {timestamps
             ? JSON.parse(timestamps).map((e) => (
@@ -437,7 +437,7 @@ const EditTemplate = () => {
                 </>
               ))
             : null}
-        </div>
+        </div> */}
         <button
           className="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
           onClick={async () => {
@@ -451,10 +451,10 @@ const EditTemplate = () => {
                 status: "Done",
                 userid: currentUser ? currentUser.id : "",
                 subtitle: subtitle,
-                textcolor: textcolor,
+                titlecolor: titlecolor,
                 audiourl: "(empty)",
                 imageurl: imageurl,
-                backgroundcolor: backgroundcolor,
+                subtitlecolor: subtitlecolor,
                 timestamps: timestamps,
               }),
               {

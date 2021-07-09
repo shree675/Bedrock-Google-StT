@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useGetUserEmailMutation } from "../../graphql/getUserEmail.generated";
 // import twitter from "twitter.svg"
 
 /**
@@ -9,18 +10,26 @@ export default function AuthenticationForm() {
   const [email, setEmail] = useState("");
   const router = useRouter();
   const { r } = router.query;
-  const redirect = r?.toString();
+  // const redirect = r?.toString();
+  // const [data1]=useGetUserEmailMutation();
+  const [, getUserEmail] = useGetUserEmailMutation();
 
   return (
     <div>
       <form
-        onSubmit={(evt) => {
+        onSubmit={async (evt) => {
           evt.preventDefault();
+
+          const x = await getUserEmail({
+            email: email,
+          });
+          // console.log(x.data?.getUserEmail);
+
           // POST a request with the users email or phone number to the server
           fetch(`/api/auth/magiclink`, {
             method: `POST`,
             body: JSON.stringify({
-              redirect,
+              redirect: x.data?.getUserEmail ? "/app" : "/",
               destination: email,
             }),
             headers: { "Content-Type": "application/json" },
@@ -40,7 +49,9 @@ export default function AuthenticationForm() {
           type="email"
           placeholder="Email"
           value={email}
-          onChange={(evt) => setEmail(evt.target.value)}
+          onChange={(evt) => {
+            setEmail(evt.target.value);
+          }}
         />
         &emsp;
         <button
@@ -56,7 +67,7 @@ export default function AuthenticationForm() {
           fetch(`/api/auth/twitter`, {
             method: `POST`,
             body: JSON.stringify({
-              redirect,
+              redirect: "/",
             }),
             headers: { "Content-Type": "application/json" },
           })

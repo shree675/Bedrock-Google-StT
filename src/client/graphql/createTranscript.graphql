@@ -7,10 +7,10 @@ mutation CreateTranscript(
   $renderdate: String!
   $status: String!
   $subtitle: String!
-  $textcolor: String!
+  $titlecolor: String!
   $audiourl: String!
   $imageurl: String!
-  $backgroundcolor: String!
+  $subtitlecolor: String!
   $timestamps: String!
 ) {
   createTranscript(
@@ -22,10 +22,10 @@ mutation CreateTranscript(
     expirationdate: $expirationdate
     filetype: $filetype
     subtitle: $subtitle
-    textcolor: $textcolor
+    titlecolor: $titlecolor
     audiourl: $audiourl
     imageurl: $imageurl
-    backgroundcolor: $backgroundcolor
+    subtitlecolor: $subtitlecolor
     timestamps: $timestamps
   ) {
     id
@@ -37,10 +37,10 @@ mutation CreateTranscript(
     transcript
     userid
     subtitle
-    textcolor
+    titlecolor
     audiourl
     imageurl
-    backgroundcolor
+    subtitlecolor
     timestamps
   }
 }

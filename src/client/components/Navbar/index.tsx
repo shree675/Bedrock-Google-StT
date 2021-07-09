@@ -6,7 +6,6 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 
 const navigation = [
-  { name: "Home", href: "/", current: true },
   { name: "Dashboard", href: "/app", current: false },
   { name: "Profile", href: "/app/settings", current: false },
   { name: "Upgrade", href: "/", current: false },
@@ -87,6 +86,16 @@ function Navbar() {
                       </div>
                     </div>
                   </div>
+                  {/* <button
+                    onClick={async () => {
+                      console.log(document.cookie);
+                      console.log(document.title);
+                      document.cookie =
+                        "session =; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+                    }}
+                  >
+                    Logout
+                  </button> */}
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     {/* <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                       <span className="sr-only">View notifications</span>
