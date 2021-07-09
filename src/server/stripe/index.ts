@@ -1,4 +1,4 @@
-import Stripe from "stripe";
+import Stripe from "stripe"; 
 
 if (process.browser)
   throw new Error(

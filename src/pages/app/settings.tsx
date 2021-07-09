@@ -25,7 +25,7 @@ export default function Dashboard() {
     if (currentUser?.profilepic) setProfilepic(currentUser.profilepic);
   }, [currentUser]);
 
-  const onChangeImage = (e) => {
+  const onChangeImage = (e:any) => {
     // setProfilepic(event.target.files[0]);
     if (e.target.files && e.target.files[0]) {
       let reader = new FileReader();
@@ -76,10 +76,10 @@ export default function Dashboard() {
             <div>
               <img src={profilepic} width={80} height={80}></img>
             </div>
-            <div class="flex bg-grey-lighter">
-              <label class="w-48 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+            <div className="flex bg-grey-lighter">
+              <label className="w-48 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
                 <svg
-                  class="w-8 h-8"
+                  className="w-8 h-8"
                   fill="blue"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
