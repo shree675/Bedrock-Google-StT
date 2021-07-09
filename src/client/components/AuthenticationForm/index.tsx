@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+// import twitter from "twitter.svg"
 
 /**
  * Used on the Login and Sign Up screens to handle authentication. Can be shared between those as Passport.js doesn't differentiate between logging in and signing up.
@@ -37,7 +38,7 @@ export default function AuthenticationForm() {
       >
         <input
           type="email"
-          placeholder="me@hello.com"
+          placeholder="Email"
           value={email}
           onChange={(evt) => setEmail(evt.target.value)}
         />
@@ -46,11 +47,11 @@ export default function AuthenticationForm() {
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
         >
-          Let's go!
+          Login
         </button>
       </form>
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+        className="bg-white-500 text-black hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded mb-4 border"
         onClick={async () => {
           fetch(`/api/auth/twitter`, {
             method: `POST`,
@@ -59,12 +60,18 @@ export default function AuthenticationForm() {
             }),
             headers: { "Content-Type": "application/json" },
           })
-            .then((res) => res.json())
+            .then((res) => res.text())
             .then((data) => console.log(data))
             .catch((err) => console.log(err));
         }}
       >
-        Twitter Login
+        <div style={{ display: "flex" }}>
+          <div style={{ flex: "0.3" }}>
+            <img src="/twitter.svg" height="30px" width="30px"></img>
+          </div>
+          &ensp;
+          <div style={{ flex: "2" }}> Sign up with Twitter</div>
+        </div>
       </button>
     </div>
   );
