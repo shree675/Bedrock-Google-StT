@@ -31,7 +31,7 @@ export default function UpgradeButton({ projectId }: { projectId: string }) {
       stripe.redirectToCheckout({
         sessionId,
       });
-    });
+    }); 
   };
 
   return <button onClick={redirectToCheckout}>Upgrade</button>;

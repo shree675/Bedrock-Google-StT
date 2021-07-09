@@ -13,9 +13,9 @@ const navigation = [
   { name: "Logout", href: "/api/auth/logout", current: false },
 ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(" ");
+// }
 
 function Navbar() {
   const [{ data }] = useGetCurrentUserQuery();
@@ -70,12 +70,12 @@ function Navbar() {
                           <Link
                             key={item.name}
                             href={item.href}
-                            className={classNames(
+                            className={
                               item.current
-                                ? "bg-gray-900 text-white"
-                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                              "px-3 py-2 rounded-md text-sm font-medium"
-                            )}
+                                ? "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+                                : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                              
+                            }
                             aria-current={item.current ? "page" : undefined}
                           >
                             <span className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
@@ -192,12 +192,12 @@ function Navbar() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className={classNames(
+                      className={
                         item.current
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                        "block px-3 py-2 rounded-md text-base font-medium"
-                      )}
+                          ? "bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                        
+                      }
                       aria-current={item.current ? "page" : undefined}
                     >
                       <span className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">

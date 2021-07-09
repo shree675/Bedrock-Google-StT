@@ -46,7 +46,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
   if (event.type === "checkout.session.completed") {
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription
-    );
+    ); 
 
     await prisma.project.update({
       where: {
