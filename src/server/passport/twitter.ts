@@ -41,8 +41,8 @@ passport.deserializeUser(async (user: Express.User, done) => {
 passport.use(
   new TwitterStrategy(
     {
-      consumerKey: "9ovckXkGTToo2BwgpUcTqzZsz",
-      consumerSecret: "0c2F18KErtbuG1sGAiJfBL31BhEjwt6GRu7vZv4r9Hx55NECgv",
+      consumerKey: process.env.TWITTER_API_KEY,
+      consumerSecret: process.env.TWITTER_API_SECRET_KEY,
       callbackURL: "/auth/twitter/callback",
       twitter_callback: async (req, res) => {
         try {
