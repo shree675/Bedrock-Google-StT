@@ -8,6 +8,9 @@ import toast from "react-hot-toast";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import {BlockPicker} from 'react-color'
+import Tippy from "@tippyjs/react";
+import ReactPlayer from "react-player";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -36,6 +39,7 @@ const EditTemplate = () => {
   var timestampstring = [];
   const [wavesurfer, setWS] = useState(null);
   const [file, setFile] = useState("");
+  const [showHide,setShowHide]=useState(false);
 
   const router = useRouter();
   const {
@@ -131,194 +135,41 @@ const EditTemplate = () => {
     setSubtitlecolor(color);
   };
 
-  return (
-    <div className="ml-32 flex">
-      <Menu as="div" className="relative inline-block text-left mt-64">
-        {({ open }) => (
-          <>
-            <div>
-              <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-                Background Color
-                <ChevronDownIcon
-                  className="-mr-1 ml-2 h-5 w-5"
-                  aria-hidden="true"
-                />
-              </Menu.Button>
-            </div>
+  const onClickSaveHandler = () => {
+    setShowHide(!showHide);
 
-            <Transition
-              show={open}
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items
-                static
-                className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-              >
-                <div className="py-1">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={() => onClickSubtitleColor("black")}
-                        type="submit"
-                        className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "block w-full text-left px-4 py-2 text-sm"
-                        )}
-                      >
-                        <span className="border text-black mr-4">A</span>Default
-                      </button>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={() => onClickSubtitleColor("gray")}
-                        type="submit"
-                        className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "block w-full text-left px-4 py-2 text-sm"
-                        )}
-                      >
-                        <span className="border text-gray-500 mr-4">A</span>Gray
-                      </button>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={() => onClickSubtitleColor("brown")}
-                        type="submit"
-                        className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "block w-full text-left px-4 py-2 text-sm"
-                        )}
-                      >
-                        <span className="border text-yellow-800 mr-4">A</span>
-                        Brown
-                      </button>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={() => onClickSubtitleColor("red")}
-                        type="submit"
-                        className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "block w-full text-left px-4 py-2 text-sm"
-                        )}
-                      >
-                        <span className="border text-red-500 mr-4">A</span>Red
-                      </button>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={() => onClickSubtitleColor("yellow")}
-                        type="submit"
-                        className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "block w-full text-left px-4 py-2 text-sm"
-                        )}
-                      >
-                        <span className="border text-yellow-500 mr-4">A</span>
-                        Yellow
-                      </button>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={() => onClickSubtitleColor("green")}
-                        type="submit"
-                        className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "block w-full text-left px-4 py-2 text-sm"
-                        )}
-                      >
-                        <span className="border text-green-500 mr-4">A</span>
-                        Green
-                      </button>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={() => onClickSubtitleColor("blue")}
-                        type="submit"
-                        className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "block w-full text-left px-4 py-2 text-sm"
-                        )}
-                      >
-                        <span className="border text-blue-500 mr-4">A</span>Blue
-                      </button>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={() => onClickSubtitleColor("pink")}
-                        type="submit"
-                        className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "block w-full text-left px-4 py-2 text-sm"
-                        )}
-                      >
-                        <span className="border text-pink-500 mr-4">A</span>{" "}
-                        Pink
-                      </button>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={() => onClickSubtitleColor("purple")}
-                        type="submit"
-                        className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "block w-full text-left px-4 py-2 text-sm"
-                        )}
-                      >
-                        <span className="border text-purple-500 mr-4">A</span>{" "}
-                        Purple
-                      </button>
-                    )}
-                  </Menu.Item>
-                </div>
-              </Menu.Items>
-            </Transition>
-          </>
-        )}
-      </Menu>
+    
+      toast.promise(
+        createTranscript({
+          title: title,
+          transcript: transcript,
+          filetype: "audio file",
+          expirationdate: new Date().toDateString(),
+          renderdate: new Date().toDateString(),
+          status: "Done",
+          userid: currentUser ? currentUser.id : "",
+          subtitle: subtitle,
+          titlecolor: titlecolor,
+          audiourl: "(empty)",
+          imageurl: imageurl,
+          subtitlecolor: subtitlecolor,
+          timestamps: timestamps,
+        }),
+        {
+          loading: `Saving transcript...`,
+          success: `Transcript saved successfully!`,
+          error: (err) => err,
+        }
+      );
+    
+  }
+
+  return (
 
       <div className="ml-40">
         <br></br>
+        <div className="flex">
+          <div>
         <div class="block text-gray-700 text-sm font-bold mb-2 mt-4">
           Upload cover art:
         </div>
@@ -347,14 +198,24 @@ const EditTemplate = () => {
         </div>
         <br />
 
+        <div className="flex ">
+          <Tippy interactive={true} placement={'left'} content = {
+            <BlockPicker
+            color={titlecolor}
+            onChangeComplete={color => setTitlecolor(color.hex)} />
+          }>
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 my-8 mx-4 cursor-pointer stroke-current text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+</svg></Tippy>
+        <div>
         <label
-          class="block text-gray-700 text-sm font-bold mb-2 mt-4"
-          for="Title"
+          className="block text-gray-700 text-sm font-bold mb-2 mt-4"
+          htmlFor="Title"
         >
           Title
         </label>
         <input
-          class="shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="title"
           type="text"
           placeholder="Title"
@@ -362,16 +223,28 @@ const EditTemplate = () => {
           onChange={onChangeTitle}
           value={title}
         />
+        </div>
+        </div>
         <br />
 
+        <div className="flex ">
+        <Tippy interactive={true} placement={'left'} content = {
+            <BlockPicker
+            color={subtitlecolor}
+            onChangeComplete={color => setSubtitlecolor(color.hex)} />
+          }>
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 my-8 mx-4 cursor-pointer stroke-current text-blue-600 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+</svg></Tippy>
+        <div>
         <label
-          class="block text-gray-700 text-sm font-bold mb-2 mt-4"
-          for="Subtitle"
+          className="block text-gray-700 text-sm font-bold mb-2 mt-4"
+          htmlFor="Subtitle"
         >
           Subtitle
         </label>
         <input
-          class="shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="Subtitle"
           type="text"
           placeholder="Subtitle"
@@ -379,28 +252,19 @@ const EditTemplate = () => {
           onChange={onChangeSubTitle}
           value={subtitle}
         />
+        </div>
+        </div>
         <br />
+        </div>
 
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2 mt-4"
-          for="text color"
-        >
-          Text color
-        </label>
-        <input
-          class="shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="text color"
-          type="text"
-          placeholder="title color"
-          name="titlecolor"
-          onChange={onChangeTitleColor}
-          value={titlecolor}
-        />
+        <div className="ml-8">
+            <ReactPlayer controls url='https://www.youtube.com/watch?v=9P8mASSREYM'/>
+          </div>
+        </div>
 
         <div id="wave" style={{ marginRight: `3%` }}></div>
 
         <button
-          className="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
           onClick={() => {
             if (play) {
               wavesurfer.pause();
@@ -411,7 +275,14 @@ const EditTemplate = () => {
           }}
           type="button"
         >
-          {play ? "Pause" : "Play"}
+          {play ? 
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mt-8" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+        </svg>
+          : 
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mt-8" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+        </svg>}
         </button>
         <div ref={containerRef} />
 
@@ -439,47 +310,32 @@ const EditTemplate = () => {
             : null}
         </div> */}
         <button
-          className="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
-          onClick={async () => {
-            toast.promise(
-              createTranscript({
-                title: title,
-                transcript: transcript,
-                filetype: "audio file",
-                expirationdate: new Date().toDateString(),
-                renderdate: new Date().toDateString(),
-                status: "Done",
-                userid: currentUser ? currentUser.id : "",
-                subtitle: subtitle,
-                titlecolor: titlecolor,
-                audiourl: "(empty)",
-                imageurl: imageurl,
-                subtitlecolor: subtitlecolor,
-                timestamps: timestamps,
-              }),
-              {
-                loading: `Saving transcript...`,
-                success: `Transcript saved successfully!`,
-                error: (err) => err,
-              }
-            );
-          }}
+          className="mt-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4 w-1/4"
+          onClick={onClickSaveHandler}
         >
-          Save
+          Render video
         </button>
         <br></br>
-        <Link
+        {showHide? 
+       <div className="w-full h-full inset-0 fixed">
+         <div onClick={()=>{setShowHide(!showHide)}} className="w-full h-full inset-0 fixed bg-opacity-30 bg-gray-700">
+         <div className="absolute top-20 left-1/3 ml-24 bg-white max-w-xl w-1/4 text-center px-12 pt-8 rounded">
+           <h1 className="font-bold text-lg">video is ready</h1>
+           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+         <Link
           href={{
             pathname: "/app/details",
             query: { transcript, title, renderdate },
           }}
         >
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
-            Download
+         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+            Download Now
           </button>
         </Link>
+        </div>
+        </div>
+        </div>:null}
       </div>
-    </div>
   );
   // }
   // catch (err) {

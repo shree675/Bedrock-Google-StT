@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import ReactPlayer from "react-player";
 
 const Details = () => {
   const router = useRouter();
@@ -14,6 +15,10 @@ const Details = () => {
       <h4 className="text-lg font-bold text-gray-500 mb-1">Date</h4>
       <div>{renderdate}</div>
       <br></br>
+      <div>
+            <ReactPlayer controls url='https://www.youtube.com/watch?v=9P8mASSREYM'/>
+          </div>
+          <br></br>
       <h3 className="text-lg font-bold text-gray-500 mb-1">Transcript:</h3>
       <div style={{ paddingRight: "10%" }}>{transcript}</div>
       <br></br>
