@@ -74,6 +74,8 @@ function Homepage() {
     console.log(files[0]);
     setFileName(files[0].name);
     setTranscription("");
+
+    upload();
   };
 
   const hasUploaded = (event:any) => {
@@ -168,7 +170,7 @@ function Homepage() {
       <div className="mb-4 font-bold">Upload from computer</div>
 
       <br></br>
-      <div className="flex items-center justify-center bg-grey-lighter">
+      {/* <div className="flex items-center justify-center bg-grey-lighter">
         <label className="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
           <svg
             className="w-8 h-8"
@@ -183,7 +185,7 @@ function Homepage() {
         </label>
       </div>
       <br></br>
-      <div style={{ textAlign: "center" }}>OR</div>
+      <div style={{ textAlign: "center" }}>OR</div> */}
       <br></br>
       <div className="flex items-center justify-center bg-grey-lighter">
         <FileDrop
@@ -205,12 +207,12 @@ function Homepage() {
       </div>
 
       <br></br>
-      <button
+      {/* <button
         onClick={upload}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
       >
         Upload
-      </button>
+      </button> */}
       <div>We currently support only 60 seconds</div>
       <div className="mt-8">
         {transcription === "" ? (
