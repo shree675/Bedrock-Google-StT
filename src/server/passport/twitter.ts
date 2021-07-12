@@ -1,6 +1,6 @@
 import passport from "passport";
 // import TwitterStrategy from "passport-twitter";
-const TwitterStrategy = require("passport-twitter").Strategy;
+const TwitterStrategy = require("passport-twitter");
 import prisma from "../db/prisma";
 
 declare global {

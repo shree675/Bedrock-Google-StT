@@ -33,7 +33,7 @@ export default function Dashboard() {
   const upload = async () => {
     var formData = new FormData();
     // console.log(uploadedFile);
-    window.File = uploadedFile;
+    // window.File = uploadedFile;
 
     formData.append("file", uploadedFile);
 
@@ -84,20 +84,20 @@ export default function Dashboard() {
     //   .catch((err) => console.log(err));
   };
 
-  const hasDropped = (files:any, event:any) => {
+  const hasDropped = (files: any, event: any) => {
     setUploadedFile(files[0]);
     // getBase64(files[0]);
-    console.log(files[0]);
+    // console.log(files[0]);
     setFileName(files[0].name);
     setTranscription("");
-
+    window.File = files[0];
+    console.log(window.File);
     upload();
   };
 
-  const hasUploaded = (event:any) => {
+  const hasUploaded = (event: any) => {
     setUploadedFile(event.target.files[0]);
     setTranscription("");
-    // getBase64(event.target.files[0]);
   };
 
   if (fetching) return <p>Loading...</p>;

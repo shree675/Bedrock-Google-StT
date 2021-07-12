@@ -36,11 +36,12 @@ function Homepage() {
   const [audiourl, setAudiourl] = useState("");
 
   useEffect(() => {}, [filename]);
-    
+
   const upload = async () => {
     var formData = new FormData();
-    // console.log(uploadedFile);
-    window.File = uploadedFile;
+    console.log(uploadedFile);
+    // window.File = uploadedFile;
+    // console.log(window.File);
     formData.append("file", uploadedFile);
 
     // var reader = new FileReader();
@@ -69,16 +70,18 @@ function Homepage() {
       .catch((err) => console.log(err));
   };
 
-  const hasDropped = (files:any, event:any) => {
+  const hasDropped = (files: any, event: any) => {
     setUploadedFile(files[0]);
-    console.log(files[0]);
-    setFileName(files[0].name);
+    console.log(uploadedFile);
+    // console.log(files[0]);
+    // setFileName(files[0].name);
     setTranscription("");
-
+    window.File = files[0];
+    console.log(window.File);
     upload();
   };
 
-  const hasUploaded = (event:any) => {
+  const hasUploaded = (event: any) => {
     setUploadedFile(event.target.files[0]);
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
