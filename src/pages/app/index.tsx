@@ -32,10 +32,10 @@ export default function Dashboard() {
 
   const upload = async () => {
     var formData = new FormData();
-    // console.log(uploadedFile);
+    // console.log(window.File);
     // window.File = uploadedFile;
 
-    formData.append("file", uploadedFile);
+    formData.append("file", window.File);
 
     fetch("/api/uploadfile", {
       method: "POST",

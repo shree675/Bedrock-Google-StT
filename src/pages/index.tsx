@@ -42,7 +42,7 @@ function Homepage() {
     console.log(uploadedFile);
     // window.File = uploadedFile;
     // console.log(window.File);
-    formData.append("file", uploadedFile);
+    formData.append("file", window.File);
 
     // var reader = new FileReader();
     // reader.onload = function (event) {

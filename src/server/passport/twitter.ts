@@ -1,6 +1,5 @@
 import passport from "passport";
-// import TwitterStrategy from "passport-twitter";
-const TwitterStrategy = require("passport-twitter");
+const TwitterStrategy = require("passport-twitter").Strategy;
 import prisma from "../db/prisma";
 
 declare global {
@@ -38,81 +37,77 @@ passport.deserializeUser(async (user: Express.User, done) => {
   done(null, user);
 });
 
-passport.use(
-  new TwitterStrategy(
-    {
-      consumerKey: process.env.TWITTER_API_KEY,
-      consumerSecret: process.env.TWITTER_API_SECRET_KEY,
-      callbackURL: "/auth/twitter/callback",
-      twitter_callback: async (req, res) => {
-        try {
-          const twitter_user = await req.user;
-          const user = await prisma.user.upsert({
-            create: {
-              email: twitter_user.emails[0].value,
-            },
-            update: {},
-            where: {
-              email: twitter_user.emails[0].value,
-            },
-          });
-          // const user = await User.create({
-          //   name: twitter_user.displayName,
-          //   email: twitter_user.emails[0].value,
-          // });
+// passport.use(
+//   new TwitterStrategy(
+//     {
+//       consumerKey: process.env.TWITTER_API_KEY,
+//       consumerSecret: process.env.TWITTER_API_SECRET_KEY,
+//       callbackURL: "/auth/twitter/callback",
+//       twitter_callback: async (req: any, res: any) => {
+//         try {
+//           const twitter_user = await req.user;
+//           console.log(twitter_user);
+//           const user = await prisma.user.upsert({
+//             create: {
+//               email: twitter_user.emails[0].value,
+//             },
+//             update: {},
+//             where: {
+//               email: twitter_user.emails[0].value,
+//             },
+//           });
+//           // const user = await User.create({
+//           //   name: twitter_user.displayName,
+//           //   email: twitter_user.emails[0].value,
+//           // });
 
-          // const token = user.generateAuthToken();
-          // res.header("x_auth_token", token).json({
-          //   msg: "callback called",
-          //   status: 200,
-          // });
+//           res.redirect("/app");
+//         } catch (err) {
+//           console.log(err);
+//         }
+//       },
+//     }),
+//     function (token: any, tokenSecret: any, profile: any, done: any) {
+//       done(null, profile);
+//     }
 
-          res.redirect("/");
-        } catch (err) {
-          console.log(err);
-          // res.status(500).json(err);
-        }
-      },
+// );
+
+const twitterLink = new TwitterStrategy(
+  {
+    consumerKey: process.env.TWITTER_API_KEY,
+    consumerSecret: process.env.TWITTER_API_SECRET_KEY,
+    callbackURL: "http://localhost:3000/api/auth/twitter/callback",
+    twitter_callback: async (req: any, res: any) => {
+      try {
+        const twitter_user = await req.user;
+        console.log(twitter_user);
+        const user = await prisma.user.upsert({
+          create: {
+            email: twitter_user.emails[0].value,
+          },
+          update: {},
+          where: {
+            email: twitter_user.emails[0].value,
+          },
+        });
+        // const user = await User.create({
+        //   name: twitter_user.displayName,
+        //   email: twitter_user.emails[0].value,
+        // });
+
+        res.redirect("/app");
+      } catch (err) {
+        console.log(err);
+      }
     },
-    function (token, tokenSecret, profile, done) {
-      done(null, profile);
-    }
-  )
+  },
+  function (token: any, tokenSecret: any, profile: any, done: any) {
+    console.log(profile);
+    done(null, profile);
+  }
 );
 
-const twitterLink = new TwitterStrategy({
-  consumerKey: process.env.TWITTER_API_KEY,
-  consumerSecret: process.env.TWITTER_API_SECRET_KEY,
-  callbackURL: "/auth/twitter/callback",
-  twitter_callback: async (req, res) => {
-    try {
-      const twitter_user = await req.user;
-      const user = await prisma.user.upsert({
-        create: {
-          email: twitter_user.emails[0].value,
-        },
-        update: {},
-        where: {
-          email: twitter_user.emails[0].value,
-        },
-      });
-      // const user = await User.create({
-      //   name: twitter_user.displayName,
-      //   email: twitter_user.emails[0].value,
-      // });
-
-      // const token = user.generateAuthToken();
-      // res.header("x_auth_token", token).json({
-      //   msg: "callback called",
-      //   status: 200,
-      // });
-
-      // res.redirect("/");
-    } catch (err) {
-      console.log(err);
-      // res.status(500).json(err);
-    }
-  },
-});
+passport.use(twitterLink);
 
 export default twitterLink;
