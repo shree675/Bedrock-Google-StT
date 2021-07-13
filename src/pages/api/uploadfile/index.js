@@ -23,7 +23,7 @@ export default async function test(req, res) {
   });
 
   form.parse(req, async (err, fields, files) => {
-    // console.log(files.file);
+    console.log(files.file);
     ufile = files.file;
 
     const audio = {
@@ -46,7 +46,7 @@ export default async function test(req, res) {
 
     // Detects speech in the audio file
     const [response] = await client.recognize(request);
-    console.log("response : ", response.results.alternatives.words[0][2]);
+    // console.log("response : ", response.results.alternatives.words[0][2]);
     const [words] = response.results.map(
       (result) => result.alternatives[0].words
     );

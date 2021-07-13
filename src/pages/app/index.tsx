@@ -37,7 +37,7 @@ export default function Dashboard() {
     // console.log(uploadedFile);
     // window.File = uploadedFile;
 
-    formData.append("file", uploadedFile);
+    formData.append("file", window.File);
 
     fetch("/api/uploadfile", {
       method: "POST",

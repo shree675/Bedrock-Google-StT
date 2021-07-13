@@ -44,7 +44,7 @@ function Homepage() {
     console.log(uploadedFile);
     // window.File = uploadedFile;
     // console.log(window.File);
-    formData.append("file", uploadedFile);
+    formData.append("file", window.File);
 
     // var reader = new FileReader();
     // reader.onload = function (event) {
@@ -76,7 +76,7 @@ function Homepage() {
     setUploadedFile(files[0]);
     console.log(uploadedFile);
     // console.log(files[0]);
-    // setFileName(files[0].name);
+    setFileName(files[0].name);
     setTranscription("");
     window.File = files[0];
     console.log(window.File);
