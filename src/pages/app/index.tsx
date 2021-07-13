@@ -10,6 +10,7 @@ import { event } from "next/dist/build/output/log";
 import { use } from "passport";
 import { useTranscriptQuery } from "../../client/graphql/getTranscripts.generated";
 import { GetStaticProps } from "next";
+import {BounceLoader} from 'react-spinners'
 
 export default function Dashboard() {
   const router = useRouter();
@@ -24,6 +25,7 @@ export default function Dashboard() {
   const [transcript, setTranscript] = useState("");
   const [timestamps, setTimestamps] = useState("");
   const [apiData, setApiData] = useState({});
+  const [loading, setLoading]= useState(false);
 
   useEffect(() => {
     const transcripts = data1?.data?.transcript;
@@ -92,6 +94,7 @@ export default function Dashboard() {
     setTranscription("");
 
     upload();
+    setLoading(true);
   };
 
   const hasUploaded = (event:any) => {
@@ -156,24 +159,31 @@ export default function Dashboard() {
           <br></br>
           <div style={{ textAlign: "center" }}>OR</div> */}
           <br></br>
-          <div className="flex items-center justify-center bg-grey-lighter">
-            <FileDrop
-              onFrameDragEnter={(event) => {}}
-              onFrameDragLeave={(event) => {}}
-              onFrameDrop={(event) => {}}
-              onDragOver={(event) => {}}
-              onDragLeave={(event) => {}}
-              onDrop={(files, event) => {
-                hasDropped(files, event);
-              }}
-            >
-              <div>
-                {filename === ""
-                  ? "Drag and drop an audio file"
-                  : `${filename} (or) Drop a different file`}
+          <div className="flex items-center justify-center bg-grey-lighter ">
+        <FileDrop
+          className="border-dashed border-2 text-center items-center justify-center rounded border-gray-400 py-16 px-96"
+          onFrameDragEnter={(event) => {}}
+          onFrameDragLeave={(event) => {}}
+          onFrameDrop={(event) => {}}
+          onDragOver={(event) => {}}
+          onDragLeave={(event) => {}}
+          onDrop={(files, event) => {
+            hasDropped(files, event);
+          }}
+        >
+          <div className="">
+            {filename === ""
+              ? <div >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-20 mb-4 stroke-current text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                  </svg>
+                  <p>Drag and drop an audio file</p>
+                  <p className="bg-clip-content bg-green-300 mt-4 text-xs rounded">We currently support only 60 seconds</p>
               </div>
-            </FileDrop>
+              : `${filename} (or) Drop a different file`}
           </div>
+        </FileDrop>
+      </div>
 
           <br></br>
           {/* <button
@@ -183,34 +193,32 @@ export default function Dashboard() {
             Upload
           </button> */}
           <br></br>
-          <div>We currently support only 60 seconds</div>
-          <div className="mt-8">
-            {transcription === "" ? (
-              <>
-                <h4 className="mb-4 font-bold">Transcription:</h4>
-                <div>(Please upload a file)</div>
-              </>
-            ) : (
-              <>
-                <h4 className="mb-4 font-bold">Transcription:</h4>
-                <div className="mr-64">{transcription}</div>
-              </>
-            )}
+          {loading?<div className="mt-8">
+        {transcription === "" ? (
+          <div className="w-full h-full inset-0 fixed bg-opacity-30 bg-gray-700">
+          <div className="absolute top-1/2 left-1/3 ml-24 ">
+            <BounceLoader loading/>
           </div>
-          <br></br>
-          <Link
-            href={{
-              pathname: "/app/choosetemplate",
-              query: {
-                transcript: transcription,
-                timestamps: timestamps,
-              },
-            }}
-          >
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Proceed
-            </button>
-          </Link>
+          </div>
+        ) : (
+          <>
+            
+      <Link
+        href={{
+          pathname: "/app/choosetemplate",
+          query: {
+            transcript: transcription,
+            timestamps: timestamps,
+          },
+        }}
+      >
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Proceed
+        </button>
+      </Link>
+          </>
+        )}
+      </div>:null}
 
           <div style={{ height: "50px" }}></div>
 
