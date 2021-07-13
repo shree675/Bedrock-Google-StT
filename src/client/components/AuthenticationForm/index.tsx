@@ -67,7 +67,7 @@ export default function AuthenticationForm() {
           fetch(`/api/auth/twitter`, {
             method: `POST`,
             body: JSON.stringify({
-              redirect: "/",
+              redirect: "/app",
             }),
             headers: { "Content-Type": "application/json" },
           })
