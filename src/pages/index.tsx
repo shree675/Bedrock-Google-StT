@@ -11,6 +11,7 @@ import { FileDrop } from "react-file-drop";
 import { event } from "next/dist/build/output/log";
 import { useCreateTranscriptMutation } from "../client/graphql/createTranscript.generated";
 import toast from "react-hot-toast";
+import {BounceLoader} from 'react-spinners'
 // import Wavesurfer from "react-wavesurfer";
 // import WaveSurfer from "wavesurfer";
 // import dynamic from "next/dynamic";
@@ -28,6 +29,7 @@ function Homepage() {
   const [name, setName] = useState("");
   const [uploadedFile, setUploadedFile] = useState("");
   const [filename, setFileName] = useState("");
+  const [loading, setLoading]= useState(false);
   const [transcription, setTranscription] = useState(
     "(Please upload an audio file)"
   );
@@ -74,11 +76,13 @@ function Homepage() {
     setUploadedFile(files[0]);
     console.log(uploadedFile);
     // console.log(files[0]);
-    // setFileName(files[0].name);
+    setFileName(files[0].name);
     setTranscription("");
     window.File = files[0];
     console.log(window.File);
     upload();
+
+    setLoading(true);
   };
 
   const hasUploaded = (event: any) => {
@@ -190,8 +194,9 @@ function Homepage() {
       <br></br>
       <div style={{ textAlign: "center" }}>OR</div> */}
       <br></br>
-      <div className="flex items-center justify-center bg-grey-lighter">
+      <div className="flex items-center justify-center bg-grey-lighter ">
         <FileDrop
+          className="border-dashed border-2 rounded border-gray-400 py-16 px-96"
           onFrameDragEnter={(event) => {}}
           onFrameDragLeave={(event) => {}}
           onFrameDrop={(event) => {}}
@@ -201,9 +206,15 @@ function Homepage() {
             hasDropped(files, event);
           }}
         >
-          <div>
+          <div className="">
             {filename === ""
-              ? "Drag and drop an audio file"
+              ? <div >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-20 mb-4 stroke-current text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                  </svg>
+                  <p>Drag and drop an audio file</p>
+                  <p className="bg-clip-content bg-green-300 mt-4 text-xs rounded">We currently support only 60 seconds</p>
+              </div>
               : `${filename} (or) Drop a different file`}
           </div>
         </FileDrop>
@@ -216,23 +227,16 @@ function Homepage() {
       >
         Upload
       </button> */}
-      <div>We currently support only 60 seconds</div>
-      <div className="mt-8">
+      {loading?<div className="mt-8">
         {transcription === "" ? (
-          <>
-            <h4 className="mb-4 font-bold">Transcription:</h4>
-            <div>(Please upload a file)</div>
-          </>
+          <div className="w-full h-full inset-0 fixed bg-opacity-30 bg-gray-700">
+          <div className="absolute top-1/2 left-1/3 ml-24 ">
+            <BounceLoader loading/>
+          </div>
+          </div>
         ) : (
           <>
-            <h4 className="mb-4 font-bold">Transcription:</h4>
-            <div className="mr-64">{transcription}</div>
-          </>
-        )}
-      </div>
-
-      <br></br>
-
+            
       <Link
         href={{
           pathname: "/app/choosetemplate",
@@ -246,6 +250,12 @@ function Homepage() {
           Proceed
         </button>
       </Link>
+          </>
+        )}
+      </div>:null}
+
+      <br></br>
+
 
       <div style={{ height: "50px" }}></div>
     </div>
