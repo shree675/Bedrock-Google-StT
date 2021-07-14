@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useGetUserEmailMutation } from "../../graphql/getUserEmail.generated";
 import Link from "next/link";
+import axios from "axios";
 
 /**
  * Used on the Login and Sign Up screens to handle authentication. Can be shared between those as Passport.js doesn't differentiate between logging in and signing up.
@@ -84,17 +85,50 @@ export default function AuthenticationForm() {
           <div style={{ flex: "2" }}> Sign up with Twitter</div>
         </div>
       </button>
-      {/* <Link href="/api/auth/twitter">
-        <button className="bg-white-500 text-black hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded mb-4 border">
-          <div style={{ display: "flex" }}>
-            <div style={{ flex: "0.3" }}>
-              <img src="/twitter.svg" height="30px" width="30px"></img>
-            </div>
-            &ensp;
-            <div style={{ flex: "2" }}> Sign up with Twitter</div>
+      {/* <br></br>
+      <button
+        className="bg-white-500 text-black hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded mb-4 border"
+        onClick={async () => {
+          fetch(`http://localhost:5000/twitter/login`, {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "application/json",
+            },
+          })
+            .then((res) => res.json())
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err));
+        }}
+      >
+        <div style={{ display: "flex" }}>
+          <div style={{ flex: "0.3" }}>
+            <img src="/twitter.svg" height="30px" width="30px"></img>
           </div>
-        </button>
-      </Link> */}
+          &ensp;
+          <div style={{ flex: "2" }}> Twitter Login</div>
+        </div>
+      </button>
+
+      <br></br>
+
+      <button
+        className="bg-white-500 text-black hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded mb-4 border"
+        onClick={async () => {
+          axios
+            .get("http://localhost:5000/twitter/login")
+            .then((res) => res.data())
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err));
+        }}
+      >
+        <div style={{ display: "flex" }}>
+          <div style={{ flex: "0.3" }}>
+            <img src="/twitter.svg" height="30px" width="30px"></img>
+          </div>
+          &ensp;
+          <div style={{ flex: "2" }}> Twitter</div>
+        </div>
+      </button> */}
     </div>
   );
 }

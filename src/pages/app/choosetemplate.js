@@ -6,7 +6,8 @@ const TemplatePage = () => {
   const {
     query: { transcript, timestamps },
   } = router;
-  // console.log(audiourl);
+  // console.log(window.File);
+
   return (
     <div className="ml-40 mt-8">
       <div className="text-2xl font-bold mb-4">Choose your template</div>

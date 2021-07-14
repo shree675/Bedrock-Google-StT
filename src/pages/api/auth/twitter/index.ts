@@ -144,14 +144,17 @@ import passport from "../../../../server/passport";
 var TwitterStrategy = require("passport-twitter").Strategy;
 var session = require("express-session");
 import handler from "../../../../server/api-route";
+import twitterLink from "../../../../server/passport/twitter";
+require("https").globalAgent.options.rejectUnauthorized = false;
+import magicLink from "../../../../server/passport/magicLink";
 
-// handler().get(
+// handler().use(
 //   passport.authenticate("twitter", {
 //     scope: ["profile", "email"],
 //   })
 // );
 
-export default (req: any, res: any) => {
+export default handler().use((req: any, res: any) => {
   passport.use(
     new TwitterStrategy(
       {
@@ -160,34 +163,31 @@ export default (req: any, res: any) => {
         callbackURL: "http://localhost:3000/api/auth/twitter/callback",
       },
       function (token: any, tokenSecret: any, profile: any, done: any) {
+        console.log(profile);
         return done(null, profile);
       }
     )
   );
 
-  passport.serializeUser(function (user, callback) {
-    callback(null, user);
-  });
+  passport.authenticate("twitter");
 
-  passport.deserializeUser(function (obj, callback) {
-    callback(null, obj);
-  });
+  // console.log(passport.authenticate("twitter"));
 
-  passport.authenticate("twitter", {
-    successRedirect: req.body.redirect,
-    failureRedirect: "/login",
-  });
-
+  // res.send(passport.serializeUser(() => {}));
   res.end();
-};
+});
 
-// export default function (req: any, res: any) {
-//   passport.authenticate("twitter", {
-//     successRedirect: req.body.redirect,
-//     failureRedirect: "/login",
+// export default handler()
+//   .use(twitterLink)
+//   .use(passport.authenticate("twitter"))
+//   .use((req, res) => {
+//     console.log(req.user);
+//     res.redirect(req.user?.redirect || "/app");
 //   });
-//   res.send(passport);
-// }
+
+// console.log(twitterLink);
+// console.log(magicLink);
+// export default handler().use(twitterLink).use(session);
 
 // --------------------------------------------------------------------------------------------------------------------
 

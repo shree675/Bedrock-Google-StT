@@ -1,5 +1,6 @@
 import passport from "passport";
-const TwitterStrategy = require("passport-twitter").Strategy;
+// const TwitterStrategy = require("passport-twitter").Strategy;
+import TwitterStrategy from "passport-twitter";
 import prisma from "../db/prisma";
 
 declare global {
@@ -17,6 +18,7 @@ declare global {
 // so the browser will remember the user when login
 passport.serializeUser(async (u: Express.User, done) => {
   const email = u.email.toLowerCase();
+  console.log(email);
   const user = await prisma.user.upsert({
     create: {
       email,
@@ -78,29 +80,29 @@ const twitterLink = new TwitterStrategy(
     consumerKey: process.env.TWITTER_API_KEY,
     consumerSecret: process.env.TWITTER_API_SECRET_KEY,
     callbackURL: "http://localhost:3000/api/auth/twitter/callback",
-    twitter_callback: async (req: any, res: any) => {
-      try {
-        const twitter_user = await req.user;
-        console.log(twitter_user);
-        const user = await prisma.user.upsert({
-          create: {
-            email: twitter_user.emails[0].value,
-          },
-          update: {},
-          where: {
-            email: twitter_user.emails[0].value,
-          },
-        });
-        // const user = await User.create({
-        //   name: twitter_user.displayName,
-        //   email: twitter_user.emails[0].value,
-        // });
+    //   twitter_callback: async (req: any, res: any) => {
+    //     try {
+    //       const twitter_user = await req.user;
+    //       console.log(twitter_user);
+    //       const user = await prisma.user.upsert({
+    //         create: {
+    //           email: twitter_user.emails[0].value,
+    //         },
+    //         update: {},
+    //         where: {
+    //           email: twitter_user.emails[0].value,
+    //         },
+    //       });
+    //       // const user = await User.create({
+    //       //   name: twitter_user.displayName,
+    //       //   email: twitter_user.emails[0].value,
+    //       // });
 
-        res.redirect("/app");
-      } catch (err) {
-        console.log(err);
-      }
-    },
+    //       res.redirect("/app");
+    //     } catch (err) {
+    //       console.log(err);
+    //     }
+    //   },
   },
   function (token: any, tokenSecret: any, profile: any, done: any) {
     console.log(profile);
@@ -108,6 +110,8 @@ const twitterLink = new TwitterStrategy(
   }
 );
 
-passport.use(twitterLink);
+// console.log(twitterLink);
+
+// passport.use(twitterLink);
 
 export default twitterLink;

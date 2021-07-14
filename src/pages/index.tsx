@@ -11,7 +11,7 @@ import { FileDrop } from "react-file-drop";
 import { event } from "next/dist/build/output/log";
 import { useCreateTranscriptMutation } from "../client/graphql/createTranscript.generated";
 import toast from "react-hot-toast";
-import {BounceLoader} from 'react-spinners'
+import { BounceLoader } from "react-spinners";
 // import Wavesurfer from "react-wavesurfer";
 // import WaveSurfer from "wavesurfer";
 // import dynamic from "next/dynamic";
@@ -29,7 +29,7 @@ function Homepage() {
   const [name, setName] = useState("");
   const [uploadedFile, setUploadedFile] = useState("");
   const [filename, setFileName] = useState("");
-  const [loading, setLoading]= useState(false);
+  const [loading, setLoading] = useState(false);
   const [transcription, setTranscription] = useState(
     "(Please upload an audio file)"
   );
@@ -42,9 +42,8 @@ function Homepage() {
   const upload = async () => {
     var formData = new FormData();
     console.log(uploadedFile);
-    // window.File = uploadedFile;
-    // console.log(window.File);
     formData.append("file", window.File);
+    console.log(window.File);
 
     // var reader = new FileReader();
     // reader.onload = function (event) {
@@ -62,12 +61,16 @@ function Homepage() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setApiData(data);
-        setTranscription(data.transcription);
-        // console.log("transcript: ", data.transcription);
-        // console.log("data : ", data.words);
         setTimestamps(JSON.stringify(data.words));
-        // console.log(JSON.stringify(data.words));
+        setTranscription(data.transcription);
+        setApiData(data);
+        router.push({
+          pathname: "/app/choosetemplate",
+          query: {
+            transcript: data.transcription,
+            timestamps: JSON.stringify(data.words),
+          },
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -75,7 +78,6 @@ function Homepage() {
   const hasDropped = (files: any, event: any) => {
     setUploadedFile(files[0]);
     console.log(uploadedFile);
-    // console.log(files[0]);
     setFileName(files[0].name);
     setTranscription("");
     window.File = files[0];
@@ -207,15 +209,30 @@ function Homepage() {
           }}
         >
           <div className="">
-            {filename === ""
-              ? <div >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-20 mb-4 stroke-current text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                  </svg>
-                  <p>Drag and drop an audio file</p>
-                  <p className="bg-clip-content bg-green-300 mt-4 text-xs rounded">We currently support only 60 seconds</p>
+            {filename === "" ? (
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 ml-20 mb-4 stroke-current text-blue-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+                  />
+                </svg>
+                <p>Drag and drop an audio file</p>
+                <p className="bg-clip-content bg-green-300 mt-4 text-xs rounded">
+                  We currently support only 60 seconds
+                </p>
               </div>
-              : `${filename} (or) Drop a different file`}
+            ) : (
+              `${filename} (or) Drop a different file`
+            )}
           </div>
         </FileDrop>
       </div>
@@ -227,37 +244,21 @@ function Homepage() {
       >
         Upload
       </button> */}
-      {loading?<div className="mt-8">
-        {transcription === "" ? (
-          <div className="w-full h-full inset-0 fixed bg-opacity-30 bg-gray-700">
-          <div className="absolute top-1/2 left-1/3 ml-24 ">
-            <BounceLoader loading/>
-          </div>
-          </div>
-        ) : (
-          <>
-            
-      <Link
-        href={{
-          pathname: "/app/choosetemplate",
-          query: {
-            transcript: transcription,
-            timestamps: timestamps,
-          },
-        }}
-      >
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Proceed
-        </button>
-      </Link>
-          </>
-        )}
-      </div>:null}
+      {loading ? (
+        <div className="mt-8">
+          {transcription === "" ? (
+            <div className="w-full h-full inset-0 fixed bg-opacity-30 bg-gray-700">
+              <div className="absolute top-1/2 left-1/3 ml-24 ">
+                <BounceLoader loading />
+              </div>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
 
       <br></br>
 
-
-      <div style={{ height: "50px" }}></div>
+      {/* <div style={{ height: "50px" }}></div> */}
     </div>
   );
 }

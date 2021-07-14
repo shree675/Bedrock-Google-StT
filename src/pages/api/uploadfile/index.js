@@ -17,14 +17,14 @@ export default async function test(req, res) {
   form.keepExtensions = true;
 
   form.on("fileBegin", function (name, file) {
-    console.log(file);
+    // console.log(file);
     //rename the incoming file to the file's name
     // fs.rename(file.path, form.uploadDir + "uploadedaudiofile");
     file.path = form.uploadDir + "uploadedaudiofile";
   });
 
   form.parse(req, async (err, fields, files) => {
-    console.log(files.file);
+    // console.log(files.file);
     ufile = files.file;
 
     const audio = {
