@@ -62,73 +62,18 @@ export default function AuthenticationForm() {
           Login
         </button>
       </form>
-      <button
-        className="bg-white-500 text-black hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded mb-4 border"
-        onClick={async () => {
-          fetch(`/api/auth/twitter`, {
-            method: `POST`,
-            body: JSON.stringify({
-              redirect: "/app",
-            }),
-            headers: { "Content-Type": "application/json" },
-          })
-            .then((res) => res.text())
-            .then((data) => console.log(data))
-            .catch((err) => console.log(err));
-        }}
-      >
-        <div style={{ display: "flex" }}>
-          <div style={{ flex: "0.3" }}>
-            <img src="/twitter.svg" height="30px" width="30px"></img>
+      <a href="http://localhost:3000/api/auth/twitter">
+        <button className="bg-white-500 text-black hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded mb-4 border">
+          <div style={{ display: "flex" }}>
+            <div style={{ flex: "0.3" }}>
+              <img src="/twitter.svg" height="30px" width="30px"></img>
+            </div>
+            &ensp;
+            <div style={{ flex: "2" }}> Sign up with Twitter</div>
           </div>
-          &ensp;
-          <div style={{ flex: "2" }}> Sign up with Twitter</div>
-        </div>
-      </button>
-      {/* <br></br>
-      <button
-        className="bg-white-500 text-black hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded mb-4 border"
-        onClick={async () => {
-          fetch(`http://localhost:5000/twitter/login`, {
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-              "Content-Type": "application/json",
-            },
-          })
-            .then((res) => res.json())
-            .then((data) => console.log(data))
-            .catch((err) => console.log(err));
-        }}
-      >
-        <div style={{ display: "flex" }}>
-          <div style={{ flex: "0.3" }}>
-            <img src="/twitter.svg" height="30px" width="30px"></img>
-          </div>
-          &ensp;
-          <div style={{ flex: "2" }}> Twitter Login</div>
-        </div>
-      </button>
-
+        </button>
+      </a>
       <br></br>
-
-      <button
-        className="bg-white-500 text-black hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded mb-4 border"
-        onClick={async () => {
-          axios
-            .get("http://localhost:5000/twitter/login")
-            .then((res) => res.data())
-            .then((data) => console.log(data))
-            .catch((err) => console.log(err));
-        }}
-      >
-        <div style={{ display: "flex" }}>
-          <div style={{ flex: "0.3" }}>
-            <img src="/twitter.svg" height="30px" width="30px"></img>
-          </div>
-          &ensp;
-          <div style={{ flex: "2" }}> Twitter</div>
-        </div>
-      </button> */}
     </div>
   );
 }

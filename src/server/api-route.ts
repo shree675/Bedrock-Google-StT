@@ -4,6 +4,7 @@ import nc from "next-connect";
 import { error } from "next/dist/build/output/log";
 import passport from "./passport";
 import { trustProxyMiddleware } from "./trust-proxy-middleware";
+var session = require("express-session");
 
 export interface Request extends NextApiRequest {
   // Passport adds these to the request object
@@ -51,6 +52,13 @@ function handler() {
             !process.env.INSECURE_AUTH,
         })
       )
+      // .use(
+      //   session({
+      //     secret: "fake",
+      //     resave: true,
+      //     saveUninitialized: true,
+      //   })
+      // )
       .use(passport.initialize())
       .use(passport.session())
   );

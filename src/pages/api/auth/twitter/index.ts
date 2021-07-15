@@ -140,62 +140,137 @@
 
 // --------------------------------------------------------------------------------------------------------------------
 
-import passport from "../../../../server/passport";
+import passport from "passport";
 var TwitterStrategy = require("passport-twitter").Strategy;
 var session = require("express-session");
 import handler from "../../../../server/api-route";
 import twitterLink from "../../../../server/passport/twitter";
 require("https").globalAgent.options.rejectUnauthorized = false;
 import magicLink from "../../../../server/passport/magicLink";
+import prisma from "../../../../server/db/prisma";
 
-// handler().use(
+export default handler().use(
+  passport.authenticate("twitter", {
+    scope: ["profile", "email"],
+  })
+);
+
+// export default async function (req: any, res: any) {
+//   passport.use(
+//     new TwitterStrategy(
+//       {
+//         consumerKey: process.env.TWITTER_API_KEY,
+//         consumerSecret: process.env.TWITTER_API_SECRET_KEY,
+//         callbackURL: "http://localhost:3000/api/auth/twitter/callback",
+//       },
+//       function (token: any, tokenSecret: any, profile: any, done: any) {
+//         console.log(profile);
+//         return done(null, profile);
+//       }
+//     )
+//   );
+
+//   // console.log("kdsfj;fsdka;jk;fdsa;sdkafj;kdlfsjfdskfsdja;k");
+
+//   passport.serializeUser(async (u: Express.User, done) => {
+//     const email = u.email.toLowerCase();
+//     console.log(u);
+//     const user = await prisma.user.upsert({
+//       create: {
+//         email,
+//       },
+//       update: {},
+//       where: {
+//         email,
+//       },
+//     });
+
+//     done(null, {
+//       ...u,
+//       id: user.id,
+//     });
+//   });
+
+//   passport.deserializeUser(async (user: Express.User, done) => {
+//     done(null, user);
+//   });
+
+//   passport.authenticate("twitter");
+
+//   passport.initialize();
+//   passport.session();
+
+//   console.log(passport.authenticate("twitter"));
+
 //   passport.authenticate("twitter", {
-//     scope: ["profile", "email"],
+//     successRedirect: "http://localhost:3000/app",
+//     failureRedirect: "http://localhost:3000/login",
+//   });
+
+//   res.send(passport.serializeUser(() => {}));
+//   // res.send(passport);
+// }
+
+// -------------------------------------------------------------------------------------------------
+
+// passport.use(
+//   new TwitterStrategy(
+//     {
+//       consumerKey: process.env.TWITTER_API_KEY,
+//       consumerSecret: process.env.TWITTER_API_SECRET_KEY,
+//       callbackURL: "http://localhost:3000/api/auth/twitter/callback",
+//     },
+//     function (token: any, tokenSecret: any, profile: any, cb: any) {
+//       // console.log(profile);
+//       return cb();
+//     }
+//   )
+// );
+
+// passport.serializeUser(async (u: Express.User, done) => {
+//   const email = u.email.toLowerCase();
+//   console.log(u);
+//   const user = await prisma.user.upsert({
+//     create: {
+//       email,
+//     },
+//     update: {},
+//     where: {
+//       email,
+//     },
+//   });
+
+//   done(null, {
+//     ...u,
+//     id: user.id,
+//   });
+// });
+
+// passport.deserializeUser(async (user: Express.User, done) => {
+//   done(null, user);
+// });
+
+// passport.serializeUser(function (user, callback) {
+//   callback(null, user);
+// });
+
+// passport.deserializeUser(function (obj, callback) {
+//   callback(null, obj);
+// });
+
+// export default handler().use(
+//   passport.authenticate("twitter", {
+//     successRedirect: "/app",
+//     failureRedirect: "/",
 //   })
 // );
 
-export default handler().use((req: any, res: any) => {
-  passport.use(
-    new TwitterStrategy(
-      {
-        consumerKey: process.env.TWITTER_API_KEY,
-        consumerSecret: process.env.TWITTER_API_SECRET_KEY,
-        callbackURL: "http://localhost:3000/api/auth/twitter/callback",
-      },
-      function (token: any, tokenSecret: any, profile: any, done: any) {
-        console.log(profile);
-        return done(null, profile);
-      }
-    )
-  );
-
-  passport.authenticate("twitter");
-
-  // console.log(passport.authenticate("twitter"));
-
-  // res.send(passport.serializeUser(() => {}));
-  res.end();
-});
-
-// export default handler()
-//   .use(twitterLink)
-//   .use(passport.authenticate("twitter"))
-//   .use((req, res) => {
-//     console.log(req.user);
-//     res.redirect(req.user?.redirect || "/app");
-//   });
-
-// console.log(twitterLink);
-// console.log(magicLink);
-// export default handler().use(twitterLink).use(session);
-
-// --------------------------------------------------------------------------------------------------------------------
-
-// import handler from "../../../../server/api-route";
-// import passport from "passport";
-
-// handler().get(
-//   passport.authenticate("twitter", {
-//     scope: ["profile", "email"],
+// export default handler().use(
+//   passport.authenticate("twitter", (err, user, info) => {
+//     if (err) {
+//       console.log(err.message);
+//     } else {
+//       console.log(user);
+//     }
 //   })
 // );

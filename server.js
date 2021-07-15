@@ -28,15 +28,15 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  res.header({
-    "Access-Control-Allow-Origin": "*",
-    "Content-Type": "application/json",
-  });
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header({
+//     "Access-Control-Allow-Origin": "*",
+//     "Content-Type": "application/json",
+//   });
+//   next();
+// });
 
-app.options("*", cors());
+// app.options("*", cors());
 
 app.use(
   session({
@@ -46,7 +46,6 @@ app.use(
   })
 );
 
-// console.log(process.env.TWITTER_API_KEY);
 // app.use(dotenv);
 passport.use(
   new TwitterStrategy(
@@ -61,7 +60,7 @@ passport.use(
   )
 );
 
-passport.serializeUser(function (user, callback) {
+passport.serializeUser(async function (user, callback) {
   callback(null, user);
 });
 

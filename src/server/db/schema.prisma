@@ -25,7 +25,6 @@ model Project {
   users      User[]
   name       String
   slug       String   @unique
-
   stripeCustomerId       String?   @unique
   stripeSubscriptionId   String?   @unique
   stripePriceId          String?
@@ -36,13 +35,13 @@ model Transcript {
   id              String   @id @default(cuid())
   createdAt       DateTime @default(now())
   modifiedAt      DateTime @default(now())
-  title           String
-  filetype        String
-  expirationdate  String
-  renderdate      String
-  status          String
-  transcript      String
-  userid          String
+  title           String  @default("empty")
+  filetype        String @default("empty")
+  expirationdate  String @default("empty")
+  renderdate      String @default("empty")
+  status          String @default("empty")
+  transcript      String @default("empty")
+  userid          String @default("empty")
   subtitle        String   @default("empty")
   titlecolor      String   @default("empty")
   audiourl        String   @default("empty")
