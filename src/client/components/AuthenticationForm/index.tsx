@@ -2,7 +2,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useGetUserEmailMutation } from "../../graphql/getUserEmail.generated";
 import Link from "next/link";
-import axios from "axios";
+import passport from "passport";
+var TwitterStrategy = require("passport-twitter").Strategy;
 
 /**
  * Used on the Login and Sign Up screens to handle authentication. Can be shared between those as Passport.js doesn't differentiate between logging in and signing up.
@@ -74,6 +75,34 @@ export default function AuthenticationForm() {
         </button>
       </a>
       <br></br>
+      <button
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+        onClick={async () => {
+          passport.use(
+            new TwitterStrategy(
+              {
+                consumerKey: "",
+                consumerSecret: "",
+                callbackURL: "http://localhost:3000/api/auth/twitter/callback",
+              },
+              function (token: any, tokenSecret: any, profile: any, cb: any) {
+                console.log(profile);
+                return cb();
+              }
+            )
+          );
+          passport.initialize();
+          passport.session();
+          passport.authenticate("twitter", (err, user) => {
+            console.log("err", err);
+            console.log("user", user);
+          });
+          console.log(passport);
+        }}
+      >
+        Login with Twitter
+      </button>
     </div>
   );
 }

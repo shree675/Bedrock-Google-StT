@@ -16,28 +16,28 @@ declare global {
 }
 // serialize the user.id to save in the cookie session
 // so the browser will remember the user when login
-passport.serializeUser(async (u: Express.User, done) => {
-  const email = u.email.toLowerCase();
-  console.log(email);
-  const user = await prisma.user.upsert({
-    create: {
-      email,
-    },
-    update: {},
-    where: {
-      email,
-    },
-  });
+// passport.serializeUser(async (u: Express.User, done) => {
+//   const email = u.email.toLowerCase();
+//   console.log(email);
+//   const user = await prisma.user.upsert({
+//     create: {
+//       email,
+//     },
+//     update: {},
+//     where: {
+//       email,
+//     },
+//   });
 
-  done(null, {
-    ...u,
-    id: user.id,
-  });
-});
+//   done(null, {
+//     ...u,
+//     id: user.id,
+//   });
+// });
 
-passport.deserializeUser(async (user: Express.User, done) => {
-  done(null, user);
-});
+// passport.deserializeUser(async (user: Express.User, done) => {
+//   done(null, user);
+// });
 
 // passport.use(
 //   new TwitterStrategy(
@@ -105,7 +105,7 @@ const twitterLink = new TwitterStrategy(
     //   },
   },
   function (token: any, tokenSecret: any, profile: any, done: any) {
-    console.log(profile);
+    console.log("/passport/twitter", profile);
     done(null, profile);
   }
 );

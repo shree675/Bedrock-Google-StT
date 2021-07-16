@@ -48,6 +48,14 @@ const EditTemplate = () => {
     query: { transcript, timestamps },
   } = router;
 
+  // if (!localStorage.getItem("audiofile")) {
+  //   localStorage.setItem("audiofile", window.File);
+  // }
+  // console.log(localStorage.getItem("audiofile"));
+  // const checkout =
+  //   typeof window !== "undefined" ? localStorage.getItem("checkout") : null;
+  // console.log(checkout);
+
   const containerRef = useRef();
   const waveSurferRef = useRef({
     isPlaying: () => false,
@@ -61,13 +69,13 @@ const EditTemplate = () => {
 
   useEffect(() => {
     // console.log(window.File);
-    setFile(window.File);
+    // setFile(window.File);
 
     import("wavesurfer.js")
       .then((x) => x.default)
       .then((WaveSurfer) => {
         try {
-          console.log(document.querySelector("#wave"));
+          // console.log(document.querySelector("#wave"));
           const waveSurfer = WaveSurfer.create({
             container: document.querySelector("#wave"),
             responsive: true,
@@ -82,9 +90,24 @@ const EditTemplate = () => {
 
           // console.log(window.File);
 
-          let audio = new Audio();
-          audio.src = URL.createObjectURL(window.File);
-          waveSurfer.load(audio);
+          // let audio = new Audio();
+          // audio.src = URL.createObjectURL(window.File);
+          // waveSurfer.load(audio);
+
+          // fetch(localStorage.getItem("audiofile"))
+          //   .then(function (res) {
+          //     return res.arrayBuffer();
+          //   })
+          //   .then(function (buf) {
+          //     console.log(new File([buf], "my file", { type: "audio/*" }));
+          //   });
+
+          // fetch(localStorage.getItem("audiofile"))
+          //   .then((res) => res.blob())
+          //   .then((data) => {
+          //     waveSurfer.loadBlob(data);
+          //   });
+          waveSurfer.load(localStorage.getItem("audiofile"));
 
           // waveSurfer.load(
           //   "http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3"
@@ -94,9 +117,8 @@ const EditTemplate = () => {
             else waveSurfer.pause();
           });
         } catch (err) {
-          alert(
-            "Contents are lost because of refreshing. Page will redirect to the home page."
-          );
+          console.log(err);
+          alert("An error occurred.");
           router.push("/app");
         }
       });
@@ -160,7 +182,7 @@ const EditTemplate = () => {
         userid: currentUser ? currentUser.id : "",
         subtitle: subtitle,
         titlecolor: titlecolor,
-        audiourl: "(empty)",
+        audiourl: localStorage.getItem("audiofile"),
         imageurl: imageurl,
         subtitlecolor: subtitlecolor,
         timestamps: timestamps,

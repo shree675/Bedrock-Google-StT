@@ -15,6 +15,7 @@ const cors = require("cors");
 const session = require("express-session");
 var passport = require("passport"),
   TwitterStrategy = require("passport-twitter").Strategy;
+const { redirect } = require("next/dist/next-server/server/api-utils");
 require("https").globalAgent.options.rejectUnauthorized = false;
 
 app.use(express.json());
@@ -46,6 +47,8 @@ app.use(
   })
 );
 
+var p = "";
+
 // app.use(dotenv);
 passport.use(
   new TwitterStrategy(
@@ -55,6 +58,10 @@ passport.use(
       callbackURL: "http://localhost:5000/auth/twitter/callback",
     },
     function (token, tokenSecret, profile, done) {
+      console.log(profile);
+      p = profile.id;
+      console.log("p", p);
+
       done(null, profile);
     }
   )
@@ -73,10 +80,12 @@ app.use(passport.session());
 
 app.get("/twitter/login", passport.authenticate("twitter"));
 
+console.log("hello:", p);
+
 app.get(
   "/auth/twitter/callback",
   passport.authenticate("twitter", {
-    successRedirect: "http://localhost:3000/app",
+    successRedirect: `http://localhost:3000/app?profileid=` + p,
     failureRedirect: "http://localhost:3000/login",
   })
 );

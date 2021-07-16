@@ -27,6 +27,11 @@ export default function Dashboard() {
   const [apiData, setApiData] = useState({});
   const [loading, setLoading] = useState(false);
 
+  // const {
+  //   query: { profileid },
+  // } = router;
+  // console.log(profileid);
+
   useEffect(() => {
     const transcripts = data1?.data?.transcript;
     setResults(transcripts);
@@ -37,6 +42,20 @@ export default function Dashboard() {
 
     formData.append("file", window.File);
     console.log(window.File);
+    // if (!localStorage.getItem("audiofile")) {
+    //   localStorage.setItem("audiofile", window.File);
+    // }
+    // console.log(localStorage.getItem("audiofile"));
+
+    var reader = new FileReader();
+    reader.readAsDataURL(window.File);
+    reader.onload = function () {
+      if (localStorage.getItem("audiofile")) {
+        localStorage.removeItem("audiofile");
+      }
+      localStorage.setItem("audiofile", reader.result);
+    };
+    // console.log(localStorage.getItem("audiofile"));
 
     fetch("/api/uploadfile", {
       method: "POST",
