@@ -223,7 +223,7 @@ passport.use(
       callbackURL: "http://localhost:3000/api/auth/twitter/callback",
     },
     function (token: any, tokenSecret: any, profile: any, cb: any) {
-      console.log("profile", profile);
+      // console.log("profile", profile);
       console.log("token", token);
       console.log("tokensecret", tokenSecret);
       return cb(null, "stackwork87@gmail.com");
@@ -233,6 +233,7 @@ passport.use(
 
 // passport.serializeUser(async (u: Express.User, done) => {
 //   const email = u.email.toLowerCase();
+//   // const email = "";
 //   console.log(u);
 //   const user = await prisma.user.upsert({
 //     create: {

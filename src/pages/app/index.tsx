@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import { useMutation } from "urql";
 import { CreateProjectDocument } from "../../client/graphql/createProject.generated";
 import { useGetCurrentUserQuery } from "../../client/graphql/getCurrentUser.generated";
-import axios from "axios";
 import { FileDrop } from "react-file-drop";
 import { event } from "next/dist/build/output/log";
 import { use } from "passport";
 import { useTranscriptQuery } from "../../client/graphql/getTranscripts.generated";
 import { GetStaticProps } from "next";
 import { BounceLoader } from "react-spinners";
+import prisma from "../../server/db/prisma";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -27,14 +27,33 @@ export default function Dashboard() {
   const [apiData, setApiData] = useState({});
   const [loading, setLoading] = useState(false);
 
-  // const {
-  //   query: { profileid },
-  // } = router;
-  // console.log(profileid);
+  const {
+    query: { profileid, username, email },
+  } = router;
+  console.log(profileid);
+  console.log(username);
+  console.log(email);
+
+  // console.log(server.p);
 
   useEffect(() => {
     const transcripts = data1?.data?.transcript;
     setResults(transcripts);
+    // if (profileid) {
+    //   prisma.user
+    //     .upsert({
+    //       create: {
+    //         email,
+    //       },
+    //       update: {},
+    //       where: {
+    //         email,
+    //       },
+    //     })
+    //     .then((data) => {
+    //       console.log("completed");
+    //     });
+    // }
   }, [filename, data1?.data?.transcript]);
 
   const upload = async () => {
@@ -91,15 +110,15 @@ export default function Dashboard() {
 
   if (error) return <p>{error.message}</p>;
 
-  if (!data?.currentUser) {
-    if (process.browser) router.push("/login");
-    return (
-      <p>
-        Redirecting to <Link href="/login">/login</Link>
-        ...
-      </p>
-    );
-  }
+  // if (!data?.currentUser) {
+  //   if (process.browser) router.push("/login");
+  //   return (
+  //     <p>
+  //       Redirecting to <Link href="/login">/login</Link>
+  //       ...
+  //     </p>
+  //   );
+  // }
 
   return (
     <div className="ml-20 mt-8">

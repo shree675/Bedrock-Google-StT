@@ -17,6 +17,9 @@ var passport = require("passport"),
   TwitterStrategy = require("passport-twitter").Strategy;
 const { redirect } = require("next/dist/next-server/server/api-utils");
 require("https").globalAgent.options.rejectUnauthorized = false;
+// import prisma from "./src/server/db/prisma";
+
+var p = "";
 
 app.use(express.json());
 
@@ -47,27 +50,33 @@ app.use(
   })
 );
 
-var p = "";
+// var p = "";
 
 // app.use(dotenv);
 passport.use(
   new TwitterStrategy(
     {
-      consumerKey: "9ovckXkGTToo2BwgpUcTqzZsz",
-      consumerSecret: "0c2F18KErtbuG1sGAiJfBL31BhEjwt6GRu7vZv4r9Hx55NECgv",
+      consumerKey: "HSA8cY1wJZjpN0JNsGcEgzo8V",
+      consumerSecret: "r5lXauB57n87nkkAgZGHGBGUKhMaah8j5NiXxDRVaUdT0hsFls",
       callbackURL: "http://localhost:5000/auth/twitter/callback",
+      includeEmail: true,
     },
     function (token, tokenSecret, profile, done) {
-      console.log(profile);
-      p = profile.id;
-      console.log("p", p);
-
+      // console.log(profile);
+      // setP(profile.id);
+      // p = profile.id;
+      global.id = profile.id;
+      console.log("global.id", global.id);
       done(null, profile);
     }
   )
 );
 
 passport.serializeUser(async function (user, callback) {
+  // if (!p) {
+  //   p = user.id;
+  global.id = user.id;
+  // }
   callback(null, user);
 });
 
@@ -80,16 +89,36 @@ app.use(passport.session());
 
 app.get("/twitter/login", passport.authenticate("twitter"));
 
-console.log("hello:", p);
+// console.log("hello:", p);
+
+// app.get(
+//   "/auth/twitter/callback",
+//   passport.authenticate("twitter", {
+//     successRedirect: "http://localhost:3000/app?profileid=" + global.id,
+//     failureRedirect: "http://localhost:3000/login",
+//   })
+// );
 
 app.get(
   "/auth/twitter/callback",
-  passport.authenticate("twitter", {
-    successRedirect: `http://localhost:3000/app?profileid=` + p,
-    failureRedirect: "http://localhost:3000/login",
-  })
+  passport.authenticate("twitter"),
+  function (req, res) {
+    console.log(req.user);
+    res.redirect(
+      "http://localhost:3000/app?profileid=" +
+        req.user.id +
+        "&usename=" +
+        req.user.username +
+        "&email=" +
+        req.user.emails[0].value
+    );
+  }
 );
 
 app.listen(5000, () => {
   console.log("listening on port 5000");
 });
+
+module.exports = {
+  p: p,
+};

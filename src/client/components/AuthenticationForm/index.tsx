@@ -63,7 +63,7 @@ export default function AuthenticationForm() {
           Login
         </button>
       </form>
-      <a href="http://localhost:3000/api/auth/twitter">
+      <a href="http://localhost:5000/twitter/login">
         <button className="bg-white-500 text-black hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded mb-4 border">
           <div style={{ display: "flex" }}>
             <div style={{ flex: "0.3" }}>
