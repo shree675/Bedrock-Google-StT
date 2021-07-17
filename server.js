@@ -1,11 +1,3 @@
-/**
- * This is a redundant file used for testing
- * This file is not being used anywhere in the code
- * But please do not delete this file
- */
-
-// ------------------------------------------------------------------------------------------------
-
 const express = require("express");
 const app = express();
 const path = require("path");
