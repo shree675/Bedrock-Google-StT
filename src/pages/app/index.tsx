@@ -7,16 +7,22 @@ import { useGetCurrentUserQuery } from "../../client/graphql/getCurrentUser.gene
 import { FileDrop } from "react-file-drop";
 import { event } from "next/dist/build/output/log";
 import { use } from "passport";
-import { useTranscriptQuery } from "../../client/graphql/getTranscripts.generated";
+import { useGetTranscriptsMutation } from "../../client/graphql/getTranscripts.generated";
 import { GetStaticProps } from "next";
 import { BounceLoader } from "react-spinners";
 import prisma from "../../server/db/prisma";
+import { useCreateUserMutation } from "../../client/graphql/createUser.generated";
+import toast from "react-hot-toast";
+import { setInterval } from "timers";
+import { useGetUserEmailMutation } from "../../client/graphql/getUserEmail.generated";
 
 export default function Dashboard() {
   const router = useRouter();
   const [{ data, fetching, error }] = useGetCurrentUserQuery();
+  const [, createUser] = useCreateUserMutation();
   const currentUser = data?.currentUser;
-  const [data1] = useTranscriptQuery();
+  // const [data1] = useTranscriptQuery();
+  const [, getTranscripts] = useGetTranscriptsMutation();
   const [uploadedFile, setUploadedFile] = useState("");
   const [filename, setFileName] = useState("");
   const [transcription, setTranscription] = useState("");
@@ -26,45 +32,94 @@ export default function Dashboard() {
   const [timestamps, setTimestamps] = useState("");
   const [apiData, setApiData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [x, setX] = useState(0);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [, getUserEmail] = useGetUserEmailMutation();
 
   const {
-    query: { profileid, username, email },
+    query: { profileid, username, emailad },
   } = router;
-  console.log(profileid);
-  console.log(username);
-  console.log(email);
+  // console.log(profileid);
 
-  // console.log(server.p);
+  const t = setInterval(() => {
+    setX(x + 1);
+    if (x >= 3) {
+      clearInterval(t);
+    }
+  }, 2000);
+
+  if (x >= 3) {
+    clearInterval(t);
+  }
 
   useEffect(() => {
-    const transcripts = data1?.data?.transcript;
-    setResults(transcripts);
-    // if (profileid) {
-    //   prisma.user
-    //     .upsert({
-    //       create: {
-    //         email,
-    //       },
-    //       update: {},
-    //       where: {
-    //         email,
-    //       },
-    //     })
-    //     .then((data) => {
-    //       console.log("completed");
-    //     });
-    // }
-  }, [filename, data1?.data?.transcript]);
+    // const transcripts = data1?.data?.transcript;
+    // console.log(data1);
+
+    // console.log(profileid);
+
+    getTranscripts({
+      userid: localStorage.getItem("userid"),
+    }).then((e) => {
+      // console.log(e.data?.getTranscripts);
+      setResults(e.data?.getTranscripts);
+    });
+
+    // setResults(transcripts);
+
+    if (profileid) {
+      localStorage.setItem("isloggedin", "true");
+      console.log(localStorage.getItem("isloggedin"));
+      getUserEmail({
+        id: profileid,
+      }).then((data) => {
+        // console.log(data);
+        localStorage.setItem("isloggedin", "true");
+        if (data.data?.getUserEmail) {
+          setEmail(data.data?.getUserEmail.email);
+          setName(data.data?.getUserEmail.name);
+          localStorage.setItem("name", data.data?.getUserEmail.name);
+          localStorage.setItem("userid", data.data.getUserEmail.id);
+        } else {
+          localStorage.setItem("userid", profileid);
+          localStorage.setItem("name", username);
+          setEmail(emailad);
+          setName(username);
+          createUser({
+            id: profileid,
+            name: username,
+            email: emailad,
+          });
+          router.push("/");
+        }
+      });
+    } else {
+      setName(localStorage.getItem("name"));
+    }
+
+    // console.log(x);
+    if (localStorage.getItem("isloggedin") === "false" && x >= 3) {
+      console.log("hello");
+      clearInterval(t);
+      router.push("/login");
+    } else if (localStorage.getItem("isloggedin") === "true" && x >= 3) {
+      clearInterval(t);
+    }
+    if (x >= 3) {
+      clearInterval(t);
+    }
+  }, [filename, profileid]);
 
   const upload = async () => {
+    if (localStorage.getItem("isloggedin") === "false") {
+      alert("You are not logged in. Please login");
+      router.push("/login");
+    }
     var formData = new FormData();
 
     formData.append("file", window.File);
     console.log(window.File);
-    // if (!localStorage.getItem("audiofile")) {
-    //   localStorage.setItem("audiofile", window.File);
-    // }
-    // console.log(localStorage.getItem("audiofile"));
 
     var reader = new FileReader();
     reader.readAsDataURL(window.File);
@@ -74,7 +129,6 @@ export default function Dashboard() {
       }
       localStorage.setItem("audiofile", reader.result);
     };
-    // console.log(localStorage.getItem("audiofile"));
 
     fetch("/api/uploadfile", {
       method: "POST",
@@ -122,7 +176,7 @@ export default function Dashboard() {
 
   return (
     <div className="ml-20 mt-8">
-      {!data?.currentUser ? (
+      {localStorage.getItem("isloggedin") === "false" ? (
         <>
           <h3>Sign up to our account and get started</h3>
           <br></br>
@@ -132,9 +186,7 @@ export default function Dashboard() {
         </>
       ) : (
         <>
-          <h1 className="text-4xl font-bold mb-4">
-            Hello, {data.currentUser.name}
-          </h1>
+          <h1 className="text-4xl font-bold mb-4">Hello, {name}</h1>
           <div className="text-2xl mb-4">Welcome to xyz</div>
 
           <br></br>

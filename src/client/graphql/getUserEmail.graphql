@@ -1,5 +1,5 @@
-mutation GetUserEmail($email: String!) {
-  getUserEmail(email: $email) {
+mutation GetUserEmail($id: String!) {
+  getUserEmail(id: $id) {
     id
     name
     email

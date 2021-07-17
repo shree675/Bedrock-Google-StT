@@ -103,13 +103,13 @@ app.get(
   "/auth/twitter/callback",
   passport.authenticate("twitter"),
   function (req, res) {
-    console.log(req.user);
+    console.log(req.isAuthenticated());
     res.redirect(
       "http://localhost:3000/app?profileid=" +
         req.user.id +
-        "&usename=" +
+        "&username=" +
         req.user.username +
-        "&email=" +
+        "&emailad=" +
         req.user.emails[0].value
     );
   }

@@ -1,3 +1,4 @@
+import { id } from "common-tags";
 import { extendType, nonNull, objectType, stringArg } from "nexus";
 import prisma from "../../db/prisma";
 
@@ -57,7 +58,7 @@ const mutations = extendType({
         userId: nonNull(stringArg()),
       },
       resolve: async (_, { userId }, ctx) => {
-        if (!ctx.user?.id) return null;
+        // if (!ctx.user?.id) return null;
 
         const hasAccess = await prisma.user.findFirst({
           where: { id: userId },
@@ -79,13 +80,44 @@ const mutations = extendType({
     t.nullable.field("getUserEmail", {
       type: "User",
       args: {
-        email: nonNull(stringArg()),
+        id: nonNull(stringArg()),
       },
-      resolve: async (_, { email }, ctx) => {
+      resolve: async (_, { id }, ctx) => {
         // if (!ctx.user?.id) return null;
 
         return await prisma.user.findFirst({
-          where: { email: email },
+          where: { id: id },
+        });
+      },
+    });
+
+    t.nullable.field("createUser", {
+      type: "User",
+      args: {
+        email: stringArg(),
+        name: stringArg(),
+        profilepic: stringArg(),
+        id: nonNull(stringArg()),
+      },
+      resolve: async (_, args, ctx) => {
+        // console.log(ctx);
+        // if (!ctx.user?.id) return null;
+
+        return await prisma.user.upsert({
+          where: {
+            id: args.id,
+          },
+          update: {
+            email: args.email,
+            name: args.name,
+            profilepic: args.profilepic,
+          },
+          create: {
+            id: args.id,
+            email: args.email,
+            name: args.name,
+            profilepic: args.profilepic,
+          },
         });
       },
     });

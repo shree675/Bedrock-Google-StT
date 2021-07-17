@@ -6,26 +6,52 @@ import { useUpdateUserMutation } from "../../client/graphql/updateUser.generated
 import toast from "react-hot-toast";
 import { useGetCurrentUserQuery } from "../../client/graphql/getCurrentUser.generated";
 import { useDeleteUserMutation } from "../../client/graphql/deleteUser.generated";
+import { useGetUserEmailMutation } from "../../client/graphql/getUserEmail.generated";
+import { useCreateUserMutation } from "../../client/graphql/createUser.generated";
+import { useDeleteTranscriptsMutation } from "../../client/graphql/deleteTranscripts.generated";
 
 export default function Dashboard() {
   const [{ data, fetching, error }] = useGetCurrentUserQuery();
+  const [, getUserEmail] = useGetUserEmailMutation();
   const router = useRouter();
   const [, updateUser] = useUpdateUserMutation();
   const [, deleteUser] = useDeleteUserMutation();
+  const [, deleteTranscripts] = useDeleteTranscriptsMutation();
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [profilepic, setProfilepic] = useState(
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
   );
   const currentUser = data?.currentUser;
+  const [, createUser] = useCreateUserMutation();
 
   useEffect(() => {
-    if (currentUser?.name) setName(currentUser.name);
-    if (currentUser?.email) setEmail(currentUser.email);
-    if (currentUser?.profilepic) setProfilepic(currentUser.profilepic);
+    // if (currentUser?.name) setName(currentUser.name);
+    // if (currentUser?.email) setEmail(currentUser.email);
+    // if (currentUser?.profilepic) setProfilepic(currentUser.profilepic);
+    // console.log(localStorage.getItem("email"));
+    if (localStorage.getItem("isloggedin") === "false") {
+      router.push("/login");
+      console.log("not logged in");
+    }
+    const user = getUserEmail({
+      id: localStorage.getItem("userid"),
+    }).then((data) => {
+      // console.log(data.data?.getUserEmail?.email);
+      if (data.data?.getUserEmail) {
+        setEmail(data.data?.getUserEmail.email);
+        setName(data.data?.getUserEmail.name);
+        localStorage.setItem("name", data.data?.getUserEmail.name);
+        setProfilepic(
+          data.data?.getUserEmail.profilepic
+            ? data.data?.getUserEmail.profilepic
+            : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+        );
+      }
+    });
   }, [currentUser]);
 
-  const onChangeImage = (e:any) => {
+  const onChangeImage = (e: any) => {
     // setProfilepic(event.target.files[0]);
     if (e.target.files && e.target.files[0]) {
       let reader = new FileReader();
@@ -41,15 +67,15 @@ export default function Dashboard() {
 
   if (error) return <p>{error.message}</p>;
 
-  if (!currentUser) {
-    if (process.browser) router.push("/login");
-    return (
-      <p>
-        Redirecting to <Link href="/login">/login</Link>
-        ...
-      </p>
-    );
-  }
+  // if (!currentUser) {
+  //   if (process.browser) router.push("/login");
+  //   return (
+  //     <p>
+  //       Redirecting to <Link href="/login">/login</Link>
+  //       ...
+  //     </p>
+  //   );
+  // }
 
   return (
     <div className="mx-40 mt-8">
@@ -134,10 +160,10 @@ export default function Dashboard() {
             onClick={() => {
               // console.log(profilepic);
               toast.promise(
-                updateUser({
+                createUser({
+                  id: localStorage.getItem("userid"),
                   name: name,
                   email: email,
-                  userId: currentUser.id,
                   profilepic: profilepic,
                 }),
                 {
@@ -146,6 +172,7 @@ export default function Dashboard() {
                   error: (err) => err,
                 }
               );
+              localStorage.setItem("name", name);
             }}
           >
             SAVE
@@ -204,17 +231,31 @@ export default function Dashboard() {
             className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-4"
             onClick={async () => {
               await toast.promise(
-                deleteUser({
-                  userId: currentUser.id,
+                deleteTranscripts({
+                  userid: localStorage.getItem("userid"),
                 }),
                 {
-                  loading: `Deleting account...`,
-                  success: `Account deleted! Refresh the browser to apply changes`,
+                  loading: `Deleting data`,
+                  success: `Data deleted!`,
                   error: (err) => {
                     return err;
                   },
                 }
               );
+              await toast.promise(
+                deleteUser({
+                  userId: localStorage.getItem("userid"),
+                }),
+                {
+                  loading: `Logging out...`,
+                  success: `Account deleted!`,
+                  error: (err) => {
+                    return err;
+                  },
+                }
+              );
+              localStorage.setItem("isloggedin", "false");
+              router.push("/login");
             }}
           >
             DELETE ACCOUNT

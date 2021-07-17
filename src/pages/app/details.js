@@ -1,11 +1,19 @@
 import { useRouter } from "next/router";
 import ReactPlayer from "react-player";
+import { useEffect } from "react";
 
 const Details = () => {
   const router = useRouter();
   const {
     query: { title, transcript, renderdate },
   } = router;
+
+  useEffect(() => {
+    if (localStorage.getItem("isloggedin") === "false") {
+      router.push("/login");
+    }
+  }, []);
+
   return (
     <div className="ml-40 mt-8">
       <h1 className="text-4xl font-bold mb-4">Details</h1>
@@ -16,9 +24,12 @@ const Details = () => {
       <div>{renderdate}</div>
       <br></br>
       <div>
-            <ReactPlayer controls url='https://www.youtube.com/watch?v=9P8mASSREYM'/>
-          </div>
-          <br></br>
+        <ReactPlayer
+          controls
+          url="https://www.youtube.com/watch?v=9P8mASSREYM"
+        />
+      </div>
+      <br></br>
       <h3 className="text-lg font-bold text-gray-500 mb-1">Transcript:</h3>
       <div style={{ paddingRight: "10%" }}>{transcript}</div>
       <br></br>

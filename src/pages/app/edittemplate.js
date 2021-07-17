@@ -65,6 +65,9 @@ const EditTemplate = () => {
   useEffect(() => {
     timestampstring = timestamps ? JSON.parse(timestamps) : {};
     // console.log(timestampstring);
+    if (localStorage.getItem("isloggedin") === "false") {
+      router.push("/login");
+    }
   }, []);
 
   useEffect(() => {
@@ -170,7 +173,7 @@ const EditTemplate = () => {
 
   const onClickSaveHandler = () => {
     setShowHide(!showHide);
-
+    // localStorage.getItem("userid")
     toast.promise(
       createTranscript({
         title: title,
@@ -179,10 +182,10 @@ const EditTemplate = () => {
         expirationdate: new Date().toDateString(),
         renderdate: new Date().toDateString(),
         status: "Done",
-        userid: currentUser ? currentUser.id : "",
+        userid: localStorage.getItem("userid"),
         subtitle: subtitle,
         titlecolor: titlecolor,
-        audiourl: localStorage.getItem("audiofile"),
+        audiourl: "(empty)",        // localStorage.getItem("audiofile")
         imageurl: imageurl,
         subtitlecolor: subtitlecolor,
         timestamps: timestamps,
@@ -193,6 +196,7 @@ const EditTemplate = () => {
         error: (err) => err,
       }
     );
+    // audiourl: localStorage.getItem("audiofile")
   };
 
   return (

@@ -1,5 +1,5 @@
-mutation GetTranscripts($userid: String!) {
-  getTranscripts(userid: $userid) {
+mutation DeleteTranscripts($userid: String!) {
+  deleteTranscripts(userid: $userid) {
     id
     title
     filetype

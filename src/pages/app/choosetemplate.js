@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const TemplatePage = () => {
   const router = useRouter();
@@ -7,6 +8,12 @@ const TemplatePage = () => {
     query: { transcript, timestamps },
   } = router;
   // console.log(window.File);
+
+  useEffect(() => {
+    if (localStorage.getItem("isloggedin") === "false") {
+      router.push("/login");
+    }
+  }, []);
 
   return (
     <div className="ml-40 mt-8">

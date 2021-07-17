@@ -26,16 +26,21 @@ const queries = extendType({
   definition: (t) => {
     t.list.field("transcript", {
       type: "Transcript",
-      resolve: async (_, __, ctx) => {
-        if (!ctx.user?.id) return null;
+      args: {
+        userid: nonNull(stringArg()),
+      },
+      resolve: async (_, userid, ctx) => {
+        // if (!ctx.user?.id) return null;
         // if (!userid)
         //   throw new Error(
         //     "Please provide a user ID to the transcript query (/Transcript/index.ts)"
         //   );
 
+        // console.log(id);
+
         const transcript = await prisma.transcript.findMany({
           where: {
-            userid: ctx.user.id,
+            userid: userid,
           },
         });
 
@@ -68,7 +73,7 @@ const mutations = extendType({
         timestamps: nonNull(stringArg()),
       },
       resolve: async (_, args, ctx) => {
-        if (!ctx.user?.id) return null;
+        // if (!ctx.user?.id) return null;
 
         return await prisma.transcript.create({
           data: {
@@ -90,19 +95,35 @@ const mutations = extendType({
       },
     });
 
-    // t.nullable.field("getTranscripts", {
-    //   type: "Transcript",
-    //   args: {
-    //     userid: nonNull(stringArg()),
-    //   },
-    //   resolve: async (_, args, ctx) => {
-    //     if (!ctx.user?.id) return null;
+    t.list.field("getTranscripts", {
+      type: "Transcript",
+      args: {
+        userid: nonNull(stringArg()),
+      },
+      resolve: async (_, args, ctx) => {
+        // if (!ctx.user?.id) return null;
 
-    //     return await prisma.transcript.findMany({
-    //       where: { userid: args.userid },
-    //     });
-    //   },
-    // });
+        return await prisma.transcript.findMany({
+          where: { userid: args.userid },
+        });
+      },
+    });
+
+    t.field("deleteTranscripts", {
+      type: "Transcript",
+      args: {
+        userid: nonNull(stringArg()),
+      },
+      resolve: async (_, args, ctx) => {
+        // if (!ctx.user?.id) return null;
+
+        await prisma.transcript.deleteMany({
+          where: { userid: args.userid },
+        });
+
+        return null;
+      },
+    });
   },
 });
 

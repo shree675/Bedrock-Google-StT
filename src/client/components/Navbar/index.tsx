@@ -4,13 +4,14 @@ import React, { useEffect, useState } from "react";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { clearInterval } from "timers";
 
 const navigation = [
   { name: "Dashboard", href: "/app", current: false },
   { name: "Profile", href: "/app/settings", current: false },
   { name: "Upgrade", href: "/", current: false },
   { name: "Feedback", href: "/app/feedback", current: false },
-  { name: "Logout", href: "/api/auth/logout", current: false },
+  // { name: "Logout", href: "/api/auth/logout", current: false },
 ];
 
 // function classNames(...classes) {
@@ -20,18 +21,40 @@ const navigation = [
 function Navbar() {
   const [{ data }] = useGetCurrentUserQuery();
   // console.log(data?.currentUser?.profilepic);
-  const isAuthenticated = !!data?.currentUser;
+  // const isAuthenticated = !!data?.currentUser;
+  const isAuthenticated = "false";
+  const [isloggedin, setStatus] = useState("");
   const [profilepic, setProfilepic] = useState("");
+  const [x, setX] = useState(0);
   // console.log(data?.currentUser);
 
+  const logout = () => {
+    setStatus("false");
+    localStorage.removeItem("isloggedin");
+    localStorage.removeItem("name");
+    localStorage.setItem("isloggedin", "false");
+  };
+
   useEffect(() => {
-    // console.log(data?.currentUser?.profilepic);
-    // setProfilepic(data?.currentUser?.profilepic);
-  }, []);
+    console.log(localStorage.getItem("isloggedin"));
+    setStatus(localStorage.getItem("isloggedin"));
+    const t = setInterval(() => {
+      setStatus(localStorage.getItem("isloggedin"));
+      setX(x + 1);
+
+      // console.log(x);
+      // if (localStorage.getItem("isloggedin") === "true") {
+      //   clearInterval(t);
+      // }
+      if (x >= 3) {
+        clearInterval(t);
+      }
+    }, 1000);
+  }, [isloggedin]);
 
   return (
     <>
-      {!isAuthenticated ? null : (
+      {isloggedin === "false" ? null : (
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
             <>
@@ -74,7 +97,6 @@ function Navbar() {
                               item.current
                                 ? "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
                                 : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                              
                             }
                             aria-current={item.current ? "page" : undefined}
                           >
@@ -83,6 +105,17 @@ function Navbar() {
                             </span>
                           </Link>
                         ))}
+                        <Link
+                          href="/login"
+                          className={
+                            "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                          }
+                          aria-current={undefined}
+                        >
+                          <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <button onClick={logout}>Logout</button>
+                          </span>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -196,7 +229,6 @@ function Navbar() {
                         item.current
                           ? "bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
                           : "text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                        
                       }
                       aria-current={item.current ? "page" : undefined}
                     >

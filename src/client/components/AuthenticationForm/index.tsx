@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useGetUserEmailMutation } from "../../graphql/getUserEmail.generated";
 import Link from "next/link";
 import passport from "passport";
@@ -16,9 +16,16 @@ export default function AuthenticationForm() {
   // const [data1]=useGetUserEmailMutation();
   const [, getUserEmail] = useGetUserEmailMutation();
 
+  useEffect(() => {
+    console.log(localStorage.getItem("isloggedin"));
+    if (localStorage.getItem("isloggedin") === "true") {
+      router.push("/app");
+    }
+  }, []);
+
   return (
     <div>
-      <form
+      {/* <form
         onSubmit={async (evt) => {
           evt.preventDefault();
 
@@ -62,7 +69,7 @@ export default function AuthenticationForm() {
         >
           Login
         </button>
-      </form>
+      </form> */}
       <a href="http://localhost:5000/twitter/login">
         <button className="bg-white-500 text-black hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded mb-4 border">
           <div style={{ display: "flex" }}>
@@ -75,7 +82,7 @@ export default function AuthenticationForm() {
         </button>
       </a>
       <br></br>
-      <button
+      {/* <button
         type="submit"
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
         onClick={async () => {
@@ -102,7 +109,7 @@ export default function AuthenticationForm() {
         }}
       >
         Login with Twitter
-      </button>
+      </button> */}
     </div>
   );
 }

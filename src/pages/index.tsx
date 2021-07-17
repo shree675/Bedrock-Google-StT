@@ -39,6 +39,12 @@ function Homepage() {
 
   useEffect(() => {}, [filename]);
 
+  useEffect(() => {
+    if (localStorage.getItem("isloggedin") === "false") {
+      router.push("/login");
+    }
+  }, []);
+
   const upload = async () => {
     var formData = new FormData();
     console.log(uploadedFile);
@@ -103,22 +109,22 @@ function Homepage() {
 
   if (error) return <p>{error.message}</p>;
 
-  if (!data?.currentUser) {
-    if (process.browser) router.push("/login");
-    return (
-      <p>
-        Redirecting to <Link href="/login">/login</Link>
-        ...
-      </p>
-    );
-  }
+  // if (!data?.currentUser) {
+  //   if (process.browser) router.push("/login");
+  //   return (
+  //     <p>
+  //       Redirecting to <Link href="/login">/login</Link>
+  //       ...
+  //     </p>
+  //   );
+  // }
 
   return (
     <div className="ml-40 mt-8">
       <h1 className="text-2xl font-bold mb-4">Getting Started</h1>
       <h2 className="mb-4 text-lg">
-        👋Welcome {data.currentUser.name}! This is your onboading page to play
-        around with.
+        👋Welcome {localStorage.getItem("name")}! This is your onboading page to
+        play around with.
       </h2>
 
       <br></br>

@@ -1,0 +1,19 @@
+mutation CreateUser(
+  $name: String
+  $profilepic: String
+  $email: String
+  $id: String!
+) {
+  createUser(name: $name, profilepic: $profilepic, email: $email, id: $id) {
+    id
+    name
+    email
+    profilepic
+    projects {
+      id
+      name
+      slug
+      paidPlan
+    }
+  }
+}
