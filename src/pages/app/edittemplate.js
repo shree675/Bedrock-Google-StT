@@ -65,6 +65,12 @@ const EditTemplate = () => {
   useEffect(() => {
     timestampstring = timestamps ? JSON.parse(timestamps) : {};
     // console.log(timestampstring);
+    if (
+      localStorage.getItem("isloggedin") === null ||
+      localStorage.getItem("isloggedin") === undefined
+    ) {
+      router.push("/login");
+    }
     if (localStorage.getItem("isloggedin") === "false") {
       router.push("/login");
     }
@@ -185,7 +191,7 @@ const EditTemplate = () => {
         userid: localStorage.getItem("userid"),
         subtitle: subtitle,
         titlecolor: titlecolor,
-        audiourl: "(empty)",        // localStorage.getItem("audiofile")
+        audiourl: "(empty)", // localStorage.getItem("audiofile")
         imageurl: imageurl,
         subtitlecolor: subtitlecolor,
         timestamps: timestamps,
