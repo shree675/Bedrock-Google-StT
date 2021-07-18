@@ -182,7 +182,7 @@ export default function Dashboard() {
   // }
 
   return (
-    <div className="ml-20 mt-8">
+    <div className="ml-72 mt-8">
       {localStorage.getItem("isloggedin") === "false" ? (
         <>
           <h3>Sign up to our account and get started</h3>
@@ -193,11 +193,15 @@ export default function Dashboard() {
         </>
       ) : (
         <>
+          <div className = "mb-8 flex">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 stroke-current text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+            </svg>
+            <p className="mx-4 text-gray-300 text-lg font-bold">/</p>
+            <p className="text-lg text-green-400 font-bold">Dashboard</p>
+          </div>
           <h1 className="text-4xl font-bold mb-4">Hello, {name}</h1>
           <div className="text-2xl mb-4">Welcome to xyz</div>
-
-          <br></br>
-          <div className="mb-4 font-bold">Upload from computer</div>
 
           <br></br>
           {/* <div className="flex items-center justify-center bg-grey-lighter">
@@ -282,13 +286,7 @@ export default function Dashboard() {
             </div>
           ) : null}
 
-          <div style={{ height: "50px" }}></div>
-
           <hr></hr>
-
-          <div style={{ height: "50px" }}></div>
-
-          <h3 className="mb-4 font-bold text-2xl">Previous Transcriptions</h3>
 
           <div style={{ width: "90%" }}>
             <div className="flex flex-col">
