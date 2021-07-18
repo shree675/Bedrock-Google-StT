@@ -20,7 +20,7 @@ export default function Dashboard() {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [profilepic, setProfilepic] = useState(
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+    " "
   );
   const currentUser = data?.currentUser;
   const [, createUser] = useCreateUserMutation();
@@ -45,7 +45,7 @@ export default function Dashboard() {
         setProfilepic(
           data.data?.getUserEmail.profilepic
             ? data.data?.getUserEmail.profilepic
-            : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            : " "
         );
       }
     });
@@ -78,42 +78,34 @@ export default function Dashboard() {
   // }
 
   return (
-    <div className="mx-40 mt-8">
-      <h1 className="text-4xl font-bold mb-4">Profile</h1>
+    <div className="mx-72 mt-8">
+      <h1 className="text-3xl font-bold mb-4">Profile</h1>
       <br></br>
-      <div style={{ display: "flex" }}>
-        <div style={{ flex: 1 }}>
+      <div className="flex">
+        <div className="flex-1">
           <div className="mb-2 text-2xl">Profile Information</div>
           <div>
             Update your account's profile information and email address.
           </div>
         </div>
         <div
-          style={{
-            flex: 1,
-            borderLeft: "1px solid #cecece",
-            paddingLeft: "20px",
-          }}
+          className="flex-1 border-l-2 pl-8"
         >
           <div>
             <div>
               <b>Photo</b>
             </div>
             <div>
-              <img src={profilepic} width={80} height={80}></img>
+              {profilepic === " " ?
+              <div className="bg-blue-200 text-3xl px-3 py-3 rounded-full w-16 h-16 center text-blue-600">NE</div>  
+            :
+              <img className="rounded-full" src={profilepic} width={80} height={80}></img>}
             </div>
-            <div className="flex bg-grey-lighter">
-              <label className="w-48 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
-                <svg
-                  className="w-8 h-8"
-                  fill="blue"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-                </svg>
-                <div style={{ fontSize: "12px", paddingBottom: "0px" }}>
-                  Upload an image
+            <div className="flex bg-grey-lighter mt-4">
+              <label className="w-48 flex flex-col items-center px-2 py-4 font-bold bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+              
+                <div className="text-sm pb-0">
+                  SELECT A NEW PHOTO
                 </div>
                 <input
                   className="hidden"
@@ -156,7 +148,7 @@ export default function Dashboard() {
           </div>
           <br></br>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+            className="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
             onClick={() => {
               // console.log(profilepic);
               toast.promise(
@@ -181,8 +173,8 @@ export default function Dashboard() {
       </div>
       <br></br>
       <hr className="mb-4"></hr>
-      <div style={{ display: "flex" }}>
-        <div style={{ flex: 1 }}>
+      <div className="flex">
+        <div className="flex-1">
           <div className="mb-2 text-2xl">Browser Sessions</div>
           <div>
             Manage and logout your active sessions on other browsers and
@@ -190,11 +182,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div
-          style={{
-            flex: 1,
-            borderLeft: "1px solid #cecece",
-            paddingLeft: "20px",
-          }}
+          className="flex-1 border-l-2 pl-8"
         >
           <div>
             If necessary, you may logout of all of your other browser sessions
@@ -202,7 +190,7 @@ export default function Dashboard() {
             below; however, this list may not be exhaustive. If you feel your
             account has been compromised, you should also update your password.
           </div>
-          <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+          <button className="mt-4 bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
             LOGOUT OTHER BROWSER SESSIONS
           </button>
           <br></br>
@@ -210,17 +198,13 @@ export default function Dashboard() {
       </div>
       <br></br>
       <hr className="mb-4"></hr>
-      <div style={{ display: "flex" }}>
-        <div style={{ flex: 1 }}>
+      <div className="flex">
+        <div className="flex-1">
           <div className="mb-2 text-2xl">Delete Account</div>
           <div>Permenantly delete your account.</div>
         </div>
         <div
-          style={{
-            flex: 1,
-            borderLeft: "1px solid #cecece",
-            paddingLeft: "20px",
-          }}
+          className="flex-1 border-l-2 pl-8"
         >
           <div>
             Once your account is deleted, all of its resources and data will be

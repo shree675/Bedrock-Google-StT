@@ -93,9 +93,9 @@ const EditTemplate = () => {
 
           // console.log(window.File);
 
-          // let audio = new Audio();
-          // audio.src = URL.createObjectURL(window.File);
-          // waveSurfer.load(audio);
+          let audio = new Audio();
+          audio.src = URL.createObjectURL(window.File);
+          waveSurfer.load(audio);
 
           // fetch(localStorage.getItem("audiofile"))
           //   .then(function (res) {
@@ -110,7 +110,7 @@ const EditTemplate = () => {
           //   .then((data) => {
           //     waveSurfer.loadBlob(data);
           //   });
-          waveSurfer.load(localStorage.getItem("audiofile"));
+          // waveSurfer.load(localStorage.getItem("audiofile"));
 
           // waveSurfer.load(
           //   "http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3"
@@ -201,7 +201,17 @@ const EditTemplate = () => {
 
   return (
     <div className="ml-72 mt-8">
-      <br></br>
+      <div className = "mb-8 flex">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 stroke-current text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+        </svg>
+        <p className="mx-4 text-gray-300 text-lg font-bold">/</p>
+        <p className="text-lg text-gray-400 font-bold">Dashboard</p>
+        <p className="mx-4 text-gray-300 text-lg font-bold">/</p>
+        <p className="text-lg text-gray-400 font-bold">Template</p>
+        <p className="mx-4 text-gray-300 text-lg font-bold">/</p>
+        <p className="text-lg text-green-400 font-bold">Transcript</p>
+      </div>
       <div className="flex">
         <div>
           <div className="flex ">
@@ -356,15 +366,15 @@ const EditTemplate = () => {
 
         <div className="ml-8">
           <ReactPlayer
-            width="560px"
-            height="360px"
+            width="360px"
+            height="240px"
             controls
             url="https://www.youtube.com/watch?v=9P8mASSREYM"
           />
         </div>
       </div>
 
-      <div id="wave" style={{ marginRight: `3%`, marginTop: "40px" }}></div>
+      <div id="wave" className="mr-8 mt-24"></div>
 
       <button
         onClick={() => {
