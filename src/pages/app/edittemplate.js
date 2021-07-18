@@ -370,7 +370,10 @@ const EditTemplate = () => {
         </div>
       </div>
 
-      <div id="wave" style={{ marginRight: `3%`, marginTop: "40px" }}></div>
+      <div
+        id="wave"
+        style={{ marginRight: `3%`, marginTop: "40px", display: "none" }}
+      ></div>
 
       <button
         onClick={() => {
