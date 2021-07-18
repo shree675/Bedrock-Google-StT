@@ -19,9 +19,7 @@ export default function Dashboard() {
   const [, deleteTranscripts] = useDeleteTranscriptsMutation();
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [profilepic, setProfilepic] = useState(
-    " "
-  );
+  const [profilepic, setProfilepic] = useState(" ");
   const currentUser = data?.currentUser;
   const [, createUser] = useCreateUserMutation();
 
@@ -88,25 +86,28 @@ export default function Dashboard() {
             Update your account's profile information and email address.
           </div>
         </div>
-        <div
-          className="flex-1 border-l-2 pl-8"
-        >
+        <div className="flex-1 border-l-2 pl-8">
           <div>
             <div>
               <b>Photo</b>
             </div>
             <div>
-              {profilepic === " " ?
-              <div className="bg-blue-200 text-3xl px-3 py-3 rounded-full w-16 h-16 center text-blue-600">NE</div>  
-            :
-              <img className="rounded-full" src={profilepic} width={80} height={80}></img>}
+              {profilepic === " " ? (
+                <div className="bg-blue-200 text-3xl px-3 py-3 rounded-full w-16 h-16 center text-blue-600">
+                  NE
+                </div>
+              ) : (
+                <img
+                  className="rounded-full"
+                  src={profilepic}
+                  width={80}
+                  height={80}
+                ></img>
+              )}
             </div>
             <div className="flex bg-grey-lighter mt-4">
               <label className="w-48 flex flex-col items-center px-2 py-4 font-bold bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
-              
-                <div className="text-sm pb-0">
-                  SELECT A NEW PHOTO
-                </div>
+                <div className="text-sm pb-0">SELECT A NEW PHOTO</div>
                 <input
                   className="hidden"
                   type="file"
@@ -181,16 +182,20 @@ export default function Dashboard() {
             devices.
           </div>
         </div>
-        <div
-          className="flex-1 border-l-2 pl-8"
-        >
+        <div className="flex-1 border-l-2 pl-8">
           <div>
             If necessary, you may logout of all of your other browser sessions
             across all of your devices. Some of your recent sessions are listed
             below; however, this list may not be exhaustive. If you feel your
             account has been compromised, you should also update your password.
           </div>
-          <button className="mt-4 bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+          <button
+            className="mt-4 bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+            onClick={() => {
+              localStorage.setItem("isloggedin", "false");
+              router.push("/login");
+            }}
+          >
             LOGOUT OTHER BROWSER SESSIONS
           </button>
           <br></br>
@@ -203,9 +208,7 @@ export default function Dashboard() {
           <div className="mb-2 text-2xl">Delete Account</div>
           <div>Permenantly delete your account.</div>
         </div>
-        <div
-          className="flex-1 border-l-2 pl-8"
-        >
+        <div className="flex-1 border-l-2 pl-8">
           <div>
             Once your account is deleted, all of its resources and data will be
             permanently deleted. Before deleting your account, please download
