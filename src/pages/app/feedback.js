@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
+import { useRouter } from "next/router";
 // import 'alpinejs';
 
 // window.ap = function() {
@@ -69,7 +70,20 @@ import { useState } from "react";
 //   <div dangerouslySetInnerHTML={{__html: alpineTemplate}} />
 // );
 
+
+
 const Feedback = () => {
+  useEffect(() => {
+    if (
+      localStorage.getItem("isloggedin") === null ||
+      localStorage.getItem("isloggedin") === undefined
+    ) {
+      router.push("/login");
+    }
+    if (localStorage.getItem("isloggedin") === "false") {
+      router.push("/login");
+    }
+  });
 
   return (
     <div>

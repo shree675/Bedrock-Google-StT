@@ -23,7 +23,7 @@ function Navbar() {
   // console.log(data?.currentUser?.profilepic);
   // const isAuthenticated = !!data?.currentUser;
   const isAuthenticated = "false";
-  const [isloggedin, setStatus] = useState("");
+  const [isloggedin, setStatus] = useState("false");
   const [profilepic, setProfilepic] = useState("");
   const [x, setX] = useState(0);
   // console.log(data?.currentUser);

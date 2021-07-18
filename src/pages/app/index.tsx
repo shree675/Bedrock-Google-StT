@@ -109,6 +109,13 @@ export default function Dashboard() {
     if (x >= 3) {
       clearInterval(t);
     }
+
+    if (
+      localStorage.getItem("isloggedin") === null ||
+      localStorage.getItem("isloggedin") === undefined
+    ) {
+      router.push("/login");
+    }
   }, [filename, profileid]);
 
   const upload = async () => {

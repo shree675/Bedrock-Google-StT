@@ -40,6 +40,12 @@ function Homepage() {
   useEffect(() => {}, [filename]);
 
   useEffect(() => {
+    if (
+      localStorage.getItem("isloggedin") === null ||
+      localStorage.getItem("isloggedin") === undefined
+    ) {
+      router.push("/login");
+    }
     if (localStorage.getItem("isloggedin") === "false") {
       router.push("/login");
     }

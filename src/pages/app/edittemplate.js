@@ -65,6 +65,12 @@ const EditTemplate = () => {
   useEffect(() => {
     timestampstring = timestamps ? JSON.parse(timestamps) : {};
     // console.log(timestampstring);
+    if (
+      localStorage.getItem("isloggedin") === null ||
+      localStorage.getItem("isloggedin") === undefined
+    ) {
+      router.push("/login");
+    }
     if (localStorage.getItem("isloggedin") === "false") {
       router.push("/login");
     }
@@ -185,7 +191,7 @@ const EditTemplate = () => {
         userid: localStorage.getItem("userid"),
         subtitle: subtitle,
         titlecolor: titlecolor,
-        audiourl: "(empty)",        // localStorage.getItem("audiofile")
+        audiourl: "(empty)", // localStorage.getItem("audiofile")
         imageurl: imageurl,
         subtitlecolor: subtitlecolor,
         timestamps: timestamps,
@@ -213,6 +219,7 @@ const EditTemplate = () => {
         <p className="text-lg text-green-400 font-bold">Transcript</p>
       </div>
       <div className="flex">
+        <div>
         <div>
           <div className="flex ">
             <Tippy
@@ -323,7 +330,7 @@ const EditTemplate = () => {
 
           <div className="flex items-center justify-center bg-grey-lighter ">
             <FileDrop
-              className="border-dashed border-2 rounded border-gray-400 py-4 px-32"
+              className="border-dashed border-2 rounded border-gray-400 py-4 px-28 mr-16"
               onFrameDragEnter={(event) => {}}
               onFrameDragLeave={(event) => {}}
               onFrameDrop={(event) => {}}
@@ -364,17 +371,10 @@ const EditTemplate = () => {
           <br />
         </div>
 
-        <div className="ml-8">
-          <ReactPlayer
-            width="360px"
-            height="240px"
-            controls
-            url="https://www.youtube.com/watch?v=9P8mASSREYM"
-          />
-        </div>
-      </div>
+        
+      
 
-      <div id="wave" className="mr-8 mt-24"></div>
+      <div id="wave" className="mr-8 mt-24 hidden"></div>
 
       <button
         onClick={() => {
@@ -418,7 +418,7 @@ const EditTemplate = () => {
       <div ref={containerRef} />
 
       <h4 className="font-bold text-lg mb-4 ">Transcript:</h4>
-      <div className="mr-64">{transcript}</div>
+      <div className="mr-24">{transcript}</div>
       <br></br>
       {/* <h4 class="font-bold text-lg mb-4 mt-8">Timestamps:</h4>
         <div>
@@ -475,6 +475,16 @@ const EditTemplate = () => {
           </div>
         </div>
       ) : null}
+      </div>
+      <div className=" mt-24 mr-8">
+          <ReactPlayer
+            width="560px"
+            height="340px"
+            controls
+            url="https://www.youtube.com/watch?v=9P8mASSREYM"
+          />
+        </div>
+      </div>
     </div>
   );
   // }
