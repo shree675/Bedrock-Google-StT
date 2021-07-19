@@ -36,6 +36,99 @@ export default function Dashboard() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [, getUserEmail] = useGetUserEmailMutation();
+  const [show, setShow] = useState(false);
+  const [lang, setLang] = useState("en-US");
+
+  const languages = [
+    [
+      {
+        name: "Arabic",
+        value: "ar-DZ",
+      },
+      {
+        name: "Czech",
+        value: "cs-CZ",
+      },
+      {
+        name: "Dutch",
+        value: "nl-BE",
+      },
+      {
+        name: "English",
+        value: "en-US",
+      },
+      {
+        name: "French",
+        value: "fr-FR",
+      },
+    ],
+    [
+      {
+        name: "German",
+        value: "de-DE",
+      },
+      {
+        name: "Hindi",
+        value: "hi-IN",
+      },
+      {
+        name: "Italian",
+        value: "it-IT",
+      },
+      {
+        name: "Indonesian",
+        value: "id-ID",
+      },
+      {
+        name: "Japanese",
+        value: "ja-JP",
+      },
+    ],
+    [
+      {
+        name: "Korean",
+        value: "ko-KR",
+      },
+      {
+        name: "Malay",
+        value: "ms-MY",
+      },
+      {
+        name: "Portuguese",
+        value: "pt-PT",
+      },
+      {
+        name: "Polish",
+        value: "pl-PL",
+      },
+      {
+        name: "Russian",
+        value: "ru-RU",
+      },
+    ],
+    [
+      {
+        name: "Spanish",
+        value: "es-ES",
+      },
+      {
+        name: "Swedish",
+        value: "sv-SE",
+      },
+      {
+        name: "Thai",
+        value: "th-TH",
+      },
+      {
+        name: "Turkish",
+        value: "tr-TR",
+      },
+      {
+        name: "Vietnamese",
+        value: "vi-VN",
+      },
+    ],
+  ];
 
   // const {
   //   query: { profileid, username, emailad },
@@ -107,7 +200,7 @@ export default function Dashboard() {
     ) {
       router.push("/signup");
     }
-  }, [filename]);
+  }, [filename, lang]);
 
   const upload = async () => {
     if (localStorage.getItem("isloggedin") === "false") {
@@ -117,7 +210,7 @@ export default function Dashboard() {
     var formData = new FormData();
 
     formData.append("file", window.File);
-    formData.append("language", "english");
+    formData.append("language", lang);
     console.log(window.File);
 
     var reader = new FileReader();
@@ -147,16 +240,16 @@ export default function Dashboard() {
         });
       })
       .catch((err) => console.log(err));
+    setLoading(false);
   };
 
   const hasDropped = (files: any, event: any) => {
+    setShow(true);
     setUploadedFile(files[0]);
     setFileName(files[0].name);
     setTranscription("");
     window.File = files[0];
     console.log(window.File);
-    upload();
-    setLoading(true);
   };
 
   if (fetching) return <p></p>;
@@ -262,6 +355,78 @@ export default function Dashboard() {
               </div>
             </FileDrop>
           </div>
+
+          {show ? (
+            <div className="w-full h-full inset-0 fixed">
+              <div className="w-full h-full inset-0 fixed bg-opacity-30 bg-gray-700">
+                <div
+                  className="absolute top-20 ml-24 bg-white text-center px-12 pt-8 rounded"
+                  style={{
+                    width: "61%",
+                    marginLeft: "19%",
+                    paddingLeft: "11%",
+                    paddingRight: "10%",
+                  }}
+                >
+                  <img
+                    src="/dotsworld.svg"
+                    width="180"
+                    height="180"
+                    style={{ marginLeft: `31%` }}
+                  ></img>
+                  <br></br>
+                  <h1 className="font-bold text-3xl">Select Language</h1>
+                  <br></br>
+                  <div style={{ textAlign: "center" }}>
+                    <table>
+                      {languages.map((language) => (
+                        <tr>
+                          {language.map((lan) => (
+                            <td>
+                              <button
+                                style={{
+                                  width: `100px`,
+                                  margin: `10px`,
+                                  paddingTop: `4px`,
+                                  paddingBottom: `4px`,
+                                }}
+                                className={
+                                  lang === lan.value
+                                    ? "bg-blue-800 text-white py-2 px-4 rounded mb-4 font-bold"
+                                    : "bg-blue-200 hover:bg-blue-800 text-blue-800 hover:text-white py-2 px-4 rounded mb-4"
+                                }
+                                onClick={() => {
+                                  setLang(lan.value);
+                                }}
+                              >
+                                <div style={{ fontSize: `14px` }}>
+                                  {lan.name}
+                                </div>
+                              </button>
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </table>
+                    <br></br>
+                    <br></br>
+                  </div>
+                  <button
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4"
+                    style={{ width: `96%` }}
+                    onClick={() => {
+                      upload();
+                      setShow(false);
+                    }}
+                  >
+                    Select Template
+                  </button>
+                  <br></br>
+                  <br></br>
+                </div>
+              </div>
+            </div>
+          ) : null}
 
           <br></br>
           {/* <button

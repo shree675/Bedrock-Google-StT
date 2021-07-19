@@ -39,7 +39,7 @@ export default async function test(req, res) {
     console.log(audio.content.slice(0, 200));
 
     const config = {
-      languageCode: "en-US",
+      languageCode: fields.language,
       enableWordTimeOffsets: true,
     };
 
