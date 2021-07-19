@@ -97,7 +97,7 @@ app.get(
   function (req, res) {
     console.log(req.isAuthenticated());
     res.redirect(
-      "http://localhost:3000/app?profileid=" +
+      "http://localhost:3000/determine?profileid=" +
         req.user.id +
         "&username=" +
         req.user.username +

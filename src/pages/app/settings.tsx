@@ -24,18 +24,20 @@ export default function Dashboard() {
   const [, createUser] = useCreateUserMutation();
 
   useEffect(() => {
-    // if (currentUser?.name) setName(currentUser.name);
-    // if (currentUser?.email) setEmail(currentUser.email);
-    // if (currentUser?.profilepic) setProfilepic(currentUser.profilepic);
-    // console.log(localStorage.getItem("email"));
-    if (localStorage.getItem("isloggedin") === "false") {
-      router.push("/login");
-      console.log("not logged in");
+    if (
+      localStorage.getItem("isloggedin") === null ||
+      localStorage.getItem("isloggedin") === undefined
+    ) {
+      router.push("/signup");
     }
+    if (localStorage.getItem("isloggedin") === "false") {
+      router.push("/signup");
+      // console.log("not logged in");
+    }
+
     const user = getUserEmail({
       id: localStorage.getItem("userid"),
     }).then((data) => {
-      // console.log(data.data?.getUserEmail?.email);
       if (data.data?.getUserEmail) {
         setEmail(data.data?.getUserEmail.email);
         setName(data.data?.getUserEmail.name);
@@ -61,7 +63,7 @@ export default function Dashboard() {
     }
   };
 
-  if (fetching) return <p>Loading...</p>;
+  if (fetching) return <p></p>;
 
   if (error) return <p>{error.message}</p>;
 
@@ -193,7 +195,7 @@ export default function Dashboard() {
             className="mt-4 bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
             onClick={() => {
               localStorage.setItem("isloggedin", "false");
-              router.push("/login");
+              router.push("/signup");
             }}
           >
             LOGOUT OTHER BROWSER SESSIONS
@@ -242,7 +244,7 @@ export default function Dashboard() {
                 }
               );
               localStorage.setItem("isloggedin", "false");
-              router.push("/login");
+              router.push("/signup");
             }}
           >
             DELETE ACCOUNT

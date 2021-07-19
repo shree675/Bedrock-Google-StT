@@ -8,7 +8,7 @@ var TwitterStrategy = require("passport-twitter").Strategy;
 /**
  * Used on the Login and Sign Up screens to handle authentication. Can be shared between those as Passport.js doesn't differentiate between logging in and signing up.
  */
-export default function AuthenticationForm() {
+export default function AuthenticationFormSignup() {
   const [email, setEmail] = useState("");
   const router = useRouter();
   const { r } = router.query;
@@ -74,7 +74,7 @@ export default function AuthenticationForm() {
         <button
           className="bg-white-500 text-black hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded mb-4 border"
           onClick={() => {
-            localStorage.setItem("fromsignup", "false");
+            localStorage.setItem("fromsignup", "true");
           }}
         >
           <div style={{ display: "flex" }}>

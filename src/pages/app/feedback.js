@@ -95,10 +95,10 @@ const Feedback = () => {
       localStorage.getItem("isloggedin") === null ||
       localStorage.getItem("isloggedin") === undefined
     ) {
-      router.push("/login");
+      router.push("/signup");
     }
     if (localStorage.getItem("isloggedin") === "false") {
-      router.push("/login");
+      router.push("/signup");
     }
   });
 

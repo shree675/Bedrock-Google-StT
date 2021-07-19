@@ -37,10 +37,9 @@ export default function Dashboard() {
   const [name, setName] = useState("");
   const [, getUserEmail] = useGetUserEmailMutation();
 
-  const {
-    query: { profileid, username, emailad },
-  } = router;
-  // console.log(profileid);
+  // const {
+  //   query: { profileid, username, emailad },
+  // } = router;
 
   const t = setInterval(() => {
     setX(x + 1);
@@ -54,55 +53,47 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    // const transcripts = data1?.data?.transcript;
-    // console.log(data1);
-
-    // console.log(profileid);
-
     getTranscripts({
       userid: localStorage.getItem("userid"),
     }).then((e) => {
-      // console.log(e.data?.getTranscripts);
       setResults(e.data?.getTranscripts);
     });
 
-    // setResults(transcripts);
+    setName(localStorage.getItem("name"));
 
-    if (profileid) {
-      localStorage.setItem("isloggedin", "true");
-      console.log(localStorage.getItem("isloggedin"));
-      getUserEmail({
-        id: profileid,
-      }).then((data) => {
-        // console.log(data);
-        localStorage.setItem("isloggedin", "true");
-        if (data.data?.getUserEmail) {
-          setEmail(data.data?.getUserEmail.email);
-          setName(data.data?.getUserEmail.name);
-          localStorage.setItem("name", data.data?.getUserEmail.name);
-          localStorage.setItem("userid", data.data.getUserEmail.id);
-        } else {
-          localStorage.setItem("userid", profileid);
-          localStorage.setItem("name", username);
-          setEmail(emailad);
-          setName(username);
-          createUser({
-            id: profileid,
-            name: username,
-            email: emailad,
-          });
-          router.push("/");
-        }
-      });
-    } else {
-      setName(localStorage.getItem("name"));
-    }
+    // if (profileid) {
+    //   localStorage.setItem("isloggedin", "true");
+    //   console.log(localStorage.getItem("isloggedin"));
+    //   getUserEmail({
+    //     id: profileid,
+    //   }).then((data) => {
+    //     // console.log(data);
+    //     localStorage.setItem("isloggedin", "true");
+    //     if (data.data?.getUserEmail) {
+    //       setEmail(data.data?.getUserEmail.email);
+    //       setName(data.data?.getUserEmail.name);
+    //       localStorage.setItem("name", data.data?.getUserEmail.name);
+    //       localStorage.setItem("userid", data.data.getUserEmail.id);
+    //     } else {
+    //       localStorage.setItem("userid", profileid);
+    //       localStorage.setItem("name", username);
+    //       setEmail(emailad);
+    //       setName(username);
+    //       createUser({
+    //         id: profileid,
+    //         name: username,
+    //         email: emailad,
+    //       });
+    //       router.push("/");
+    //     }
+    //   });
+    // } else {
+    //   setName(localStorage.getItem("name"));
+    // }
 
-    // console.log(x);
     if (localStorage.getItem("isloggedin") === "false" && x >= 3) {
-      console.log("hello");
       clearInterval(t);
-      router.push("/login");
+      router.push("/signup");
     } else if (localStorage.getItem("isloggedin") === "true" && x >= 3) {
       clearInterval(t);
     }
@@ -114,14 +105,14 @@ export default function Dashboard() {
       localStorage.getItem("isloggedin") === null ||
       localStorage.getItem("isloggedin") === undefined
     ) {
-      router.push("/login");
+      router.push("/signup");
     }
-  }, [filename, profileid]);
+  }, [filename]);
 
   const upload = async () => {
     if (localStorage.getItem("isloggedin") === "false") {
       alert("You are not logged in. Please login");
-      router.push("/login");
+      router.push("/signup");
     }
     var formData = new FormData();
 
@@ -168,7 +159,7 @@ export default function Dashboard() {
     setLoading(true);
   };
 
-  if (fetching) return <p>Loading...</p>;
+  if (fetching) return <p></p>;
 
   if (error) return <p>{error.message}</p>;
 
@@ -351,14 +342,27 @@ export default function Dashboard() {
                                       }}
                                     >
                                       <div className="flex">
-                                        {row["title"] ? <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                        </svg> : null}
-                                      <div className="text-sm font-medium text-gray-900">
-                                        {row["title"]
-                                          ? row["title"]
-                                          : "(untitled)"}
-                                      </div>
+                                        {row["title"] ? (
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 mr-2"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                          >
+                                            <path
+                                              stroke-linecap="round"
+                                              stroke-linejoin="round"
+                                              stroke-width="2"
+                                              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                                            />
+                                          </svg>
+                                        ) : null}
+                                        <div className="text-sm font-medium text-gray-900">
+                                          {row["title"]
+                                            ? row["title"]
+                                            : "(untitled)"}
+                                        </div>
                                       </div>
                                     </button>
                                   </Link>
@@ -429,10 +433,10 @@ export default function Dashboard() {
                                       }}
                                     >
                                       <>
-                                        <div className = "flex">
+                                        <div className="flex">
                                           <div className="rounded-full w-2 h-2 bg-green-600 px-2 py-2 mt-1 mr-2"></div>
                                           {row["status"]}
-                                          </div>
+                                        </div>
                                         <div>
                                           Render Date: {row["renderdate"]}
                                         </div>

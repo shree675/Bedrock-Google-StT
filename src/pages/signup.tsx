@@ -1,11 +1,18 @@
-import AuthenticationForm from "../client/components/AuthenticationForm";
+import AuthenticationFormSignup from "../client/components/AuthenticationForm/signup";
 import ReactPlayer from "react-player";
 
-function Login() {
+function Signup() {
   return (
-    <>
-      <div style={{ display: "flex", height: "735px", overflow: "hidden" }}>
-        <div style={{ textAlign: "center", flex: "1" }}>
+    <div style={{ overflow: "hidden" }}>
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          padding: "0px",
+          height: "735px",
+        }}
+      >
+        <div style={{ textAlign: "center", flex: "1", width: "100%" }}>
           <div
             style={{ padding: "15%", textAlign: "center", paddingTop: "20%" }}
           >
@@ -21,7 +28,7 @@ function Login() {
               alt="Workflow"
             />
             <br></br>
-            <h1 className="text-4xl font-bold mb-4">Welcome back.</h1>
+            <h1 className="text-4xl font-bold mb-4">Signup for xyz</h1>
             <h3 className="text-lg font-bold text-gray-500 mb-2">
               Watch an On-demand product wackthrough or live demo, and start
               your 14-day free trial.
@@ -30,7 +37,10 @@ function Login() {
               <img src="/people.png" height="100px" width="140px"></img>
             </div>
             <br></br>
-            <AuthenticationForm />
+            <AuthenticationFormSignup />
+            <a href="/login" style={{ color: "blue" }}>
+              <u>Already a user? Login</u>
+            </a>
           </div>
         </div>
         <div
@@ -46,11 +56,11 @@ function Login() {
         >
           <div
             style={{
-              backgroundColor: "#000f47",
-              width: "100%",
+              backgroundColor: "#4565e8",
+              width: "fit-content",
               height: "100%",
               textAlign: "center",
-              paddingTop: "15%",
+              paddingTop: "7%",
               paddingLeft: "7%",
               paddingRight: "auto",
             }}
@@ -58,29 +68,37 @@ function Login() {
             <div
               style={{
                 overflow: "hidden",
+                borderRadius: "5px",
                 width: "fit-content",
                 boxShadow: "2px 0px 10px #232323",
               }}
             >
+              {/* <img src="/dots.svg" height="00px" style={{ zIndex: 5 }}></img> */}
+
               <ReactPlayer
                 controls
-                url="https://www.youtube.com/watch?v=pl4UYZfVmTA"
+                url="https://www.youtube.com/watch?v=AucSVFQ-IPI"
               />
             </div>
             <br></br>
-            {/* <img src="/hello.png"></img> */}
             <div
-              className="text-1xl text-gray-300"
-              style={{ textAlign: "left", marginTop: "2%" }}
+              className="text-lg text-white"
+              style={{ paddingLeft: "10%", paddingRight: "15%" }}
             >
-              FROM THE PART OF THE TEAM THAT BUILD XYZ
+              "Our members are so impressed. It's intuitive. It's clean. It's
+              distraction free. If you're building a community where you want
+              the focus to be on your members and discussion, I highly recommend
+              checking out Circle. I'm glad we made this decision."
             </div>
+            <br></br>
+            <div className="text-2xl text-white font-bold">Pat Flynn</div>
+            <div className="text-gray-300">Founder, Smart Passive Income</div>
           </div>
           {/* </div> */}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
-export default Login;
+export default Signup;
