@@ -78,17 +78,18 @@ export default function Dashboard() {
   // }
 
   return (
-    <div className="mx-72 mt-8">
+    <div className="ml-72 mr-32 mt-8">
       <h1 className="text-3xl font-bold mb-4">Profile</h1>
       <br></br>
       <div className="flex">
-        <div className="flex-1">
+        <div style={{flex:"0.4"}}>
           <div className="mb-2 text-2xl">Profile Information</div>
-          <div>
+          <div className="mr-8 text-gray-500">
             Update your account's profile information and email address.
           </div>
         </div>
-        <div className="flex-1 border-l-2 pl-8">
+        <div style={{flex:"0.6"}} className=" shadow-lg rounded">
+          <div className="pl-8">
           <div>
             <div>
               <b>Photo</b>
@@ -108,7 +109,7 @@ export default function Dashboard() {
               )}
             </div>
             <div className="flex bg-grey-lighter mt-4">
-              <label className="w-48 flex flex-col items-center px-2 py-4 font-bold bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+              <label className="w-48 flex flex-col items-center px-2 py-2 font-bold bg-white text-gray-600 rounded tracking-wide uppercase border border-black cursor-pointer hover:bg-blue">
                 <div className="text-sm pb-0">SELECT A NEW PHOTO</div>
                 <input
                   className="hidden"
@@ -124,10 +125,11 @@ export default function Dashboard() {
           <br></br>
           <div>
             <div>
-              <b>Name</b>
+              <b className="text-gray-600">Name</b>
             </div>
             <div>
               <input
+                className="rounded w-3/5"
                 value={name}
                 placeholder=""
                 type="text"
@@ -138,10 +140,11 @@ export default function Dashboard() {
           <br></br>
           <div>
             <div>
-              <b>Email</b>
+              <b className="text-gray-600">Email</b>
             </div>
             <div>
               <input
+                className="rounded w-3/5"
                 value={email}
                 placeholder="me@hello.com"
                 type="text"
@@ -150,8 +153,10 @@ export default function Dashboard() {
             </div>
           </div>
           <br></br>
+          </div>
+          <div className="flex justify-end w-full pr-4 bg-gray-200">
           <button
-            className="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+            className="bg-gray-900 hover:bg-black text-white text-sm py-1 px-4 font-bold mt-3 rounded mb-4"
             onClick={() => {
               // console.log(profilepic);
               toast.promise(
@@ -172,27 +177,28 @@ export default function Dashboard() {
           >
             SAVE
           </button>
+          </div>
         </div>
       </div>
       <br></br>
       <hr className="mb-4"></hr>
-      <div className="flex">
-        <div className="flex-1">
+      <div className="flex mt-8">
+        <div style={{flex:"0.4"}}>
           <div className="mb-2 text-2xl">Browser Sessions</div>
-          <div>
+          <div className="text-gray-500">
             Manage and logout your active sessions on other browsers and
             devices.
           </div>
         </div>
-        <div className="flex-1 border-l-2 pl-8">
-          <div>
+        <div style={{flex:"0.6"}} className="pl-8 shadow-lg">
+          <div className="text-gray-500">
             If necessary, you may logout of all of your other browser sessions
             across all of your devices. Some of your recent sessions are listed
             below; however, this list may not be exhaustive. If you feel your
             account has been compromised, you should also update your password.
           </div>
           <button
-            className="mt-4 bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+            className="mt-4 bg-gray-900 hover:bg-black text-white font-bold py-2 px-4 rounded mb-4"
             onClick={() => {
               localStorage.setItem("isloggedin", "false");
               router.push("/signup");
@@ -205,19 +211,19 @@ export default function Dashboard() {
       </div>
       <br></br>
       <hr className="mb-4"></hr>
-      <div className="flex">
-        <div className="flex-1">
+      <div className="flex mb-24 mt-8">
+        <div style={{flex:"0.4"}}>
           <div className="mb-2 text-2xl">Delete Account</div>
-          <div>Permenantly delete your account.</div>
+          <div className="text-gray-500">Permenantly delete your account.</div>
         </div>
-        <div className="flex-1 border-l-2 pl-8">
-          <div>
+        <div style={{flex:"0.6"}} className="shadow-lg pl-8">
+          <div className="text-gray-500">
             Once your account is deleted, all of its resources and data will be
             permanently deleted. Before deleting your account, please download
             any data or information that you wish to retain.
           </div>
           <button
-            className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-4"
+            className="mt-4 bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded mb-4"
             onClick={async () => {
               await toast.promise(
                 deleteTranscripts({

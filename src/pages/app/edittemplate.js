@@ -12,6 +12,10 @@ import { BlockPicker, CirclePicker } from "react-color";
 import Tippy from "@tippyjs/react";
 import ReactPlayer from "react-player";
 import { FileDrop } from "react-file-drop";
+import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
+import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -205,7 +209,7 @@ const EditTemplate = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex relative">
       
       <div style={{flex:"0.3"}} className="ml-72 mt-8 ">
         <div>
@@ -306,7 +310,7 @@ const EditTemplate = () => {
               </div>
             </div>
 
-            <div className="block text-gray-700 text-lg font-bold mb-2 mt-8">
+            <div className="block text-gray-700 text-lg font-bold mb-2 ml-16 mt-8">
               Upload cover art:
             </div>
 
@@ -340,7 +344,7 @@ const EditTemplate = () => {
 
             <div className="flex bg-grey-lighter ">
               <FileDrop
-                className="border-dashed border-2 rounded border-gray-400 py-4 px-28 mr-24"
+                className="border-dashed border-2 rounded border-gray-400 py-4 px-24 ml-16 mr-16"
                 onFrameDragEnter={(event) => {}}
                 onFrameDragLeave={(event) => {}}
                 onFrameDrop={(event) => {}}
@@ -355,7 +359,7 @@ const EditTemplate = () => {
                     <div>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-8 w-8 ml-32"
+                        className="h-8 w-8 ml-32 stroke-current text-gray-400"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -397,15 +401,13 @@ const EditTemplate = () => {
             type="button"
           >
             {play ? (
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 px-2 py-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+              <div className="bg-gray-200 rounded-full p-2 m-4">
+              <PauseIcon />
+              </div>
             ) : (
-              
-               <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 px-2 py-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-             </svg>
+              <div className="bg-gray-200 rounded-full p-2 m-4">
+              <PlayArrowIcon />
+              </div>
             )}
           </button>
           </div>
@@ -436,7 +438,7 @@ const EditTemplate = () => {
             : null}
         </div> */}
           <button
-            className="mt-8 bg-green-500 w-4/5  hover:bg-green-700 text-white text-xs font-bold py-2 px-4 rounded mb-4 w-1/4"
+            className="mt-8 bg-green-600 w-4/5  hover:bg-green-700 text-white text-xs font-bold py-2 px-4 rounded mb-4 w-1/4"
             onClick={onClickSaveHandler}
           >
             Render video
@@ -445,26 +447,31 @@ const EditTemplate = () => {
           </div>
           <br></br>
           {showHide ? (
-            <div className="w-full h-full inset-0 fixed">
+            <div className="w-full h-full inset-0 fixed z-30">
               <div
                 onClick={() => {
                   setShowHide(!showHide);
                 }}
-                className="w-full h-full inset-0 fixed bg-opacity-30 bg-gray-700"
+                className="w-full h-full inset-0 absolute z-30 bg-opacity-30 bg-gray-700"
               >
-                <div className="absolute top-20 left-1/3 ml-24 bg-white max-w-xl w-1/4 text-center px-12 pt-8 rounded">
+                <div className="absolute z-30 top-56 left-1/3 ml-24 bg-white max-w-xl w-1/4 text-center px-12 pt-8 rounded">
+                  <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 ml-28 mb-4 bg-green-200 rounded-full p-2 stroke-current text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
                   <h1 className="font-bold text-lg">video is ready</h1>
-                  <p>
+                  <p className="text-sm mb-6">
                     Lorem Ipsum is simply dummy text of the printing and
                     typesetting industry.
                   </p>
                   <Link
                     href={{
                       pathname: "/app/details",
-                      query: { transcript, title, renderdate },
+                      query: { transcript, title, subtitle, renderdate },
                     }}
                   >
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+                    <button className="bg-blue-800 w-full hover:bg-blue-900 text-white py-1 px-4 rounded mb-4">
                       Download Now
                     </button>
                   </Link>
@@ -476,14 +483,14 @@ const EditTemplate = () => {
       
       </div>
         <div  style={{flex:"0.7"}}>
-      <div className=" mt-48 ml-48 z-10 absolute">
+      <div className=" mt-48 ml-64 z-10 absolute">
               <img src="/dots.png" height="280px" width="280px" className=""/>
             </div>
-      <div className=" mt-64 mr-8 z-20 relative">
-            <p className="bg-gray-300 w-1/3 pl-8 mb-16 ml-24">Original <span className="ml-6">v</span></p>
+      <div className=" mt-64 mr-8 z-20 absolute">
+            <p className="bg-gray-300 w-1/3 pl-8 mb-16 ml-32">Original <span className="ml-6">v</span></p>
           <ReactPlayer
-            width="420px"
-            height="260px"
+            width="480px"
+            height="360px"
             controls
             url="https://www.youtube.com/watch?v=9P8mASSREYM"
           />

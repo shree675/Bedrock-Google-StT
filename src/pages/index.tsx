@@ -317,7 +317,7 @@ function Homepage() {
               <div >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 ml-40 mb-4 stroke-current text-blue-600 bg-green-200 rounded-full p-2"
+                  className="h-8 w-8 ml-56 mb-4 stroke-current text-blue-600 bg-green-200 rounded-full p-2"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -329,11 +329,11 @@ function Homepage() {
                     d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
                   />
                 </svg>
-                <div className="px-24 text-center text-xs mb-8">
+                <div className="px-44 text-center text-xs mb-8">
                 <p >Uplaoad file from computer or <span className="font-bold">drag and drop </span>an mp3</p>
                 
                 </div>
-                <div className="px-16">
+                <div className="px-36">
                 <div className="bg-clip-content bg-green-300 mt-4   rounded flex">
                  <span className="rounded-full w-1 h-1 bg-green-600 ml-1 mr-1 mt-2 px-1 py-1"></span> 
                  <p className="my-1 text-xs">We currently support only 60 seconds</p>
@@ -351,46 +351,36 @@ function Homepage() {
         <div className="w-full h-full inset-0 fixed">
           <div className="w-full h-full inset-0 fixed bg-opacity-30 bg-gray-700">
             <div
-              className="absolute top-20 ml-24 bg-white text-center px-12 pt-8 rounded"
-              style={{
-                width: "61%",
-                marginLeft: "19%",
-                paddingLeft: "11%",
-                paddingRight: "10%",
-              }}
+              className="absolute top-20 left-16 ml-64 w-3/5 bg-white text-center px-44 pt-8 rounded"
+          
             >
               <img
                 src="/dotsworld.svg"
                 width="180"
                 height="180"
-                style={{ marginLeft: `31%` }}
+                className="ml-48"
               ></img>
               <br></br>
               <h1 className="font-bold text-3xl">Select Language</h1>
               <br></br>
-              <div style={{ textAlign: "center" }}>
+              <div className="text-center">
                 <table>
                   {languages.map((language) => (
                     <tr>
                       {language.map((lan) => (
                         <td>
                           <button
-                            style={{
-                              width: `100px`,
-                              margin: `10px`,
-                              paddingTop: `4px`,
-                              paddingBottom: `4px`,
-                            }}
+                            
                             className={
                               lang === lan.value
-                                ? "bg-blue-800 text-white py-2 px-4 rounded mb-4 font-bold"
-                                : "bg-blue-200 hover:bg-blue-800 text-blue-800 hover:text-white py-2 px-4 rounded mb-4"
+                                ? "bg-blue-800 text-white py-2 px-4 rounded mb-4 font-bold w-24 m-2 py-2"
+                                : "bg-blue-200 hover:bg-blue-800 text-blue-800 hover:text-white py-2 px-4 rounded mb-4 w-24 m-2 py-2"
                             }
                             onClick={() => {
                               setLang(lan.value);
                             }}
                           >
-                            <div style={{ fontSize: `14px` }}>{lan.name}</div>
+                            <div className="text-sm">{lan.name}</div>
                           </button>
                         </td>
                       ))}
@@ -401,8 +391,8 @@ function Homepage() {
                 <br></br>
               </div>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4"
-                style={{ width: `96%` }}
+                className="bg-green-500 hover:bg-green-700 w-full text-white font-bold py-2 px-4 rounded mb-4"
+                
                 onClick={() => {
                   upload();
                   setShow(false);

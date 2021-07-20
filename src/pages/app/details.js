@@ -5,7 +5,7 @@ import { useEffect } from "react";
 const Details = () => {
   const router = useRouter();
   const {
-    query: { title, transcript, renderdate },
+    query: { title, subtitle, transcript, renderdate },
   } = router;
 
   useEffect(() => {
@@ -36,11 +36,13 @@ const Details = () => {
         <p className="mx-4 text-gray-300 text-lg font-bold">/</p>
         <p className="text-lg text-green-400 font-bold">Title</p>
       </div>
-      <h1 className="text-4xl font-bold mb-4">Title</h1>
+      <div className="ml-56">
+      <h1 className="text-4xl font-bold mb-4">{title}</h1>
       {/* <h3 className="text-lg font-bold text-gray-500 mb-1">Title</h3>
       <div>{title}</div>
       <br></br>
       <h4 className="text-lg font-bold text-gray-500 mb-1">Date</h4> */}
+      <div>{subtitle}</div>
       <div>{renderdate}</div>
       <br></br>
       <div>
@@ -66,8 +68,9 @@ const Details = () => {
         <h3 className="text-lg font-bold text-black mb-4">Download</h3>
       </div>
 
-      <div className="mr-96 pr-48">{transcript}</div>
+      <div className="mr-96 text-gray-500">{transcript}</div>
       <br></br>
+      </div>
     </div>
   );
 };
