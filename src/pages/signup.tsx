@@ -3,27 +3,12 @@ import ReactPlayer from "react-player";
 
 function Signup() {
   return (
-    <div style={{ overflow: "hidden" }}>
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          padding: "0px",
-          height: "735px",
-        }}
-      >
-        <div style={{ textAlign: "center", flex: "1", width: "100%" }}>
-          <div
-            style={{ padding: "15%", textAlign: "center", paddingTop: "20%" }}
-          >
+    <div className="overflow-hidden">
+      <div className="flex w-full p-0 h-screen">
+        <div className="text-center flex-1 w-full">
+          <div className="p-48 text-center pt-32">
             <img
-              className="block h-10 w-auto"
-              style={{
-                textAlign: "center",
-                width: "fit-content",
-                marginLeft: "auto",
-                marginRight: "auto",
-              }}
+              className="block h-10 w-auto text-center w-min ml-auto mr-auto"
               src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
               alt="Workflow"
             />
@@ -33,57 +18,37 @@ function Signup() {
               Watch an On-demand product wackthrough or live demo, and start
               your 14-day free trial.
             </h3>
-            <div style={{ textAlign: "center", marginLeft: "37%" }}>
+            <div className="text-center ml-32">
               <img src="/people.png" height="100px" width="140px"></img>
             </div>
             <br></br>
             <AuthenticationFormSignup />
-            <a href="/login" style={{ color: "blue" }}>
+            <a href="/login" className="text-blue-600">
               <u>Already a user? Login</u>
             </a>
           </div>
         </div>
         <div
-          style={{
-            textAlign: "center",
-            flex: "1",
-            width: "100%",
-            padding: "0px",
-            margin: "0px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
+          className="text-center flex-1 w-screen p-0 m-0 mx-auto"
         >
           <div
-            style={{
-              backgroundColor: "#4565e8",
-              width: "fit-content",
-              height: "100%",
-              textAlign: "center",
-              paddingTop: "7%",
-              paddingLeft: "7%",
-              paddingRight: "auto",
-            }}
+            className="bg-blue-600 w-full h-full text-center pt-32 pl-28 pr-auto"
           >
-            <div
-              style={{
-                overflow: "hidden",
-                borderRadius: "5px",
-                width: "fit-content",
-                boxShadow: "2px 0px 10px #232323",
-              }}
-            >
+            <div className="absolute z-10 mt-48 ml-96 pl-16 ">
+              <img src="/dots.png" height="150px" width="150px" className="transform rotate-45"/>
+            </div>
+            <div className="overflow-hidden rounded-md w-min shadow-2xl absolute z-20">
               {/* <img src="/dots.svg" height="00px" style={{ zIndex: 5 }}></img> */}
 
-              <ReactPlayer
+              <ReactPlayer width="540px" height="320px"
                 controls
                 url="https://www.youtube.com/watch?v=AucSVFQ-IPI"
               />
             </div>
             <br></br>
             <div
-              className="text-lg text-white"
-              style={{ paddingLeft: "10%", paddingRight: "15%" }}
+              className="text-sm text-white pl-20 pr-48 mt-80 pt-8 absolute z-20"
+
             >
               "Our members are so impressed. It's intuitive. It's clean. It's
               distraction free. If you're building a community where you want
@@ -91,8 +56,8 @@ function Signup() {
               checking out Circle. I'm glad we made this decision."
             </div>
             <br></br>
-            <div className="text-2xl text-white font-bold">Pat Flynn</div>
-            <div className="text-gray-300">Founder, Smart Passive Income</div>
+            <div className="text-xl text-white font-bold mt-96 pt-16 ml-56 absolute z-20">Pat Flynn</div>
+            <div className="text-gray-300 text-sm absolute z-20 mt-96 pt-24 ml-44">Founder, Smart Passive Income</div>
           </div>
           {/* </div> */}
         </div>

@@ -174,7 +174,7 @@ export default function Dashboard() {
   // }
 
   return (
-    <div className="ml-72 mt-8">
+    <div className="ml-72 mt-8 font-body">
       {localStorage.getItem("isloggedin") === "false" ? (
         <>
           <h3>Sign up to our account and get started</h3>
@@ -185,7 +185,7 @@ export default function Dashboard() {
         </>
       ) : (
         <>
-          <div className="mb-8 flex">
+          <div className="mb-8 flex ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 stroke-current text-gray-500"
@@ -223,44 +223,50 @@ export default function Dashboard() {
           <div style={{ textAlign: "center" }}>OR</div> */}
           <br></br>
           <div className="flex items-center justify-center bg-grey-lighter ">
-            <FileDrop
-              className="border-dashed border-2 text-center items-center justify-center rounded border-gray-400 py-16 px-96"
-              onFrameDragEnter={(event) => {}}
-              onFrameDragLeave={(event) => {}}
-              onFrameDrop={(event) => {}}
-              onDragOver={(event) => {}}
-              onDragLeave={(event) => {}}
-              onDrop={(files, event) => {
-                hasDropped(files, event);
-              }}
-            >
-              <div className="">
-                {filename === "" ? (
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 ml-20 mb-4 stroke-current text-blue-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-                      />
-                    </svg>
-                    <p>Drag and drop an audio file</p>
-                    <p className="bg-clip-content bg-green-300 mt-4 text-xs rounded">
-                      We currently support only 60 seconds
-                    </p>
-                  </div>
-                ) : (
-                  `${filename} (or) Drop a different file`
-                )}
+          <FileDrop
+          className="border-dashed border-2 rounded border-gray-400 py-8 px-64 mr-56"
+          onFrameDragEnter={(event) => {}}
+          onFrameDragLeave={(event) => {}}
+          onFrameDrop={(event) => {}}
+          onDragOver={(event) => {}}
+          onDragLeave={(event) => {}}
+          onDrop={(files, event) => {
+            hasDropped(files, event);
+          }}
+        >
+          <div className="">
+            {filename === "" ? (
+              <div >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8 ml-40 mb-4 stroke-current text-blue-600 bg-green-200 rounded-full p-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+                  />
+                </svg>
+                <div className="px-24 text-center text-xs mb-8">
+                <p >Uplaoad file from computer or <span className="font-bold">drag and drop </span>an mp3</p>
+                
+                </div>
+                <div className="px-16">
+                <div className="bg-clip-content bg-green-300 mt-4   rounded flex">
+                 <span className="rounded-full w-1 h-1 bg-green-600 ml-1 mr-1 mt-2 px-1 py-1"></span> 
+                 <p className="my-1 text-xs">We currently support only 60 seconds</p>
+                </div>
+                </div>
               </div>
-            </FileDrop>
+            ) : (
+              `${filename} (or) Drop a different file`
+            )}
+          </div>
+        </FileDrop>
           </div>
 
           <br></br>

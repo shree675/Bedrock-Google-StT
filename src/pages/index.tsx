@@ -126,7 +126,7 @@ function Homepage() {
   // }
 
   return (
-    <div className="ml-72 mt-8">
+    <div className="ml-72 mt-8 font-body">
       <div className="mb-8 flex">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -198,7 +198,6 @@ function Homepage() {
         </li>
       </ul>
 
-      <br></br>
 
       <br></br>
       {/* <div className="flex items-center justify-center bg-grey-lighter">
@@ -217,10 +216,10 @@ function Homepage() {
       </div>
       <br></br>
       <div style={{ textAlign: "center" }}>OR</div> */}
-      <br></br>
-      <div className="flex items-center justify-center bg-grey-lighter ">
+      
+      <div className="flex bg-grey-lighter ">
         <FileDrop
-          className="border-dashed border-2 rounded border-gray-400 py-16 px-96"
+          className="border-dashed border-2 rounded border-gray-400 py-8 px-64 mr-56"
           onFrameDragEnter={(event) => {}}
           onFrameDragLeave={(event) => {}}
           onFrameDrop={(event) => {}}
@@ -232,10 +231,10 @@ function Homepage() {
         >
           <div className="">
             {filename === "" ? (
-              <div>
+              <div >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 ml-20 mb-4 stroke-current text-blue-600"
+                  className="h-8 w-8 ml-40 mb-4 stroke-current text-blue-600 bg-green-200 rounded-full p-2"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -247,10 +246,16 @@ function Homepage() {
                     d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
                   />
                 </svg>
-                <p>Drag and drop an audio file</p>
-                <p className="bg-clip-content bg-green-300 mt-4 text-xs rounded">
-                  We currently support only 60 seconds
-                </p>
+                <div className="px-24 text-center text-xs mb-8">
+                <p >Uplaoad file from computer or <span className="font-bold">drag and drop </span>an mp3</p>
+                
+                </div>
+                <div className="px-16">
+                <div className="bg-clip-content bg-green-300 mt-4   rounded flex">
+                 <span className="rounded-full w-1 h-1 bg-green-600 ml-1 mr-1 mt-2 px-1 py-1"></span> 
+                 <p className="my-1 text-xs">We currently support only 60 seconds</p>
+                </div>
+                </div>
               </div>
             ) : (
               `${filename} (or) Drop a different file`
@@ -259,7 +264,6 @@ function Homepage() {
         </FileDrop>
       </div>
 
-      <br></br>
       {/* <button
         onClick={upload}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
@@ -278,7 +282,6 @@ function Homepage() {
         </div>
       ) : null}
 
-      <br></br>
 
       {/* <div style={{ height: "50px" }}></div> */}
     </div>

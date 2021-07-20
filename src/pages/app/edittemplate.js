@@ -206,8 +206,11 @@ const EditTemplate = () => {
   };
 
   return (
-    <div className="ml-72 mt-8">
-      <div className="mb-8 flex">
+    <div className="flex">
+      
+      <div style={{flex:"0.3"}} className="ml-72 mt-8 ">
+        <div>
+        <div className="mb-8 flex">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5 stroke-current text-gray-500"
@@ -223,8 +226,6 @@ const EditTemplate = () => {
         <p className="mx-4 text-gray-300 text-lg font-bold">/</p>
         <p className="text-lg text-green-400 font-bold">Transcript</p>
       </div>
-      <div className="flex">
-        <div>
           <div>
             <div className="flex ">
               <Tippy
@@ -254,7 +255,8 @@ const EditTemplate = () => {
               </Tippy>
               <div>
                 <input
-                  className=" border-none w-full py-2 px-3 font-bold text-3xl text-gray-700 rounded"
+                  className=" border-none w-full py-2 px-3 font-bold text-3xl text-gray-700 focus:outline-none rounded"
+                  
                   id="title"
                   type="text"
                   placeholder="/Empty title"
@@ -294,7 +296,7 @@ const EditTemplate = () => {
               </Tippy>
               <div>
                 <input
-                  className="border-none w-full py-2 px-3 text-xl text-gray-700 font-bold rounded"
+                  className="border-none focus:border-none focus:outline-none outline-none w-full py-2 px-3 text-xl text-gray-700 font-bold rounded"
                   id="Subtitle"
                   type="text"
                   placeholder="/Empty subtitle"
@@ -337,9 +339,9 @@ const EditTemplate = () => {
           </label>
         </div> */}
 
-            <div className="flex items-center justify-center bg-grey-lighter ">
+            <div className="flex bg-grey-lighter ">
               <FileDrop
-                className="border-dashed border-2 rounded border-gray-400 py-4 px-28 mr-16"
+                className="border-dashed border-2 rounded border-gray-400 py-4 px-28 mr-24"
                 onFrameDragEnter={(event) => {}}
                 onFrameDragLeave={(event) => {}}
                 onFrameDrop={(event) => {}}
@@ -354,7 +356,7 @@ const EditTemplate = () => {
                     <div>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-8 w-8 ml-20"
+                        className="h-8 w-8 ml-32"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -366,7 +368,7 @@ const EditTemplate = () => {
                           d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                         />
                       </svg>
-                      <p>Drag and drop an PNG, JPG file</p>
+                      <p className="text-sm px-8 text-center"><spn className="text-blue-700">Upload a file or</spn> drag and drop PNG, JPG, GF up to 50kb</p>
                     </div>
                   ) : (
                     `${filename} (or) Drop a different file`
@@ -379,8 +381,10 @@ const EditTemplate = () => {
 
             <br />
           </div>
-
+          
           <div id="wave" className="mr-8 mt-24 hidden"></div>
+          <div className="flex">
+            <div>
 
           <button
             onClick={() => {
@@ -394,33 +398,19 @@ const EditTemplate = () => {
             type="button"
           >
             {play ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-12 w-12 mt-8"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
-                  clipRule="evenodd"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 px-2 py-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-12 w-12 mt-8"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 px-2 py-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+             </svg>
             )}
           </button>
+          </div>
+          <div>
           <div ref={containerRef} />
 
           <h4 className="font-bold text-lg mb-4 ">Transcript:</h4>
@@ -447,11 +437,13 @@ const EditTemplate = () => {
             : null}
         </div> */}
           <button
-            className="mt-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4 w-1/4"
+            className="mt-8 bg-green-500 w-4/5  hover:bg-green-700 text-white text-xs font-bold py-2 px-4 rounded mb-4 w-1/4"
             onClick={onClickSaveHandler}
           >
             Render video
           </button>
+          </div>
+          </div>
           <br></br>
           {showHide ? (
             <div className="w-full h-full inset-0 fixed">
@@ -482,15 +474,22 @@ const EditTemplate = () => {
             </div>
           ) : null}
         </div>
-        <div className=" mt-24 mr-8">
+      
+      </div>
+        <div  style={{flex:"0.7"}}>
+      <div className=" mt-48 ml-48 z-10 absolute">
+              <img src="/dots.png" height="280px" width="280px" className=""/>
+            </div>
+      <div className=" mt-64 mr-8 z-20 relative">
+            <p className="bg-gray-300 w-1/3 pl-8 mb-16 ml-24">Original <span className="ml-6">v</span></p>
           <ReactPlayer
-            width="560px"
-            height="340px"
+            width="420px"
+            height="260px"
             controls
             url="https://www.youtube.com/watch?v=9P8mASSREYM"
           />
         </div>
-      </div>
+        </div>
     </div>
   );
   // }
