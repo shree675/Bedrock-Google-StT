@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { useGetCurrentUserQuery } from "../client/graphql/getCurrentUser.generated";
-// import { useGetTranscriptsQuery } from "../client/graphql/getTranscripts.generated";
-// import { useCreateTranscriptsQuery } from "../client/graphql/getTranscripts.generated";
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef } from "react";
 import { useMutation } from "urql";
@@ -12,13 +10,6 @@ import { event } from "next/dist/build/output/log";
 import { useCreateTranscriptMutation } from "../client/graphql/createTranscript.generated";
 import toast from "react-hot-toast";
 import { BounceLoader } from "react-spinners";
-// import Wavesurfer from "react-wavesurfer";
-// import WaveSurfer from "wavesurfer";
-// import dynamic from "next/dynamic";
-
-// const WaveSurfer = dynamic(() => import("wavesurfer.js"), {
-//   ssr: false,
-// });
 
 function Homepage() {
   const [{ data, fetching, error }] = useGetCurrentUserQuery();
@@ -36,8 +27,101 @@ function Homepage() {
   const [apiData, setApiData] = useState({});
   const [timestamps, setTimestamps] = useState("");
   const [audiourl, setAudiourl] = useState("");
+  const [show, setShow] = useState(false);
+  const [lang, setLang] = useState("en-US");
 
-  useEffect(() => {}, [filename]);
+  const languages = [
+    [
+      {
+        name: "Arabic",
+        value: "ar-DZ",
+      },
+      {
+        name: "Czech",
+        value: "cs-CZ",
+      },
+      {
+        name: "Dutch",
+        value: "nl-BE",
+      },
+      {
+        name: "English",
+        value: "en-US",
+      },
+      {
+        name: "French",
+        value: "fr-FR",
+      },
+    ],
+    [
+      {
+        name: "German",
+        value: "de-DE",
+      },
+      {
+        name: "Hindi",
+        value: "hi-IN",
+      },
+      {
+        name: "Italian",
+        value: "it-IT",
+      },
+      {
+        name: "Indonesian",
+        value: "id-ID",
+      },
+      {
+        name: "Japanese",
+        value: "ja-JP",
+      },
+    ],
+    [
+      {
+        name: "Korean",
+        value: "ko-KR",
+      },
+      {
+        name: "Malay",
+        value: "ms-MY",
+      },
+      {
+        name: "Portuguese",
+        value: "pt-PT",
+      },
+      {
+        name: "Polish",
+        value: "pl-PL",
+      },
+      {
+        name: "Russian",
+        value: "ru-RU",
+      },
+    ],
+    [
+      {
+        name: "Spanish",
+        value: "es-ES",
+      },
+      {
+        name: "Swedish",
+        value: "sv-SE",
+      },
+      {
+        name: "Thai",
+        value: "th-TH",
+      },
+      {
+        name: "Turkish",
+        value: "tr-TR",
+      },
+      {
+        name: "Vietnamese",
+        value: "vi-VN",
+      },
+    ],
+  ];
+
+  useEffect(() => {}, [filename, lang]);
 
   useEffect(() => {
     if (
@@ -53,19 +137,19 @@ function Homepage() {
 
   const upload = async () => {
     var formData = new FormData();
-    console.log(uploadedFile);
+
     formData.append("file", window.File);
+    formData.append("language", lang);
     console.log(window.File);
 
-    // var reader = new FileReader();
-    // reader.onload = function (event) {
-    //   // var res = event.target.result;
-    //   // console.log(res);
-    //   // setAudiourl(res);
-    //   // var blob = new window.Blob([new Uint8Array(event.target.result)]);
-    //   // console.log(blob);
-    // };
-    // reader.readAsDataURL(uploadedFile);
+    var reader = new FileReader();
+    reader.readAsDataURL(window.File);
+    reader.onload = function () {
+      if (localStorage.getItem("audiofile")) {
+        localStorage.removeItem("audiofile");
+      }
+      localStorage.setItem("audiofile", reader.result);
+    };
 
     fetch("/api/uploadfile", {
       method: "POST",
@@ -85,18 +169,17 @@ function Homepage() {
         });
       })
       .catch((err) => console.log(err));
+    setLoading(false);
   };
 
   const hasDropped = (files: any, event: any) => {
+    setShow(true);
     setUploadedFile(files[0]);
     console.log(uploadedFile);
     setFileName(files[0].name);
     setTranscription("");
     window.File = files[0];
     console.log(window.File);
-    upload();
-
-    setLoading(true);
   };
 
   const hasUploaded = (event: any) => {
@@ -264,6 +347,77 @@ function Homepage() {
         </FileDrop>
       </div>
 
+      {show ? (
+        <div className="w-full h-full inset-0 fixed">
+          <div className="w-full h-full inset-0 fixed bg-opacity-30 bg-gray-700">
+            <div
+              className="absolute top-20 ml-24 bg-white text-center px-12 pt-8 rounded"
+              style={{
+                width: "61%",
+                marginLeft: "19%",
+                paddingLeft: "11%",
+                paddingRight: "10%",
+              }}
+            >
+              <img
+                src="/dotsworld.svg"
+                width="180"
+                height="180"
+                style={{ marginLeft: `31%` }}
+              ></img>
+              <br></br>
+              <h1 className="font-bold text-3xl">Select Language</h1>
+              <br></br>
+              <div style={{ textAlign: "center" }}>
+                <table>
+                  {languages.map((language) => (
+                    <tr>
+                      {language.map((lan) => (
+                        <td>
+                          <button
+                            style={{
+                              width: `100px`,
+                              margin: `10px`,
+                              paddingTop: `4px`,
+                              paddingBottom: `4px`,
+                            }}
+                            className={
+                              lang === lan.value
+                                ? "bg-blue-800 text-white py-2 px-4 rounded mb-4 font-bold"
+                                : "bg-blue-200 hover:bg-blue-800 text-blue-800 hover:text-white py-2 px-4 rounded mb-4"
+                            }
+                            onClick={() => {
+                              setLang(lan.value);
+                            }}
+                          >
+                            <div style={{ fontSize: `14px` }}>{lan.name}</div>
+                          </button>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </table>
+                <br></br>
+                <br></br>
+              </div>
+              <button
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4"
+                style={{ width: `96%` }}
+                onClick={() => {
+                  upload();
+                  setShow(false);
+                }}
+              >
+                Select Template
+              </button>
+              <br></br>
+              <br></br>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      <br></br>
       {/* <button
         onClick={upload}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"

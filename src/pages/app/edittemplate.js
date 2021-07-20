@@ -78,7 +78,6 @@ const EditTemplate = () => {
 
   useEffect(() => {
     // console.log(window.File);
-    // setFile(window.File);
 
     import("wavesurfer.js")
       .then((x) => x.default)
@@ -127,7 +126,7 @@ const EditTemplate = () => {
           });
         } catch (err) {
           console.log(err);
-          alert("An error occurred.");
+          alert("An error occurred. Please select the correct language of the uploaded file, if not already done.");
           router.push("/app");
         }
       });
