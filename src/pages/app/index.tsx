@@ -316,59 +316,60 @@ export default function Dashboard() {
           <div style={{ textAlign: "center" }}>OR</div> */}
           <br></br>
           <div className="flex bg-grey-lighter ">
-          <FileDrop
-          className="border-dashed border-2 rounded border-gray-400 py-8 px-64 mr-56"
-          onFrameDragEnter={(event) => {}}
-          onFrameDragLeave={(event) => {}}
-          onFrameDrop={(event) => {}}
-          onDragOver={(event) => {}}
-          onDragLeave={(event) => {}}
-          onDrop={(files, event) => {
-            hasDropped(files, event);
-          }}
-        >
-          <div className="">
-            {filename === "" ? (
-              <div >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 ml-56 mb-4 stroke-current text-blue-600 bg-green-200 rounded-full p-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-                  />
-                </svg>
-                <div className="px-44 text-center text-xs mb-8">
-                <p >Uplaoad file from computer or <span className="font-bold">drag and drop </span>an mp3</p>
-                
-                </div>
-                <div className="px-36">
-                <div className="bg-clip-content bg-green-300 mt-4   rounded flex">
-                 <span className="rounded-full w-1 h-1 bg-green-600 ml-1 mr-1 mt-2 px-1 py-1"></span> 
-                 <p className="my-1 text-xs">We currently support only 60 seconds</p>
-                </div>
-                </div>
+            <FileDrop
+              className="border-dashed border-2 rounded border-gray-400 py-8 px-64 mr-56"
+              onFrameDragEnter={(event) => {}}
+              onFrameDragLeave={(event) => {}}
+              onFrameDrop={(event) => {}}
+              onDragOver={(event) => {}}
+              onDragLeave={(event) => {}}
+              onDrop={(files, event) => {
+                hasDropped(files, event);
+              }}
+            >
+              <div className="">
+                {filename === "" ? (
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-8 w-8 ml-56 mb-4 stroke-current text-blue-600 bg-green-200 rounded-full p-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+                      />
+                    </svg>
+                    <div className="px-44 text-center text-xs mb-8">
+                      <p>
+                        Upload file from computer or{" "}
+                        <span className="font-bold">drag and drop </span>an mp3
+                      </p>
+                    </div>
+                    <div className="px-36">
+                      <div className="bg-clip-content bg-green-300 mt-4   rounded flex">
+                        <span className="rounded-full w-1 h-1 bg-green-600 ml-1 mr-1 mt-2 px-1 py-1"></span>
+                        <p className="my-1 text-xs">
+                          We currently support only 60 seconds
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  `${filename} (or) Drop a different file`
+                )}
               </div>
-            ) : (
-              `${filename} (or) Drop a different file`
-            )}
-          </div>
-        </FileDrop>
+            </FileDrop>
           </div>
 
           {show ? (
             <div className="w-full h-full inset-0 fixed">
               <div className="w-full h-full inset-0 fixed bg-opacity-30 bg-gray-700">
-                <div
-                  className="absolute top-20 left-16 ml-64 w-3/5 bg-white text-center px-44 pt-8 rounded"
-                  
-                >
+                <div className="absolute top-20 left-16 ml-64 w-3/5 bg-white text-center px-44 pt-8 rounded">
                   <img
                     src="/dotsworld.svg"
                     width="180"
@@ -394,9 +395,7 @@ export default function Dashboard() {
                                   setLang(lan.value);
                                 }}
                               >
-                                <div className="text-sm">
-                                  {lan.name}
-                                </div>
+                                <div className="text-sm">{lan.name}</div>
                               </button>
                             </td>
                           ))}
@@ -491,6 +490,7 @@ export default function Dashboard() {
                                         title: row["title"],
                                         transcript: row["transcript"],
                                         renderdate: row["renderdate"],
+                                        subtitle: row["subtitle"],
                                       },
                                     }}
                                   >

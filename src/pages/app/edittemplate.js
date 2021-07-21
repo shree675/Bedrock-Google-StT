@@ -12,10 +12,10 @@ import { BlockPicker, CirclePicker } from "react-color";
 import Tippy from "@tippyjs/react";
 import ReactPlayer from "react-player";
 import { FileDrop } from "react-file-drop";
-import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
-import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import PauseIcon from '@material-ui/icons/Pause';
+import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
+import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import PauseIcon from "@material-ui/icons/Pause";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -102,9 +102,9 @@ const EditTemplate = () => {
 
           // console.log(window.File);
 
-          let audio = new Audio();
-          audio.src = URL.createObjectURL(window.File);
-          waveSurfer.load(audio);
+          // let audio = new Audio();
+          // audio.src = URL.createObjectURL(window.File);
+          // waveSurfer.load(audio);
 
           // fetch(localStorage.getItem("audiofile"))
           //   .then(function (res) {
@@ -114,12 +114,12 @@ const EditTemplate = () => {
           //     console.log(new File([buf], "my file", { type: "audio/*" }));
           //   });
 
-          // fetch(localStorage.getItem("audiofile"))
-          //   .then((res) => res.blob())
-          //   .then((data) => {
-          //     waveSurfer.loadBlob(data);
-          //   });
-          // waveSurfer.load(localStorage.getItem("audiofile"));
+          fetch(localStorage.getItem("audiofile"))
+            .then((res) => res.blob())
+            .then((data) => {
+              waveSurfer.loadBlob(data);
+            });
+          waveSurfer.load(localStorage.getItem("audiofile"));
 
           // waveSurfer.load(
           //   "http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3"
@@ -130,7 +130,9 @@ const EditTemplate = () => {
           });
         } catch (err) {
           console.log(err);
-          alert("An error occurred. Please select the correct language of the uploaded file, if not already done.");
+          alert(
+            "An error occurred. Please select the correct language of the uploaded file, if not already done."
+          );
           router.push("/app");
         }
       });
@@ -210,25 +212,24 @@ const EditTemplate = () => {
 
   return (
     <div className="flex relative">
-      
-      <div style={{flex:"0.3"}} className="ml-72 mt-8 ">
+      <div style={{ flex: "0.3" }} className="ml-72 mt-8 ">
         <div>
-        <div className="mb-8 flex">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 stroke-current text-gray-500"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-        </svg>
-        <p className="mx-4 text-gray-300 text-lg font-bold">/</p>
-        <p className="text-lg text-gray-400 font-bold">Dashboard</p>
-        <p className="mx-4 text-gray-300 text-lg font-bold">/</p>
-        <p className="text-lg text-gray-400 font-bold">Template</p>
-        <p className="mx-4 text-gray-300 text-lg font-bold">/</p>
-        <p className="text-lg text-green-400 font-bold">Transcript</p>
-      </div>
+          <div className="mb-8 flex">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 stroke-current text-gray-500"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+            </svg>
+            <p className="mx-4 text-gray-300 text-lg font-bold">/</p>
+            <p className="text-lg text-gray-400 font-bold">Dashboard</p>
+            <p className="mx-4 text-gray-300 text-lg font-bold">/</p>
+            <p className="text-lg text-gray-400 font-bold">Template</p>
+            <p className="mx-4 text-gray-300 text-lg font-bold">/</p>
+            <p className="text-lg text-green-400 font-bold">Transcript</p>
+          </div>
           <div>
             <div className="flex ">
               <Tippy
@@ -259,7 +260,6 @@ const EditTemplate = () => {
               <div>
                 <input
                   className=" border-none w-full py-2 px-3 font-bold text-3xl text-gray-700 focus:outline-none rounded"
-                  
                   id="title"
                   type="text"
                   placeholder="/Empty title"
@@ -371,7 +371,10 @@ const EditTemplate = () => {
                           d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                         />
                       </svg>
-                      <p className="text-sm px-8 text-center"><spn className="text-blue-700">Upload a file or</spn> drag and drop PNG, JPG, GF up to 50kb</p>
+                      <p className="text-sm px-8 text-center">
+                        <spn className="text-blue-700">Upload a file or</spn>{" "}
+                        drag and drop PNG, JPG, GF up to 50kb
+                      </p>
                     </div>
                   ) : (
                     `${filename} (or) Drop a different file`
@@ -384,40 +387,39 @@ const EditTemplate = () => {
 
             <br />
           </div>
-          
+
           <div id="wave" className="mr-8 mt-24 hidden"></div>
           <div className="flex">
             <div>
+              <button
+                onClick={() => {
+                  if (play) {
+                    wavesurfer.pause();
+                  } else {
+                    wavesurfer.play();
+                  }
+                  setPlay(!play);
+                }}
+                type="button"
+              >
+                {play ? (
+                  <div className="bg-gray-200 rounded-full p-2 m-4">
+                    <PauseIcon />
+                  </div>
+                ) : (
+                  <div className="bg-gray-200 rounded-full p-2 m-4">
+                    <PlayArrowIcon />
+                  </div>
+                )}
+              </button>
+            </div>
+            <div>
+              <div ref={containerRef} />
 
-          <button
-            onClick={() => {
-              if (play) {
-                wavesurfer.pause();
-              } else {
-                wavesurfer.play();
-              }
-              setPlay(!play);
-            }}
-            type="button"
-          >
-            {play ? (
-              <div className="bg-gray-200 rounded-full p-2 m-4">
-              <PauseIcon />
-              </div>
-            ) : (
-              <div className="bg-gray-200 rounded-full p-2 m-4">
-              <PlayArrowIcon />
-              </div>
-            )}
-          </button>
-          </div>
-          <div>
-          <div ref={containerRef} />
-
-          <h4 className="font-bold text-lg mb-4 ">Transcript:</h4>
-          <div className="mr-24">{transcript}</div>
-          <br></br>
-          {/* <h4 class="font-bold text-lg mb-4 mt-8">Timestamps:</h4>
+              <h4 className="font-bold text-lg mb-4 ">Transcript:</h4>
+              <div className="mr-24">{transcript}</div>
+              <br></br>
+              {/* <h4 class="font-bold text-lg mb-4 mt-8">Timestamps:</h4>
         <div>
           {timestamps
             ? JSON.parse(timestamps).map((e) => (
@@ -437,13 +439,13 @@ const EditTemplate = () => {
               ))
             : null}
         </div> */}
-          <button
-            className="mt-8 bg-green-600 w-4/5  hover:bg-green-700 text-white text-xs font-bold py-2 px-4 rounded mb-4 w-1/4"
-            onClick={onClickSaveHandler}
-          >
-            Render video
-          </button>
-          </div>
+              <button
+                className="mt-8 bg-green-600 w-4/5  hover:bg-green-700 text-white text-xs font-bold py-2 px-4 rounded mb-4 w-1/4"
+                onClick={onClickSaveHandler}
+              >
+                Render video
+              </button>
+            </div>
           </div>
           <br></br>
           {showHide ? (
@@ -456,8 +458,19 @@ const EditTemplate = () => {
               >
                 <div className="absolute z-30 top-56 left-1/3 ml-24 bg-white max-w-xl w-1/4 text-center px-12 pt-8 rounded">
                   <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 ml-28 mb-4 bg-green-200 rounded-full p-2 stroke-current text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-10 w-10 ml-28 mb-4 bg-green-200 rounded-full p-2 stroke-current text-green-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
                   <h1 className="font-bold text-lg">video is ready</h1>
@@ -480,14 +493,15 @@ const EditTemplate = () => {
             </div>
           ) : null}
         </div>
-      
       </div>
-        <div  style={{flex:"0.7"}}>
-      <div className=" mt-48 ml-64 z-10 absolute">
-              <img src="/dots.png" height="280px" width="280px" className=""/>
-            </div>
-      <div className=" mt-64 mr-8 z-20 absolute">
-            <p className="bg-gray-300 w-1/3 pl-8 mb-16 ml-32">Original <span className="ml-6">v</span></p>
+      <div style={{ flex: "0.7" }}>
+        <div className=" mt-48 ml-64 z-10 absolute">
+          <img src="/dots.png" height="280px" width="280px" className="" />
+        </div>
+        <div className=" mt-64 mr-8 z-20 absolute">
+          <p className="bg-gray-300 w-1/3 pl-8 mb-16 ml-32">
+            Original <span className="ml-6">v</span>
+          </p>
           <ReactPlayer
             width="480px"
             height="360px"
@@ -495,7 +509,7 @@ const EditTemplate = () => {
             url="https://www.youtube.com/watch?v=9P8mASSREYM"
           />
         </div>
-        </div>
+      </div>
     </div>
   );
   // }
