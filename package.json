@@ -75,7 +75,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.13.12",
     "@babel/preset-typescript": "^7.13.0",
-    "@graphql-codegen/cli": "1.21.3",
+    "@graphql-codegen/cli": "1.21.8",
     "@graphql-codegen/near-operation-file-preset": "^1.17.13",
     "@graphql-codegen/plugin-helpers": "^1.18.4",
     "@graphql-codegen/typed-document-node": "^1.18.4",
