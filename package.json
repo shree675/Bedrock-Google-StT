@@ -86,7 +86,7 @@
     "@types/common-tags": "^1.8.0",
     "@types/cookie-session": "^2.0.42",
     "@types/jest": "^26.0.23",
-    "@types/node": "^15.6.0",
+    "@types/node": "^16.6.0",
     "@types/passport": "^1.0.6",
     "@types/react": "^17.0.3",
     "@types/slug": "^0.9.1",
