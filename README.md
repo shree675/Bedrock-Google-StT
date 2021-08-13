@@ -2,8 +2,8 @@
 Internship Project, Phase 3
 
 ## About
-Bedrock Google StT is a web application that lets users to upload audio files, transcribe them using Google Speech to Text API and generate a video from the transcript. Equipped with authentication, PostgreSQL database and stripe payments, this is a standard SaaS application.  
-This application uses [Bedrock](https://bedrock.mxstbr.com/) boilerplate by Max Stoiber.
+Bedrock Google StT is a web application that lets users upload audio files, transcribe them using Google Speech to Text API and generate a video from the transcript. Equipped with authentication, PostgreSQL database and stripe payments, this is a standard SaaS application.  
+This application uses [Bedrock](https://bedrock.mxstbr.com/) boilerplate created by Max Stoiber.
 
 ## Features
 * The app provides a Twitter login option for the users to login and to be able to upload audio files for conversion into videos.  
